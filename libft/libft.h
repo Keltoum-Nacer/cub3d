@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:11:04 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/11/30 14:35:18 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:45:43 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,7 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 size_t	ft_strlen(const char	*str);
+int	ft_strcmp(const char *s1, const char *s2);
+char	*ft_strstr(const char *haystack, const char *needle);
+int	ft_whitespace(char c);
 #endif

@@ -6,7 +6,7 @@
 #    By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/30 14:33:09 by sait-amm          #+#    #+#              #
-#    Updated: 2024/11/30 14:35:25 by sait-amm         ###   ########.fr        #
+#    Updated: 2024/12/01 09:33:57 by sait-amm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ SRCF = ft_atoi.c \
         ft_substr.c \
         ft_strjoin.c \
 		ft_memcpy.c \
-		ft_strlen.c
+		ft_strlen.c \
+		ft_strcmp.c \
+		ft_strstr.c
 CC = cc
 
 CFLAGS = -Wall -Werror -Wextra
