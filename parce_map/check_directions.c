@@ -10,35 +10,39 @@ int validate_position(char *line, int flag)
         return (FAILURE);
     if (flag == 3 && (line[0] != 'E' || line[1] != 'A'))
         return (FAILURE);
-    return(SUCCESS);
+    return (SUCCESS);
 }
-char    *add_north(int fd)
+char *add_dir(int fd, int flag)
+{
+    char *line;
+    char *d;
+
+    line = ft_getline(fd);
+    while (line[0] == '\n')
+    {
+        free(line);
+        line = ft_getline(fd);
+    }
+    if (!validate_position(line, flag))
+        return (ft_put_str(INV_TEX, NULL), free(line), NULL);
+    d = ft_strdup(ft_strchr(line, 't'));
+    if (!file_xpm(d))
+        return (free(d), FAILURE);
+    return (d);
+}
+
+int parce_direction(int fd, t_map **map)
 {
     char    *line;
-
-    while ()
-}
-char    *add_south(int fd)
-{
-
-}
-char    *add_west(int fd)
-{
-
-}
-char    *add_eart(int fd)
-{
-
-}
-int     parce_direction(int fd, t_map **map)
-{
-    if (!((*map)->north = add_north(fd)))
+    if (!((*map)->north = add_dir(fd, 0)))
         return (FAILURE);
-    if (!((*map)->south = add_south(fd)))
+    if (!((*map)->south = add_dir(fd, 1)))
         return (FAILURE);
-    if (!((*map)->west = add_west(fd)))
-            return (FAILURE);
-    if (!((*map)->east = add_east(fd)))
-            return (FAILURE);
+    if (!((*map)->west = add_dir(fd, 2)))
+        return (FAILURE);
+    if (!((*map)->east = add_dir(fd, 3)))
+        return (FAILURE);
+    if (line[0] != '\n')
+        return (FAILURE);
     return (SUCCESS);
 }

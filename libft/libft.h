@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:11:04 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/12/01 12:45:43 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/12/01 15:16:29 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ size_t	ft_strlen(const char	*str);
 int	ft_strcmp(const char *s1, const char *s2);
 char	*ft_strstr(const char *haystack, const char *needle);
 int	ft_whitespace(char c);
+char	*ft_strchr(const char	*s, int c);
 #endif
