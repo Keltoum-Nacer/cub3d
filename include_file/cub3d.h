@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 09:45:48 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/12/02 13:30:42 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:59:18 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #define DUP "duplicates\n"
 #define INV_RGB " Invalid RGB value \n"
 #define MIS_COL " Missing color(s)\n"
+#define ER_OPEN " Error in opening file \n"
 typedef struct s_map
 {
     char *north;

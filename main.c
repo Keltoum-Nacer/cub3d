@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:01:09 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/12/02 13:35:32 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:07:39 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,36 @@ void    ft_put_str(char *str, char *name)
         write(2, name, ft_strlen(name) -1);
     write(2, str, ft_strlen(str) -1);
 }
-int main(int ac, char **av)
+int parce_map(char *name, t_map *map)
 {
     int fd;
-    t_map *map;
+    fd = open(name, O_RDONLY);
+    if (!file_cub(fd, name))
+        return(FAILURE);
+    if (!parce_direction(fd, &map) || !parce_color(fd, &map))
+        return (FAILURE);
+    close(fd);
+    return(SUCCESS);
+}
+int main(int ac, char **av)
+{
+    t_map map;
     
     if (ac != 2)
     {
         write(2, WR_NBR , 26);
         return (EXIT_FAILURE);
     }
-    fd = open(av[1], O_RDONLY);
-    if (!file_cub(fd, av[1]))
-        return(1);
-    map = malloc(sizeof(t_map));
-    if (!map)
-        return(EXIT_FAILURE);
-    if (!parce_direction(fd, &map) || !parce_color(fd, &map))
-        return (free(map), EXIT_FAILURE);
-    free(map);
-    close(fd);
+    if (!parce_map(av[1], &map))
+        return(FAILURE);
+    printf("***%s\n", map.north);
+    printf("***%s\n", map.south);
+    printf("***%s\n", map.west);
+    printf("***%s\n", map.east);
+    printf(">>>%d\n", map.C_color);
+    printf(">>>%d\n", map.F_color);
+    free(map.north);
+    free(map.south);
+    free(map.west);
+    free(map.east);
 }

@@ -27,10 +27,7 @@ char *extract_directory_path(int fd, int flag)
         return (ft_put_str(INV_TEX, NULL), free(line), NULL);
     d = ft_strdup(ft_strchr(line, 't'));
     if (!file_xpm(d))
-    {
-        printf("fjnbkjfbn\n");
         return (free(d), free(line), NULL);
-    }
     return (free(line), d);
 }
 
@@ -49,7 +46,8 @@ int parce_direction(int fd, t_map **map)
     if (line[0] != '\n')
     {
         write(2, DUP, 12);
+        free(line);
         return (FAILURE);
     }
-    return (SUCCESS);
+    return (free(line), SUCCESS);
 }
