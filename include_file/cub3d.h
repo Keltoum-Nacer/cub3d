@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: knacer <knacer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 09:45:48 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/11/30 14:05:35 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/11/30 15:28:33 by knacer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+
+#include"libft.h"
+#include"mlx.h"
 
 typedef struct s_map
 {
