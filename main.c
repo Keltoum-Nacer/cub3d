@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:01:09 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/12/01 15:29:55 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:35:32 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int main(int ac, char **av)
     map = malloc(sizeof(t_map));
     if (!map)
         return(EXIT_FAILURE);
-    if (!parce_direction(fd, &map))
-        return (EXIT_FAILURE);
+    if (!parce_direction(fd, &map) || !parce_color(fd, &map))
+        return (free(map), EXIT_FAILURE);
+    free(map);
     close(fd);
 }

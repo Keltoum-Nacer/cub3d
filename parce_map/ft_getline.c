@@ -20,9 +20,8 @@ char    *ft_getline(int fd)
         d = buff;
         buff = ft_strjoin(d, tmp);
         if (tmp[0] == '\n' || !tmp)
-            return (buff);
+            return (free(tmp), free(d),buff);
         free(d);
-        // free(tmp);
     }
     return (NULL);
 }

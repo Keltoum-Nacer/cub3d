@@ -12,7 +12,7 @@ int validate_position(char *line, int flag)
         return (FAILURE);
     return (SUCCESS);
 }
-char *add_dir(int fd, int flag)
+char *extract_directory_path(int fd, int flag)
 {
     char *line;
     char *d;
@@ -27,22 +27,29 @@ char *add_dir(int fd, int flag)
         return (ft_put_str(INV_TEX, NULL), free(line), NULL);
     d = ft_strdup(ft_strchr(line, 't'));
     if (!file_xpm(d))
-        return (free(d), FAILURE);
-    return (d);
+    {
+        printf("fjnbkjfbn\n");
+        return (free(d), free(line), NULL);
+    }
+    return (free(line), d);
 }
 
 int parce_direction(int fd, t_map **map)
 {
     char    *line;
-    if (!((*map)->north = add_dir(fd, 0)))
+    if (!((*map)->north = extract_directory_path(fd, 0)))
         return (FAILURE);
-    if (!((*map)->south = add_dir(fd, 1)))
+    if (!((*map)->south = extract_directory_path(fd, 1)))
         return (FAILURE);
-    if (!((*map)->west = add_dir(fd, 2)))
+    if (!((*map)->west = extract_directory_path(fd, 2)))
         return (FAILURE);
-    if (!((*map)->east = add_dir(fd, 3)))
+    if (!((*map)->east = extract_directory_path(fd, 3)))
         return (FAILURE);
+    line = ft_getline(fd);
     if (line[0] != '\n')
+    {
+        write(2, DUP, 12);
         return (FAILURE);
+    }
     return (SUCCESS);
 }
