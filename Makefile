@@ -6,11 +6,16 @@
 #    By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/30 14:33:14 by sait-amm          #+#    #+#              #
-#    Updated: 2024/11/30 14:36:11 by sait-amm         ###   ########.fr        #
+#    Updated: 2024/12/02 13:34:55 by sait-amm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC =  main.c
+SRC =  main.c \
+		parce_map/check_file.c \
+		parce_map/check_directions.c \
+		parce_map/ft_getline.c \
+		parce_map/check_color.c
+		
 		
 LIBFT_DIR=libft
 LIBFT_LIB=$(LIBFT_DIR)/libft.a

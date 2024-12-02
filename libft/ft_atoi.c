@@ -6,14 +6,14 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:33:02 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/11/30 14:33:03 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:45:36 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "libft.h"
 
-static int	ft_whitespace(char c)
+int	ft_whitespace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\r'
 		|| c == '\f' || c == '\n' || c == '\v')

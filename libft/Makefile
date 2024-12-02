@@ -1,14 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: knacer <knacer@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/30 14:33:09 by sait-amm          #+#    #+#              #
-#    Updated: 2024/11/30 15:54:56 by knacer           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 
 NAME = libft.a
@@ -20,6 +9,10 @@ SRCF = ft_atoi.c \
 		ft_strlen.c \
 		ft_putendl_fd.c \
 		ft_putstr_fd.c
+		ft_strcmp.c \
+		ft_strstr.c \
+		ft_strchr.c \
+		ft_isdigit.c
 CC = cc
 
 CFLAGS = -Wall -Werror -Wextra

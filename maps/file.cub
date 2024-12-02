@@ -1,8 +1,9 @@
 NO textures/wolfenstein/grey_stone.xpm
+
 SO textures/wolfenstein/purple_stone.xpm
 WE textures/wolfenstein/red_brick.xpm
 EA textures/wolfenstein/wood.xpm
-
+vd
 F 220,100,0
 C 225,30,0
 
@@ -22,3 +23,19 @@ C 225,30,0
 11000000111 100000011
 111001000001000000111
 111111111111111111111
+
+char    *add_dir(char *line, int flag)
+{
+    char    *d;
+    if (!validate_position(line, flag))
+        {
+            ft_put_str(INV_TEX, NULL);
+            return(NULL);
+        }
+    line++;
+    line++;
+    while (ft_whitespace(line[0]))
+        line++;
+    d = ft_strdup(line);
+    return (d);
+}
