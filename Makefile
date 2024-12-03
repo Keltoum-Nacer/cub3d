@@ -1,20 +1,10 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/30 14:33:14 by sait-amm          #+#    #+#              #
-#    Updated: 2024/12/02 13:34:55 by sait-amm         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 SRC =  main.c \
-		parce_map/check_file.c \
-		parce_map/check_directions.c \
-		parce_map/ft_getline.c \
-		parce_map/check_color.c
+		parse_map/check_file.c \
+		parse_map/check_directions.c \
+		parse_map/ft_getline.c \
+		parse_map/check_color.c \
+		parse_map/check_map.c
 		
 		
 LIBFT_DIR=libft
@@ -24,7 +14,7 @@ INCLUDES = -I . -I include -I $(LIBFT_DIR)
 
 C = cc
 
-CFLAGS =  -Wall -Werror -Wextra -g3 -fsanitize=address 
+CFLAGS =  -Wall -Werror -Wextra #-g3 -fsanitize=address 
 
 all: $(NAME)
 

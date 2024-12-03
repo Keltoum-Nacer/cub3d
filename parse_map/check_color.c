@@ -77,7 +77,7 @@ int extract_color_value(int fd, int flag)
     return (-1);
 }
 
-int parce_color(int fd, t_map **map)
+int parse_color(int fd, t_map **map)
 {
     if (((*map)->F_color = extract_color_value(fd, 0)) == -1)
         return (FAILURE);

@@ -1,5 +1,3 @@
-
-
 NAME = libft.a
 SRCF = ft_atoi.c \
         ft_strdup.c \
@@ -8,7 +6,7 @@ SRCF = ft_atoi.c \
 		ft_memcpy.c \
 		ft_strlen.c \
 		ft_putendl_fd.c \
-		ft_putstr_fd.c
+		ft_putstr_fd.c \
 		ft_strcmp.c \
 		ft_strstr.c \
 		ft_strchr.c \
@@ -23,13 +21,11 @@ OBJF = $(SRCF:.c=.o)
 
 
 all : $(NAME)
-
-$(OBJF) : $(SRC)
+	$(OBJF) : $(SRC)
 	$(CC) $(CFLAGS) -c $(SRCF)
 
 $(NAME): $(OBJF) 
 	$(AR) $(NAME) $(OBJF)
-
 
 clean :
 	rm -f $(OBJF)

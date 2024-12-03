@@ -31,7 +31,7 @@ char *extract_directory_path(int fd, int flag)
     return (free(line), d);
 }
 
-int parce_direction(int fd, t_map **map)
+int parse_direction(int fd, t_map **map)
 {
     char    *line;
     if (!((*map)->north = extract_directory_path(fd, 0)))

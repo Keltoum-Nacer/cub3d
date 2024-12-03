@@ -20,6 +20,8 @@
 #define INV_RGB " Invalid RGB value \n"
 #define MIS_COL " Missing color(s)\n"
 #define ER_OPEN " Error in opening file \n"
+#define MAP_HEIGHT 1000
+#define BUFFER_SIZE 7
 
 typedef struct s_map
 {
@@ -27,9 +29,10 @@ typedef struct s_map
     char *west;
     char *east;
     char *south;
-    char **map;
+    char *map[MAP_HEIGHT];
     int F_color;
     int C_color;
+    int height;
 } t_map;
 
 // parcing functions
@@ -37,13 +40,15 @@ typedef struct s_map
 int file_cub(int fd, char *name);
 char    *ft_getline(int fd);
 void    ft_put_str(char *str, char *name);
-int parce_direction(int fd, t_map **map);
+int parse_direction(int fd, t_map **map);
 char *extract_directory_path(int fd, int flag);
 int validate_position(char *line, int flag);
 int file_xpm(char *name);
-int parce_color(int fd, t_map **map);
+int parse_color(int fd, t_map **map);
 int extract_and_validate_int(char *line, int *pos);
 int transform_sequence(char *line);
 int extract_color_value(int fd, int flag);
-int parce_color(int fd, t_map **map);
+int parse_color(int fd, t_map **map);
+int parse_map(int fd, t_map **map);
+char	*get_next_line(int fd);
 #endif

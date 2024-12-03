@@ -10,7 +10,7 @@
 
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
-int ft_atoi(const char *c);
+int     ft_atoi(const char *c);
 char *ft_strjoin(char const *s1, char const *s2);
 char *ft_substr(char const *s, unsigned int start, size_t len);
 char *ft_strdup(const char *s1);
@@ -21,3 +21,5 @@ char *ft_strstr(const char *haystack, const char *needle);
 int ft_whitespace(char c);
 int ft_isdigit(int c);
 char *ft_strchr(const char *s, int c);
+
+#endif
