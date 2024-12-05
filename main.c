@@ -8,17 +8,21 @@ void    ft_put_str(char *str, char *name)
         write(2, name, ft_strlen(name) -1);
     write(2, str, ft_strlen(str) -1);
 }
-int parce_map(char *name, t_map *map)
+
+int parse_Gmap(char *name, t_map *map)
 {
     int fd;
     fd = open(name, O_RDONLY);
     if (!file_cub(fd, name))
         return(FAILURE);
-    if (!parce_direction(fd, &map) || !parce_color(fd, &map))
+    if (!parse_direction(fd, &map) || !parse_color(fd, &map))
         return (FAILURE);
+    if (!parse_map(fd, &map))
+        return(FAILURE);
     close(fd);
     return(SUCCESS);
 }
+
 int main(int ac, char **av)
 {
     t_map map;
@@ -28,7 +32,7 @@ int main(int ac, char **av)
         write(2, WR_NBR , 26);
         return (EXIT_FAILURE);
     }
-    if (!parce_map(av[1], &map))
+    if (!parse_Gmap(av[1], &map))
         return(FAILURE);
     printf("***%s\n", map.north);
     printf("***%s\n", map.south);
