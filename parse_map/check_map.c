@@ -95,7 +95,7 @@ void    read_map(int fd, t_map **map)
         if (strcmp(line, "\n"))
         {
             (*map)->map[i] = ft_strdup(line);
-            printf("---->%s\n", (*map)->map[i]);
+            // printf("---->%s\n", (*map)->map[i]);
             i++;
         }
         free(line);

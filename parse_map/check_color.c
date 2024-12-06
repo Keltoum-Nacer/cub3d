@@ -48,7 +48,8 @@ int transform_sequence(char *line)
     line++;
     if ((c_blue = extract_and_validate_int(line + pos, &pos)) == -1)
         return (-1);
-    return (c_red * 256 * 256 + c_green * 256 + c_blue);
+    printf("****************%d\n", (c_red << 16) | (c_green << 8) | c_blue);
+    return ((255 << 24) | (c_red << 16) | (c_green << 8) | c_blue);
 }
 
 int extract_color_value(int fd, int flag)
