@@ -33,6 +33,7 @@ typedef struct s_map
     int F_color;
     int C_color;
     int height;
+    int width;
 } t_map;
 
 // parcing functions
