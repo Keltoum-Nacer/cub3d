@@ -73,7 +73,11 @@ int closed_by_1(t_map **map)
             if (j && (*map)->map[i][j - 1] != '1') 
                 return (ft_put_str("Invalid mapa!\n", NULL), FAILURE);
             while(j < len && (*map)->map[i][j] == ' ')
+            {
+                if((*map)->map[i - 1][j] != '1' || (*map)->map[i + 1][j] != '1')
+                    return (ft_put_str("Invalid maapaa!\n", NULL), FAILURE);
                 j++;
+            }
             if (j < len && ((*map)->map[i][j] != '1' && (*map)->map[i][j] != '\n'))
                 return (ft_put_str("Invalid mapaa!\n", NULL), FAILURE);
             j++;
@@ -96,8 +100,10 @@ int check_doors(t_map **map)
         {
             if ((*map)->map[i][j] == 'D')
             {
-                if ((*map)->map[i][j - 1] != 1 || (*map)->map[i][j + 1] != 1)
+                    printf("BEFORE : %c ----> %c\n", (*map)->map[i][j - 1], (*map)->map[i][j+1]);
+                if ((*map)->map[i][j - 1] != '1' || (*map)->map[i][j + 1] != '1')
                 {
+                    printf("AFTER : %c ----> %c\n", (*map)->map[i][j - 1], (*map)->map[i][j+1]);
                     return(ft_put_str("Invalid map, the doors should be surrounded by walls!", NULL), FAILURE);
                 }
             }
