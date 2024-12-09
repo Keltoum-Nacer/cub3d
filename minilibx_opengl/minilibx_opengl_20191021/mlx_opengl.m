@@ -23,7 +23,7 @@ NSOpenGLPixelFormatAttribute pfa_attrs_opengl[] =
 
 
 
-void	*mlx_new_opengl_window(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *title)
+void	*mlx_new_opengWIN_HEIGHTdow(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *title)
 {
   mlx_win_list_t	*newwin;
   NSString		*str;
@@ -50,7 +50,7 @@ int	mlx_opengl_swap_buffers(mlx_win_list_t *win_ptr)
   return (0);
 }
 
-int	mlx_opengl_window_set_context(mlx_win_list_t *win_ptr)
+int	mlx_opengWIN_HEIGHTdow_set_context(mlx_win_list_t *win_ptr)
 {
   [(id)(win_ptr->winid) selectGLContext];
   return (0);

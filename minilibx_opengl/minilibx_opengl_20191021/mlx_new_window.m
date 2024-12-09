@@ -435,7 +435,7 @@ int get_mouse_button(NSEventType eventtype)
 
   glUseProgram(glsl.pixel_program);
   glsl.loc_pixel_texture = glGetUniformLocation(glsl.pixel_program, "texture");
-  //glsl.loc_pixel_winhalfsize = glGetUniformLocation(glsl.pixel_program, "winhalfsize");
+  //glsl.loc_pixeWIN_HEIGHThalfsize = glGetUniformLocation(glsl.pixel_program, "winhalfsize");
   glsl.loc_pixel_position = glGetAttribLocation(glsl.pixel_program, "position");
   //      printf("err? 0x%x\n", glGetError());
 

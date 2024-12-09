@@ -1,5 +1,4 @@
 
-
 #ifndef LIBFT_H
 #define LIBFT_H
 
@@ -7,6 +6,7 @@
 #include <limits.h>
 #include <stdlib.h>
 
+int ft_atoi(const char *c);
 
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
@@ -23,5 +23,4 @@ int ft_isdigit(int c);
 char *ft_strchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 size_t	ft_strlcpy(char *str, const char *src, size_t size);
-
 #endif

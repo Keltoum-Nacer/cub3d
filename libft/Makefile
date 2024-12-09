@@ -1,3 +1,4 @@
+
 NAME = libft.a
 SRCF = ft_atoi.c \
         ft_strdup.c \
@@ -5,6 +6,8 @@ SRCF = ft_atoi.c \
         ft_strjoin.c \
 		ft_memcpy.c \
 		ft_strlen.c \
+		ft_strtrim.c \
+		ft_strlcpy.c \
 		ft_putendl_fd.c \
 		ft_putstr_fd.c \
 		ft_strcmp.c \
@@ -23,7 +26,8 @@ OBJF = $(SRCF:.c=.o)
 
 
 all : $(NAME)
-	$(OBJF) : $(SRC)
+
+$(OBJF) : $(SRC)
 	$(CC) $(CFLAGS) -c $(SRCF)
 
 $(NAME): $(OBJF) 

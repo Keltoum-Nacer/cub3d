@@ -1,4 +1,3 @@
-
 #ifndef CUB3D_H
 #define CUB3D_H
 
@@ -8,10 +7,12 @@
 #include <string.h>
 #include <errno.h>
 #include <fcntl.h>
-
 #include "../libft/libft.h"
-#define  SUCCESS 1
-#define  FAILURE 0
+#include "../minilibx-linux/mlx_int.h"
+#include "../minilibx-linux/mlx.h"
+
+#define SUCCESS 1
+#define FAILURE 0
 #define INV_TEX ": Invalid texture(s)\n"
 #define NOT_XPM " Not an .xpm file\n"
 #define NOT_CUB " Not an .cub file\n"
@@ -20,8 +21,12 @@
 #define INV_RGB " Invalid RGB value \n"
 #define MIS_COL " Missing color(s)\n"
 #define ER_OPEN " Error in opening file \n"
+#define EMPTY " Error : map empty\n"
 #define MAP_HEIGHT 1000
 #define BUFFER_SIZE 7
+
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 800
 
 typedef struct s_map
 {
@@ -29,13 +34,23 @@ typedef struct s_map
     char *west;
     char *east;
     char *south;
-    char *map[MAP_HEIGHT];
+    char *map[MAP_HEIGHT];  // Updated with the parsing changes
     int F_color;
     int C_color;
     int height;
     int width;
 } t_map;
+typedef struct s_mlx
+{
+    void    *mlx;
+    void    *window;
+    void    *image;
+    char    *image_addr;
+    int     bits_per_pixel;
+    int     line_length;
+    int     endian;
 
+}t_mlx;
 // parcing functions
 
 int file_cub(int fd, char *name);
@@ -52,4 +67,11 @@ int extract_color_value(int fd, int flag);
 int parse_color(int fd, t_map **map);
 int parse_map(int fd, t_map **map);
 char	*get_next_line(int fd);
+
+// functoin 2D
+
+void draw_map(t_mlx *mlx, t_map *map);
+void    draw_pixels(int i, int j, int color, t_mlx *mlx);
+void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
+
 #endif
