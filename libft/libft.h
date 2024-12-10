@@ -23,4 +23,6 @@ int ft_isdigit(int c);
 char *ft_strchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 size_t	ft_strlcpy(char *str, const char *src, size_t size);
+void	*ft_calloc(size_t count, size_t size);
+
 #endif

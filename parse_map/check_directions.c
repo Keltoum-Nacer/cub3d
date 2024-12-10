@@ -23,7 +23,7 @@ char *extract_directory_path(int fd, int flag, t_map **map)
         return (free(line), ft_put_str(EMPTY, NULL), NULL);
     while (line[0] == '\n')
     {
-        (*map)->height_text++;
+        //(*map)->height_text++;
         free(line);
         line = get_next_line(fd);
     }

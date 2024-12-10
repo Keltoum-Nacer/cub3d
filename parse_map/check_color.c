@@ -66,7 +66,7 @@ int extract_color_value(int fd, int flag, t_map **map)
     while (line[0] == '\n')
     {
         free(line);
-        (*map)->height_text++;
+        //(*map)->height_text++;
         line = get_next_line(fd);
     }
     (*map)->height_text++;
