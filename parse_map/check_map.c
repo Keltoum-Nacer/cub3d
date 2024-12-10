@@ -66,7 +66,7 @@ int closed_by_1(t_map **map)
     {
         j = 0;
         len = ft_strlen((*map)->map[i]);
-        while((*map)->map[i][j])
+        while((*map)->map[i][j])// ila kant lmap makatslalish bnewline kaytsegfaulta i don't know why
         {
             while((*map)->map[i][j] && (*map)->map[i][j] != ' ' )
                 j++;

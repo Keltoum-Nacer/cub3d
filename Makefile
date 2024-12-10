@@ -5,7 +5,11 @@ SRC =  main.c \
 		parse_map/ft_getline.c \
 		parse_map/check_color.c \
 		parse_map/check_map.c \
-		test_2D/test_2D.c
+		draw_map/draw_map.c \
+		draw_map/Field_Of_view.c \
+		draw_map/bresenham.c \
+		draw_map/move_player.c \
+		initial/init.c 
 		
 		
 LIBFT_DIR=libft
@@ -17,8 +21,8 @@ INCLUDES = -I . -I include -I $(LIBFT_DIR)
 
 C = cc
 
-CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 #-g3 -fsanitize=address 
-MLXFLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lbsd
+CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 -g3 -fsanitize=address 
+MLXFLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lbsd -lm
 
 
 all: $(NAME)

@@ -22,7 +22,6 @@ int file_xpm(char *name)
 {
     int fd;
 
-    name[ft_strlen(name) - 1] = '\0';
     if (!ft_strcmp(name, ".xpm"))
     {
         ft_put_str(NOT_XPM, name);

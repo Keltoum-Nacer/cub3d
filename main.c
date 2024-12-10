@@ -20,29 +20,26 @@ int parse_Gmap(char *name, t_map *map)
         return (FAILURE);
     if (!parse_direction(fd, &map) || !parse_color(fd, &map))
         return (FAILURE);
+<<<<<<< HEAD
     if (!parse_map(fd,fdd, &map))
+=======
+    map->height_text++;
+    if (!parse_map(fd, &map))
+>>>>>>> origin/soumaya
         return (FAILURE);
     close(fd);
     return (SUCCESS);
 }
 
-
-void    init_mlx(t_mlx *mlx)
-{
-    mlx->mlx = mlx_init();
-    if (!mlx->mlx)
-        return ;
-    mlx->image = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
-    mlx->image_addr =  mlx_get_data_addr(mlx->image, &mlx->bits_per_pixel, &mlx->line_length,&mlx->endian);
-    mlx->window = mlx_new_window(mlx->mlx, WIN_HEIGHT, WIN_WIDTH, "Our Cub3D");
-    if (mlx->window == NULL)
-        return ;
-}
 int main(int ac, char **av)
 {
     t_map map;
+<<<<<<< HEAD
    // t_mlx mlx;
 
+=======
+    t_data data;
+>>>>>>> origin/soumaya
     if (ac != 2)
     {
         write(2, WR_NBR, 26);
@@ -50,8 +47,16 @@ int main(int ac, char **av)
     }
     if (!parse_Gmap(av[1], &map))
         return (FAILURE);
+<<<<<<< HEAD
     // init_mlx(&mlx);
     // draw_map(&mlx, &map);
     // mlx_put_image_to_window(mlx.mlx, mlx.window, mlx.image, 0, 0);
     // mlx_loop(mlx.mlx);
+=======
+    init_data(map, &data);
+    draw_map(&data);
+    mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
+    mlx_key_hook(data.mlx.window, handle_key, &data);
+    mlx_loop(data.mlx.mlx);
+>>>>>>> origin/soumaya
 }
