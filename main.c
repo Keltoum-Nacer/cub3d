@@ -12,12 +12,15 @@ void ft_put_str(char *str, char *name)
 int parse_Gmap(char *name, t_map *map)
 {
     int fd;
+    int fdd;
+
     fd = open(name, O_RDONLY);
+    fdd = open(name, O_RDONLY);
     if (!file_cub(fd, name))
         return (FAILURE);
     if (!parse_direction(fd, &map) || !parse_color(fd, &map))
         return (FAILURE);
-    if (!parse_map(fd, &map))
+    if (!parse_map(fd,fdd, &map))
         return (FAILURE);
     close(fd);
     return (SUCCESS);
@@ -38,7 +41,7 @@ void    init_mlx(t_mlx *mlx)
 int main(int ac, char **av)
 {
     t_map map;
-    t_mlx mlx;
+   // t_mlx mlx;
 
     if (ac != 2)
     {
@@ -47,8 +50,8 @@ int main(int ac, char **av)
     }
     if (!parse_Gmap(av[1], &map))
         return (FAILURE);
-    init_mlx(&mlx);
-    draw_map(&mlx, &map);
-    mlx_put_image_to_window(mlx.mlx, mlx.window, mlx.image, 0, 0);
-    mlx_loop(mlx.mlx);
+    // init_mlx(&mlx);
+    // draw_map(&mlx, &map);
+    // mlx_put_image_to_window(mlx.mlx, mlx.window, mlx.image, 0, 0);
+    // mlx_loop(mlx.mlx);
 }

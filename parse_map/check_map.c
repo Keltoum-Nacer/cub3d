@@ -16,7 +16,7 @@ int valid_character(t_map **map)
             if((*map)->map[i][j] != ' '&& (*map)->map[i][j] != '0' && (*map)->map[i][j] != '1' 
             && (*map)->map[i][j] != 'N' && (*map)->map[i][j] != 'S' && (*map)->map[i][j] != 'E' 
             && (*map)->map[i][j] != 'W' && (*map)->map[i][j] != 'D')
-                return(ft_put_str("Invalid mappi!\n", NULL), FAILURE);
+                return(ft_put_str("Invalid mapp character!\n", NULL), FAILURE);
             if ((*map)->map[i][j] == 'N' || (*map)->map[i][j] == 'S' || (*map)->map[i][j] == 'E' || (*map)->map[i][j] == 'W')
                 count++;
             j++;
@@ -68,19 +68,20 @@ int closed_by_1(t_map **map)
         len = ft_strlen((*map)->map[i]);
         while((*map)->map[i][j])
         {
-            while(j < len && (*map)->map[i][j] != ' ' && (*map)->map[i][j] != '\n')
+            while((*map)->map[i][j] && (*map)->map[i][j] != ' ' )
                 j++;
-            if (j && (*map)->map[i][j - 1] != '1') 
+            if (j && (*map)->map[i][j - 1] != '1')
                 return (ft_put_str("Invalid mapa!\n", NULL), FAILURE);
-            while(j < len && (*map)->map[i][j] == ' ')
+            while((*map)->map[i][j] && (*map)->map[i][j] == ' ')
             {
                 if((*map)->map[i - 1][j] != '1' || (*map)->map[i + 1][j] != '1')
                     return (ft_put_str("Invalid maapaa!\n", NULL), FAILURE);
                 j++;
             }
-            if (j < len && ((*map)->map[i][j] != '1' && (*map)->map[i][j] != '\n'))
+            if (j < len && ((*map)->map[i][j] != '1'))
                 return (ft_put_str("Invalid mapaa!\n", NULL), FAILURE);
-            j++;
+            if((*map)->map[i][j])
+                j++;
         }
         i++;
     }
@@ -98,28 +99,37 @@ int check_doors(t_map **map)
         j = 0;
         while((*map)->map[i][j])
         {
-            if ((*map)->map[i][j] == 'D')
-            {
-                    printf("BEFORE : %c ----> %c\n", (*map)->map[i][j - 1], (*map)->map[i][j+1]);
-                if ((*map)->map[i][j - 1] != '1' || (*map)->map[i][j + 1] != '1')
-                {
-                    printf("AFTER : %c ----> %c\n", (*map)->map[i][j - 1], (*map)->map[i][j+1]);
-                    return(ft_put_str("Invalid map, the doors should be surrounded by walls!", NULL), FAILURE);
-                }
-            }
+            if ((*map)->map[i][j] == 'D' && ((*map)->map[i][j - 1] != '1' || (*map)->map[i][j + 1] != '1'))
+                return(ft_put_str("the doors should be surrounded by walls!", NULL), FAILURE);
             j++;
         }
         i++;
     }
     return(SUCCESS);
 }
+int height_map(int fdd)
+{
+    char    *line;
+    int     count;
 
-int    read_map(int fd, t_map **map)
+    count = 0;
+    while((line = get_next_line(fdd)))
+    {
+        count++;
+        free(line);
+    }
+    close(fdd);
+    return(count);
+}
+
+int    read_map(int fd, int fdd, t_map **map)
 {
     char    *line;
     int     i;
 
     i = 0;
+    (*map)->height = height_map(fdd);
+    printf("the height of map is %d\n", (*map)->height);
     while((line = get_next_line(fd)))
     {
         if (ft_strcmp(line, "\n"))
@@ -128,7 +138,7 @@ int    read_map(int fd, t_map **map)
             printf("---->%s\n", (*map)->map[i]);
             i++;
         }
-        else if(i != 0)
+        else if(i > 0 && i < (*map)->height)
         {
             free(line);
             return (ft_put_str("Invalid mapii!\n", NULL), FAILURE);
@@ -140,9 +150,9 @@ int    read_map(int fd, t_map **map)
     return(SUCCESS);
 }    
 
-int parse_map(int fd, t_map **map)
+int parse_map(int fd, int fdd, t_map **map)
 {
-    if(!read_map(fd, map))
+    if(!read_map(fd, fdd, map))
         return(FAILURE);
     if(!(*map)->map[0])
         return (ft_put_str("Empty map!\n", NULL), FAILURE);

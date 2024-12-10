@@ -65,7 +65,7 @@ int extract_and_validate_int(char *line, int *pos);
 int transform_sequence(char *line);
 int extract_color_value(int fd, int flag);
 int parse_color(int fd, t_map **map);
-int parse_map(int fd, t_map **map);
+int parse_map(int fd, int fdd, t_map **map);
 char	*get_next_line(int fd);
 
 // functoin 2D
