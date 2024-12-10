@@ -12,37 +12,43 @@ int validate_position(char *line, int flag)
         return (FAILURE);
     return (SUCCESS);
 }
-char *extract_directory_path(int fd, int flag)
+char *extract_directory_path(int fd, int flag, t_map **map)
 {
     char *line;
     char *d;
+    char *line_trim;
 
-    line = ft_getline(fd);
+    line = get_next_line(fd);
+    if (!line)
+        return (free(line), ft_put_str(EMPTY, NULL), NULL);
     while (line[0] == '\n')
     {
+        (*map)->height_text++;
         free(line);
-        line = ft_getline(fd);
+        line = get_next_line(fd);
     }
-    if (!validate_position(line, flag))
-        return (ft_put_str(INV_TEX, NULL), free(line), NULL);
-    d = ft_strdup(ft_strchr(line, 't'));
+    (*map)->height_text++;
+    line_trim = ft_strtrim(line, " \n\r\f\v\t");
+    if (!validate_position(line_trim, flag))
+        return (ft_put_str(INV_TEX, NULL), free(line), free(line_trim), NULL);
+    d = ft_strdup(ft_strchr(line_trim, 't'));
     if (!file_xpm(d))
-        return (free(d), free(line), NULL);
-    return (free(line), d);
+        return (free(d), free(line_trim), free(line), NULL);
+    return (free(line), free(line_trim), d);
 }
 
 int parse_direction(int fd, t_map **map)
 {
-    char    *line;
-    if (!((*map)->north = extract_directory_path(fd, 0)))
+    char *line;
+    if (!((*map)->north = extract_directory_path(fd, 0, map)))
         return (FAILURE);
-    if (!((*map)->south = extract_directory_path(fd, 1)))
+    if (!((*map)->south = extract_directory_path(fd, 1, map)))
         return (FAILURE);
-    if (!((*map)->west = extract_directory_path(fd, 2)))
+    if (!((*map)->west = extract_directory_path(fd, 2, map)))
         return (FAILURE);
-    if (!((*map)->east = extract_directory_path(fd, 3)))
+    if (!((*map)->east = extract_directory_path(fd, 3, map)))
         return (FAILURE);
-    line = ft_getline(fd);
+    line = get_next_line(fd);
     if (line[0] != '\n')
     {
         write(2, DUP, 12);

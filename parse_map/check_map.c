@@ -67,7 +67,7 @@ int closed_by_1(t_map **map)
     {
         j = 0;
         len = ft_strlen((*map)->map[i]);
-        while((*map)->map[i][j])
+        while((*map)->map[i][j])// ila kant lmap makatslalish bnewline kaytsegfaulta i don't know why
         {
             while(j < len && (*map)->map[i][j] != ' ' && (*map)->map[i][j] != '\n')
                 j++;
@@ -92,7 +92,8 @@ void    read_map(int fd, t_map **map)
     i = 0;
     while((line = get_next_line(fd)))
     {
-        if (strcmp(line, "\n"))
+        //here khas string to strim it because lkhat lhmar hhhh
+        if (strcmp(line, "\n"))//should change to ft_strcmp
         {
             (*map)->map[i] = ft_strdup(line);
             // printf("---->%s\n", (*map)->map[i]);

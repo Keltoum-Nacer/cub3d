@@ -10,7 +10,8 @@
 #include "../libft/libft.h"
 #include "../minilibx-linux/mlx_int.h"
 #include "../minilibx-linux/mlx.h"
-
+#include <math.h>
+// macro parsing
 #define SUCCESS 1
 #define FAILURE 0
 #define INV_TEX ": Invalid texture(s)\n"
@@ -25,8 +26,23 @@
 #define MAP_HEIGHT 1000
 #define BUFFER_SIZE 7
 
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 800
+//macro draw
+
+# define KEY_W 119
+# define KEY_D 100
+# define KEY_S 115
+# define KEY_A 97
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
+# define KEY_LEFT 65363
+# define KEY_RIGHT 65361
+
+typedef struct s_player
+{
+    float p_x;
+    float p_y;
+
+}t_player;
 
 typedef struct s_map
 {
@@ -38,7 +54,10 @@ typedef struct s_map
     int F_color;
     int C_color;
     int height;  // Added from parsing
+    int height_text;
+    t_player p;
 } t_map;
+
 typedef struct s_mlx
 {
     void    *mlx;
@@ -50,27 +69,58 @@ typedef struct s_mlx
     int     endian;
 
 }t_mlx;
+
+typedef struct s_bres_flag
+{
+	int		dx;
+	int		dy;
+	int		sx;
+	int		err;
+	int		sy;
+}			t_bres_flag;
+
+typedef struct s_point
+{
+    int x_ind;
+    int y_ind;
+}t_point;
+
+typedef struct s_data
+{
+    t_mlx mlx;
+    t_map map;
+}
+t_data;
 // parcing functions
 
 int file_cub(int fd, char *name);
 char    *ft_getline(int fd);
 void    ft_put_str(char *str, char *name);
 int parse_direction(int fd, t_map **map);
-char *extract_directory_path(int fd, int flag);
+char *extract_directory_path(int fd, int flag, t_map **map);
 int validate_position(char *line, int flag);
 int file_xpm(char *name);
 int parse_color(int fd, t_map **map);
 int extract_and_validate_int(char *line, int *pos);
-int transform_sequence(char *line);
-int extract_color_value(int fd, int flag);
+long long transform_sequence(char *line);
+int extract_color_value(int fd, int flag, t_map **map);
 int parse_color(int fd, t_map **map);
 int parse_map(int fd, t_map **map);
 char	*get_next_line(int fd);
 
 // functoin 2D
 
-void draw_map(t_mlx *mlx, t_map *map);
+void draw_map(t_data *data);
 void    draw_pixels(int i, int j, int color, t_mlx *mlx);
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 
+
+//test array
+void	bresenham(t_point p0, t_point p1, t_data *data);
+void	init_flag(t_bres_flag *s, t_point p0, t_point p1);
+void field_of_view(t_map map, t_point *y);
+void init_mlx(t_mlx *mlx);
+void init_data(t_map map, t_data *data);
+int handle_key(int keycode, t_data *data);
+void move_player(t_data *data);
 #endif
