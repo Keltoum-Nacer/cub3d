@@ -41,7 +41,6 @@ long long transform_sequence(char *line)
     pos = 0;
     while (ft_whitespace(line[0]))
         line++;
-
     if ((c_red = extract_and_validate_int(line, &pos)) == -1)
         return (-1);
     while (ft_whitespace(line[0]))
@@ -66,7 +65,6 @@ int extract_color_value(int fd, int flag, t_map **map)
     while (line[0] == '\n')
     {
         free(line);
-        //(*map)->height_text++;
         line = get_next_line(fd);
     }
     (*map)->height_text++;

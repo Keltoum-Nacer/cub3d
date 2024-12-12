@@ -21,7 +21,6 @@ int parse_Gmap(char *name, t_map *map)
         return (FAILURE);
     if (!parse_direction(fd, &map) || !parse_color(fd, &map))
         return (FAILURE);
-   // map->height_text++;
     if (!parse_map(fd, fdd, map))
         return (FAILURE);
     close(fd);
@@ -39,10 +38,9 @@ int main(int ac, char **av)
     }
     if (!parse_Gmap(av[1], &map))
         return (FAILURE);
-    printf("-->%f--->%f\n", map.p.p_x, map.p.p_y);
     init_data(map, &data);
     draw_map(&data);
     mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
-    mlx_key_hook(data.mlx.window, handle_key, &data);
+    hook_functions(&data);
     mlx_loop(data.mlx.mlx);
 }
