@@ -49,9 +49,11 @@ void draw_raycasting(t_data *data)
 
     x.x_ind = data->map.p.p_x;
     x.y_ind = data->map.p.p_y;
-    field_of_view(data->map, &y);
+    if (data->map.p.p_name == 'E' || data->map.p.p_name == 'W')
+        field_of_view_EW(data->map, &y);
+    else
+        field_of_view_SN(data->map, &y);
     i = 0;
-
     int tmp = y.y_ind;
     while (i < 17)
     {
@@ -78,7 +80,7 @@ void draw_map(t_data *data)
         {
             if (data->map.map[i][j] == '1')
                 draw_pixels(j, i, data->map.C_color, &data->mlx);
-            else if (data->map.map[i][j] != '\n')
+            else
                 draw_pixels(j, i, data->map.F_color, &data->mlx);
             j++;
         }

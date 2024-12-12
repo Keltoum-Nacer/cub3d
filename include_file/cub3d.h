@@ -36,6 +36,7 @@
 # define KEY_D 100
 # define KEY_S 115
 # define KEY_A 97
+# define ESC 65307
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 # define KEY_LEFT 65363
@@ -128,9 +129,16 @@ void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 //test array
 void	bresenham(t_point p0, t_point p1, t_data *data);
 void	init_flag(t_bres_flag *s, t_point p0, t_point p1);
-void field_of_view(t_map map, t_point *y);
+void field_of_view_EW(t_map map, t_point *y);
+void    field_of_view_SN(t_map map, t_point *yes);
 void init_mlx(t_mlx *mlx);
 void init_data(t_map map, t_data *data);
 int handle_key(int keycode, t_data *data);
 void move_player(t_data *data);
+
+//events
+
+void    hook_functions(t_data *data);
+int     ft_close(t_data *cub);
+
 #endif

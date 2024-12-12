@@ -11,29 +11,27 @@ void move_player(t_data *data)
 int handle_key(int keycode, t_data *data)
 {
     printf(">>>%d\n", keycode);
+    if(keycode == ESC)
+        return(mlx_loop_end(data->mlx.mlx), 1);
     if (keycode == KEY_W)
     {
         data->map.p.p_y = data->map.p.p_y - 5;
-        move_player(data);
-        return (1);
+        return (move_player(data), 1);
     }
     if (keycode == KEY_D)
     {
         data->map.p.p_x = data->map.p.p_x + 5;
-        move_player(data);
-        return (1);
+        return (move_player(data), 1);
     }
     if (keycode == KEY_A)
     {
         data->map.p.p_x = data->map.p.p_x - 5;
-        move_player(data);
-        return (1);
+        return (move_player(data), 1);
     }
     if (keycode == KEY_S)
     {
         data->map.p.p_y = data->map.p.p_y + 5;
-        move_player(data);
-        return (1);
+        return (move_player(data), 1);
     }
     return (0);
 }

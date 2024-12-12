@@ -11,6 +11,7 @@ SRC =  main.c \
 		draw_map/Field_Of_view.c \
 		draw_map/bresenham.c \
 		draw_map/move_player.c \
+		draw_map/events.c \
 		initial/init.c 
 		
 		
