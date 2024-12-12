@@ -31,7 +31,7 @@ int parse_Gmap(char *name, t_map *map)
 int main(int ac, char **av)
 {
     t_map map;
-    //t_data data;
+    t_data data;
     if (ac != 2)
     {
         write(2, WR_NBR, 26);
@@ -39,9 +39,10 @@ int main(int ac, char **av)
     }
     if (!parse_Gmap(av[1], &map))
         return (FAILURE);
-    // init_data(map, &data);
-    // draw_map(&data);
-    // mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
-    // mlx_key_hook(data.mlx.window, handle_key, &data);
-    // mlx_loop(data.mlx.mlx);
+    printf("-->%f--->%f\n", map.p.p_x, map.p.p_y);
+    init_data(map, &data);
+    draw_map(&data);
+    mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
+    mlx_key_hook(data.mlx.window, handle_key, &data);
+    mlx_loop(data.mlx.mlx);
 }

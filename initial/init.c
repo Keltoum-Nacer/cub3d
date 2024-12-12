@@ -17,7 +17,7 @@ void init_mlx(t_mlx *mlx)
 void init_data(t_map map, t_data *data)
 {
     data->map = map;
-    data->map.p.p_y = 90;
-    data->map.p.p_x = 270;
+    data->map.p.p_y = map.p.p_y  * 30;
+    data->map.p.p_x = map.p.p_x *30;
     init_mlx(&data->mlx);
 }

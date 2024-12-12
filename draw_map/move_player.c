@@ -10,7 +10,6 @@ void move_player(t_data *data)
 }
 int handle_key(int keycode, t_data *data)
 {
-    printf(">>>%d\n", keycode);
     if (keycode == KEY_W)
     {
         data->map.p.p_y = data->map.p.p_y - 5;
