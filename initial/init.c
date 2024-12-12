@@ -19,5 +19,13 @@ void init_data(t_map map, t_data *data)
     data->map = map;
     data->map.p.p_y *= 30 ;
     data->map.p.p_x *= 30;
+    if (map.p.p_name == 'N')
+        data->map.p.angle = 270;
+    if (map.p.p_name == 'W')
+        data->map.p.angle = 180;
+    if (map.p.p_name == 'S')
+        data->map.p.angle = 90;
+    if (map.p.p_name == 'E')
+        data->map.p.angle = 0;
     init_mlx(&data->mlx);
 }
