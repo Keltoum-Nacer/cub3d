@@ -27,31 +27,36 @@ void draw_pixels(int i, int j, int color, t_mlx *mlx)
 }
 void draw_player(int x, int y, int color, t_mlx *mlx)
 {
-            my_mlx_pixel_put(mlx, x  , y , color);
+    my_mlx_pixel_put(mlx, x, y, color);
 }
 void draw_raycasting(t_data *data)
 {
+    double fov = 30 * PI / 180.0;
+    int num_rays = 1920 / 2;
     t_point x;
 
+    double angle_step = fov / num_rays;
+    double alpha = 0;
+    double current_angle = data->map.p.angle * PI / 180.0;
     x.x_ind = data->map.p.p_x;
     x.y_ind = data->map.p.p_y;
-
-    double fov = 30 * M_PI / 180.0;
-    int num_rays = 910;
-    double angle_step = fov / num_rays;
-
-    double current_angle = data->map.p.angle * M_PI / 180.0;
-
-    for (int i = 0; i < num_rays; i++)
+    while (alpha <= fov)
     {
+        if (current_angle == 2 * PI)
+            current_angle = 0;
         bresenham(x, current_angle, data);
         current_angle += angle_step;
+        alpha += angle_step;
     }
-     current_angle = data->map.p.angle * M_PI / 180.0;
-    for (int i = num_rays; i > 0; i--)
+    alpha = fov;
+    current_angle = data->map.p.angle * PI / 180.0;
+    while (alpha >= 0)
     {
+        if (current_angle == 0)
+            current_angle = 2 * PI;
         bresenham(x, current_angle, data);
         current_angle -= angle_step;
+        alpha -= angle_step;
     }
 }
 

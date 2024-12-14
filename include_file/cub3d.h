@@ -50,6 +50,7 @@ typedef struct s_player
     float p_y;
     char  p_name;
     float angle;
+    int     **rays;
 
 }t_player;
 
@@ -132,7 +133,9 @@ void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 //test array
 // void	bresenham(t_point p0, t_point p1, t_data *data);
 void bresenham(t_point p0, double alpha, t_data *data);
-void	init_flag(t_bres_flag *s, t_point p0, t_point p1);
+void init_flag(t_bres_flag *s, t_point p0, t_point p1);
+// void bresenham(double alpha, t_data *data);
+// void	init_flag(t_bres_flag *s, t_player p, t_point p1);
 void field_of_view_EW(t_map map, t_point *y);
 void    field_of_view_SN(t_map map, t_point *yes);
 void init_mlx(t_mlx *mlx);
