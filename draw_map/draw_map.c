@@ -36,23 +36,30 @@ void draw_raycasting(t_data *data)
     x.x_ind = data->map.p.p_x;
     x.y_ind = data->map.p.p_y;
 
-    double fov = 30 * M_PI / 180.0;
-    int num_rays = 910;
+    double fov = 30 * PI / 180.0;
+    int num_rays = WIN_WIDTH / 2;
     double angle_step = fov / num_rays;
 
-    double current_angle = data->map.p.angle * M_PI / 180.0;
-
-    for (int i = 0; i < num_rays; i++)
+    double current_angle = data->map.p.angle * PI / 180.0;
+    double a =0;
+    while (a < 30 * PI / 180)   
     {
+        if(current_angle == 2 * PI)
+            current_angle = 0;
         bresenham(x, current_angle, data);
         current_angle += angle_step;
+         a = a + angle_step;
     }
-     current_angle = data->map.p.angle * M_PI / 180.0;
-    for (int i = num_rays; i > 0; i--)
-    {
-        bresenham(x, current_angle, data);
+    // a = 30;
+    current_angle = data->map.p.angle * PI / 180.0;
+    while(a >= 0)
+        {
+        if(current_angle == 0)
+            current_angle = 2 * PI;
         current_angle -= angle_step;
-    }
+        bresenham(x,current_angle, data);
+        a -= angle_step;
+        }
 }
 
 void draw_map(t_data *data)

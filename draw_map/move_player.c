@@ -8,6 +8,9 @@ void move_player(t_data *data)
     draw_map(data);
     mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->mlx.image, 0, 0);
 }
+
+
+
 int handle_key(int keycode, t_data *data)
 {
     if (keycode == ESC)
@@ -44,3 +47,6 @@ int handle_key(int keycode, t_data *data)
     }
     return (0);
 }
+
+
+
