@@ -40,33 +40,6 @@ void draw_raycasting(t_data *data)
     double current_angle = data->map.p.angle * PI / 180.0;
     x.x_ind = data->map.p.p_x;
     x.y_ind = data->map.p.p_y;
-<<<<<<< HEAD
-
-    double fov = 30 * PI / 180.0;
-    int num_rays = WIN_WIDTH / 2;
-    double angle_step = fov / num_rays;
-
-    double current_angle = data->map.p.angle * PI / 180.0;
-    double a =0;
-    while (a < 30 * PI / 180)   
-    {
-        if(current_angle == 2 * PI)
-            current_angle = 0;
-        bresenham(x, current_angle, data);
-        current_angle += angle_step;
-         a = a + angle_step;
-    }
-    // a = 30;
-    current_angle = data->map.p.angle * PI / 180.0;
-    while(a >= 0)
-        {
-        if(current_angle == 0)
-            current_angle = 2 * PI;
-        current_angle -= angle_step;
-        bresenham(x,current_angle, data);
-        a -= angle_step;
-        }
-=======
     while (alpha <= fov)
     {
         if (current_angle == 2 * PI)
@@ -85,7 +58,6 @@ void draw_raycasting(t_data *data)
         current_angle -= angle_step;
         alpha -= angle_step;
     }
->>>>>>> origin/soumaya
 }
 
 void draw_map(t_data *data)
