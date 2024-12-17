@@ -4,7 +4,7 @@ void my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
 {
     int offset;
 
-    if (x < 0 || x >= WIN_HEIGHT || y < 0 || y >= WIN_WIDTH)
+    if (x < 0 || x >= WIN_WIDTH|| y < 0 || y >= WIN_HEIGHT)
         return;
     offset = (y * data->line_length) + (x * (data->bits_per_pixel / 8));
     *((unsigned int *)(data->image_addr + offset)) = color;
@@ -14,12 +14,13 @@ void draw_pixels(int i, int j, int color, t_mlx *mlx)
 {
     int ver = 0;
     int hor = 0;
-    while (ver < 30)
+    while (ver < 64)
     {
         hor = 0;
-        while (hor < 30)
+        while (hor < 64)
         {
-            my_mlx_pixel_put(mlx, 30 * i + hor, 30 * j + ver, color);
+            // printf("--->%d-->%d\n", 64* i + hor,64* j + ver);
+            my_mlx_pixel_put(mlx, 64* i + hor, 64 * j + ver, color);
             hor++;
         }
         ver++;

@@ -69,7 +69,7 @@ void bresenham(t_point p0, double alpha, t_data *data)
     init_flag(&s, p0, p1); 
     while (1)
     {
-        if (data->map.map[p0.y_ind / 30][p0.x_ind / 30] == '1')
+        if (data->map.map[p0.y_ind / 64][p0.x_ind / 64] == '1')
             break;
         my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0x00FF00);
         e2 = s.err * 2;
