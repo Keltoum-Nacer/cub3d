@@ -66,9 +66,10 @@ void bresenham_wall(t_point p0, double wall_height, t_data *data)
     p1.x_ind = p0.x_ind;
     p1.y_ind = p0.y_ind - wall_height;
     init_flag(&s, p0, p1); 
-        printf("wa l3adawww %f ------> %f \n", p0.y_ind, p1.y_ind);
     while (p0.y_ind > p1.y_ind && p0.y_ind >= 0)
     {
+       // printf("wa l3adawww %f ------> %f \n", p0.y_ind, p1.y_ind);
+
         my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0xFFFFFF);
         // e2 = s.err * 2;
        
@@ -90,18 +91,18 @@ void bresenham(t_point p0, double alpha, t_data *data)
 
     player.x_ind = data->map.p.p_x;
     player.y_ind = data->map.p.p_y;
-    p1.x_ind = p0.x_ind + p0.x_ind* cos(alpha);
-    p1.y_ind = p0.x_ind * sin(alpha) + p0.y_ind;
+    p1.x_ind = p0.x_ind + 20000* cos(alpha);
+    p1.y_ind = 20000 * sin(alpha) + p0.y_ind;
     init_flag(&s, p0, p1); 
     while (1)
     {
         if (data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64] == '1')
         {
             calculate_distance(p0, player, data);
-            draw_wall(data, p0);
+            draw_wall(data, p0, alpha);
             break;
         }
-        my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0x00FF00);
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0x000000);
         e2 = s.err * 2;
         if (e2 > -s.dy)
         {
