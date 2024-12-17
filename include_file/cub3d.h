@@ -41,6 +41,8 @@
 # define WIN_HEIGHT 1080
 # define KEY_LEFT 65363
 # define KEY_RIGHT 65361
+# define WALL_DIM 64.0
+# define NUM_RAYS 1920 / 2
 
 
 #define PI 3.14159265359
@@ -50,7 +52,7 @@ typedef struct s_player
     float p_y;
     char  p_name;
     float angle;
-    int     **rays;
+    float   ray_dist;
 
 }t_player;
 
@@ -78,7 +80,6 @@ typedef struct s_mlx
     int     bits_per_pixel;
     int     line_length;
     int     endian;
-
 }t_mlx;
 
 typedef struct s_bres_flag
@@ -92,8 +93,8 @@ typedef struct s_bres_flag
 
 typedef struct s_point
 {
-    int x_ind;
-    int y_ind;
+    double x_ind;
+    double y_ind;
 }t_point;
 
 typedef struct s_data
@@ -142,7 +143,9 @@ void init_mlx(t_mlx *mlx);
 void init_data(t_map map, t_data *data);
 int handle_key(int keycode, t_data *data);
 void move_player(t_data *data);
-
+void    calculate_distance(t_point p0, t_point p1, t_data *data);
+void    draw_wall(t_data *data, t_point p0);
+void bresenham_wall(t_point p0, double wall_height, t_data *data);
 //events
 
 void    hook_functions(t_data *data);
