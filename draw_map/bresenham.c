@@ -23,7 +23,7 @@
 
 //     p1.x_ind = data->map.p.p_x + data->map.p.p_x * cos(alpha);
 //     p1.y_ind = data->map.p.p_y * sin(alpha) + data->map.p.p_y;
-//     init_flag(&s, data->map.p, p1); 
+//     init_flag(&s, data->map.p, p1);
 //     while (1)
 //     {
 //         if (data->map.map[(int )data->map.p.p_y / 30][(int) data->map.p.p_x / 30] == '1')
@@ -59,29 +59,38 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
 }
 void bresenham_wall(t_point p0, double wall_height, t_data *data)
 {
-    t_bres_flag s;
-    // int e2;
+    // t_bres_flag s;
     t_point p1;
 
     p1.x_ind = p0.x_ind;
     p1.y_ind = p0.y_ind - wall_height;
-    init_flag(&s, p0, p1); 
-        printf("wa l3adawww %f ------> %f \n", p0.y_ind, p1.y_ind);
+    // p1.y_ind *= 64;
+    // init_flag(&s, p0, p1); 
     while (p0.y_ind > p1.y_ind && p0.y_ind >= 0)
     {
         my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0xFFFFFF);
-        // e2 = s.err * 2;
-       
-        // if (e2 < s.dx)
-        // {
-        //     s.err += s.dx;
-            p0.y_ind += s.sy;
-            // printf("=======> %d\n", s.sy);
-        // }
+            p0.y_ind--;;
     }
 }
 
-void bresenham(t_point p0, double alpha, t_data *data)
+void draw_wall(t_data *data, t_point wall_point, double distance)
+{
+    long long cst = 4294967296 * 64;
+    int wall_height = (int)(cst / distance);
+
+    int start = (WIN_HEIGHT / 2) - (wall_height / 2);
+    int end = (WIN_HEIGHT / 2) + (wall_height / 2);
+
+    if (start < 0) start = 0;
+    if (end > WIN_HEIGHT) end = WIN_HEIGHT;
+
+    for (int y = start; y < end; y++)
+    {
+        my_mlx_pixel_put(&data->mlx, (int)wall_point.x_ind, y, 0xFFFFFF); // Replace with texture logic if needed
+    }
+}
+
+void bresenham(t_point p0, double alpha, t_data *data) 
 {
     t_bres_flag s;
     int e2;
@@ -90,15 +99,18 @@ void bresenham(t_point p0, double alpha, t_data *data)
 
     player.x_ind = data->map.p.p_x;
     player.y_ind = data->map.p.p_y;
-    p1.x_ind = p0.x_ind + p0.x_ind* cos(alpha);
-    p1.y_ind = p0.x_ind * sin(alpha) + p0.y_ind;
-    init_flag(&s, p0, p1); 
+    p1.x_ind = p0.x_ind + cos(alpha) * LARGE_DISTANCE;
+    p1.y_ind = p0.y_ind + sin(alpha) * LARGE_DISTANCE;
+    init_flag(&s, p0, p1);
     while (1)
     {
         if (data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64] == '1')
         {
             calculate_distance(p0, player, data);
-            draw_wall(data, p0);
+            // printf("------>%f\n", data->map.p.ray_dist);
+            // draw_wall(data, p0, data->map.p.ray_dist);
+            // my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0xFFFFFF);
+
             break;
         }
         my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0x00FF00);

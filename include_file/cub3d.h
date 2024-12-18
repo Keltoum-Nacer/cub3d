@@ -8,7 +8,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include "../libft/libft.h"
-#include "../minilibx-linux/mlx_int.h"
+// #include "../minilibx-linux/mlx_int.h"
 #include "../minilibx-linux/mlx.h"
 #include <math.h>
 // macro parsing
@@ -42,7 +42,9 @@
 # define KEY_LEFT 65363
 # define KEY_RIGHT 65361
 # define WALL_DIM 64.0
+#define LARGE_DISTANCE 6000
 # define NUM_RAYS 1920 / 2
+# define CST 1920 * 64
 
 
 #define PI 3.14159265359
@@ -52,7 +54,7 @@ typedef struct s_player
     float p_y;
     char  p_name;
     float angle;
-    float   ray_dist;
+    double   ray_dist;
 
 }t_player;
 
@@ -144,9 +146,12 @@ void init_data(t_map map, t_data *data);
 int handle_key(int keycode, t_data *data);
 void move_player(t_data *data);
 void    calculate_distance(t_point p0, t_point p1, t_data *data);
-void    draw_wall(t_data *data, t_point p0);
+// void    draw_wall(t_data *data, t_point p0);
+void draw_wall(t_data *data, t_point wall_point, double distance);
 void bresenham_wall(t_point p0, double wall_height, t_data *data);
+// void    draw_wall(t_data *data, t_point p0, double alpha);
 //events
+
 
 void    hook_functions(t_data *data);
 int     ft_close(t_data *cub);

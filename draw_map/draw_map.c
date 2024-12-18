@@ -38,6 +38,7 @@ void draw_player(int x, int y, int color, t_mlx *mlx)
 {
     my_mlx_pixel_put(mlx, x, y, color);
 }
+
 void draw_raycasting(t_data *data)
 {
     double fov;
@@ -69,38 +70,71 @@ void draw_raycasting(t_data *data)
     }
 }
 
-void    calculate_distance(t_point p0, t_point p1, t_data *data)
+void        calculate_distance(t_point p0, t_point p1, t_data *data)
 {
     data->map.p.ray_dist = sqrt(powf(p0.x_ind - p1.x_ind, 2.)  + powf(p0.y_ind - p1.y_ind, 2.));
+    // data->map.p.ray_dist = hypot(p0.x_ind - p1.x_ind, p0.y_ind - p1.y_ind)
+    //                    * cos(data->map.p.angle);
+
 }
 
-void    draw_wall(t_data *data, t_point p0)
+
+void	draw_image(t_data *data)
 {
-    double dis_to_proj;
-    double  wall_height;
+	int	x;
+	int	y;
 
-    dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(30));
-    wall_height = (WALL_DIM / data->map.p.ray_dist) * dis_to_proj;
-    bresenham_wall(p0, wall_height, data);
+	x = 0;
+	y = 0;
+	while (x < WIN_WIDTH)
+	{
+		y = 0;
+		while (y < WIN_HEIGHT)
+		{
+			my_mlx_pixel_put(&data->mlx, x, y, 0x000000);
+			y++;
+		}
+		x++;
+	}
 }
 
+void    draw_ceil(t_data *data, int end, int x)
+{
+    int i = 0;
+    while (i < end)
+    {
+        my_mlx_pixel_put(&data->mlx, x, i, data->map.C_color);
+        i++;
+    }
+}
+void    draw_floor(t_data *data, int start, int y)
+{
+    int i = start;
+    while (data->map.map[i])
+    {
+        my_mlx_pixel_put(&data->mlx, i, y, data->map.F_color);
+        i++;
+    }
+}
 void draw_map(t_data *data)
 {
     int i = 0;
     int j = 0;
-    while (data->map.map[i])
+    while (i < WIN_WIDTH)
     {
         j = 0;
-        while (data->map.map[i][j])
+        while (j < WIN_HEIGHT)
         {
-            if (data->map.map[i][j] == '1')
-                draw_pixels(j, i, data->map.C_color, &data->mlx);
+            if (j < WIN_HEIGHT / 2)
+                my_mlx_pixel_put(&data->mlx, i, j , 0xFEAFEC);
             else
-                draw_pixels(j, i, data->map.F_color, &data->mlx);
+                my_mlx_pixel_put(&data->mlx, i, j , data->map.F_color);
             j++;
         }
         i++;
     }
+
+    draw_image(data);
     draw_player(data->map.p.p_x, data->map.p.p_y, 0XFFFFFFFF, &data->mlx);
     draw_raycasting(data);
    // draw_wall(data);
