@@ -43,6 +43,7 @@
 # define KEY_RIGHT 65361
 # define WALL_DIM 64.0
 # define NUM_RAYS 1920 / 2
+# define FOV 60
 
 
 #define PI 3.14159265359

@@ -42,7 +42,7 @@ void draw_raycasting(t_data *data)
 {
     double fov;
     t_point x;
-    fov = degree_to_rad(30);
+    fov = degree_to_rad(FOV / 2);
     double angle_step = fov / NUM_RAYS;
     double alpha = 0;
     double current_angle = degree_to_rad(data->map.p.angle);
@@ -76,12 +76,12 @@ void    calculate_distance(t_point p0, t_point p1, t_data *data)
 
 void    draw_wall(t_data *data, t_point p0, double alpha)
 {
-    (void)alpha;
+    //(void)alpha;
     double dis_to_proj;
     double  wall_height;
     double  precise_dist;
 
-    dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(alpha - data->map.p.angle));
+    dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(FOV / 2));
     precise_dist = data->map.p.ray_dist * cos(alpha - data->map.p.angle);
     wall_height = (dis_to_proj / precise_dist) * WALL_DIM;
     bresenham_wall(p0, wall_height, data);
@@ -90,7 +90,7 @@ void    draw_wall(t_data *data, t_point p0, double alpha)
 void draw_map(t_data *data)
 {
     int i = 0;
-    int j = 0;
+    int j;
     while (i < data->map.height * 64)
     {
         j = 0;
