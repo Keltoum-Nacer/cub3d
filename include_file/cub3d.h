@@ -144,7 +144,7 @@ void init_data(t_map map, t_data *data);
 int handle_key(int keycode, t_data *data);
 void move_player(t_data *data);
 void    calculate_distance(t_point p0, t_point p1, t_data *data);
-void    draw_wall(t_data *data, t_point p0);
+void    draw_wall(t_data *data, t_point p0, double alpha);
 void bresenham_wall(t_point p0, double wall_height, t_data *data);
 //events
 

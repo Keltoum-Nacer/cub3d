@@ -74,13 +74,16 @@ void    calculate_distance(t_point p0, t_point p1, t_data *data)
     data->map.p.ray_dist = sqrt(powf(p0.x_ind - p1.x_ind, 2.)  + powf(p0.y_ind - p1.y_ind, 2.));
 }
 
-void    draw_wall(t_data *data, t_point p0)
+void    draw_wall(t_data *data, t_point p0, double alpha)
 {
+    (void)alpha;
     double dis_to_proj;
     double  wall_height;
+    double  precise_dist;
 
-    dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(30));
-    wall_height = (WALL_DIM / data->map.p.ray_dist) * dis_to_proj;
+    dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(alpha - data->map.p.angle));
+    precise_dist = data->map.p.ray_dist * cos(alpha - data->map.p.angle);
+    wall_height = (dis_to_proj / precise_dist) * WALL_DIM;
     bresenham_wall(p0, wall_height, data);
 }
 
@@ -88,20 +91,19 @@ void draw_map(t_data *data)
 {
     int i = 0;
     int j = 0;
-    while (data->map.map[i])
+    while (i < data->map.height * 64)
     {
         j = 0;
-        while (data->map.map[i][j])
+        while (j < data->map.width * 64)
         {
-            if (data->map.map[i][j] == '1')
-                draw_pixels(j, i, data->map.C_color, &data->mlx);
+            if (i < (data->map.height * 64) / 2)
+                my_mlx_pixel_put(&data->mlx, j, i , 0xFEAFEC);
             else
-                draw_pixels(j, i, data->map.F_color, &data->mlx);
+                my_mlx_pixel_put(&data->mlx, j, i , data->map.F_color);
             j++;
         }
         i++;
     }
     draw_player(data->map.p.p_x, data->map.p.p_y, 0XFFFFFFFF, &data->mlx);
     draw_raycasting(data);
-   // draw_wall(data);
 }
