@@ -42,19 +42,27 @@
 # define KEY_LEFT 65363
 # define KEY_RIGHT 65361
 # define WALL_DIM 64.0
-# define NUM_RAYS 1920 / 2
+# define NUM_RAYS 1920
+#define CST 1920 * 64
 
 
 #define PI 3.14159265359
+typedef struct s_ray
+{
+    double angle;
+    double distance;
+}t_ray;
+
 typedef struct s_player
 {
     float p_x;
     float p_y;
     char  p_name;
     float angle;
-    float   ray_dist;
+    t_ray rays[NUM_RAYS];
 
 }t_player;
+
 
 typedef struct s_map
 {
@@ -133,7 +141,7 @@ void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 
 //test array
 // void	bresenham(t_point p0, t_point p1, t_data *data);
-void bresenham(t_point p0, double alpha, t_data *data);
+void bresenham(t_point p0, double alpha, t_data *data, int *i);
 void init_flag(t_bres_flag *s, t_point p0, t_point p1);
 // void bresenham(double alpha, t_data *data);
 // void	init_flag(t_bres_flag *s, t_player p, t_point p1);
@@ -143,10 +151,12 @@ void init_mlx(t_mlx *mlx);
 void init_data(t_map map, t_data *data);
 int handle_key(int keycode, t_data *data);
 void move_player(t_data *data);
-void    calculate_distance(t_point p0, t_point p1, t_data *data);
-void    draw_wall(t_data *data, t_point p0, double alpha);
-void bresenham_wall(t_point p0, double wall_height, t_data *data);
+double    calculate_distance(t_point p0, t_point p1);
+// void    draw_wall(t_data *data);
+// void bresenham_wall(t_point p0, double wall_height, t_data *data);
+void bresenham_wall(t_point p0,t_point p1, t_data *data);
 //events
+
 
 void    hook_functions(t_data *data);
 int     ft_close(t_data *cub);
