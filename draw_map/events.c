@@ -9,7 +9,6 @@ int ft_close(t_data *cub)
 void    hook_functions(t_data *data)
 {
     mlx_hook(data->mlx.window, 17, 0, ft_close, data);
-    // mlx_key_hook(data->mlx.window, handle_key, data);
-    mlx_hook(data->mlx.window, 2, 1L << 0, handle_key, data); // Key press event
+    mlx_hook(data->mlx.window, 2, 1L << 0, handle_key, data);
 
 }
