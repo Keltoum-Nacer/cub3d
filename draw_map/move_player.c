@@ -26,7 +26,7 @@ int handle_key(int keycode, t_data *data)
     if (keycode == KEY_W && !no_event(data))
         data->map.p.p_y = data->map.p.p_y - 1;
     if (keycode == KEY_D && !no_event(data))
-        data->map.p.p_x = data->map.p.p_x  +1;
+        data->map.p.p_x = data->map.p.p_x  + 1;
     if (keycode == KEY_A && !no_event(data))
         data->map.p.p_x = data->map.p.p_x - 1;
     if (keycode == KEY_S && !no_event(data))
