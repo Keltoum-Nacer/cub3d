@@ -22,7 +22,10 @@ int parse_Gmap(char *name, t_map *map)
     if (!parse_direction(fd, &map) || !parse_color(fd, &map))
         return (FAILURE);
     if (!parse_map(fd, fdd, map))
+    {
+        printf("hey i am here\n");
         return (FAILURE);
+    }
     close(fd);
     return (SUCCESS);
 }

@@ -32,7 +32,7 @@ int    read_map(int fd, int fdd, t_map *map)
         }
         if(line && ft_strcmp(line, "\n"))
         {
-            map->map[i] = ft_strtrim(line, " \n\t\r\v\f");
+            map->map[i] = ft_strtrim(line, "\n");
             i++;
         }
         else if(line && i < map->height - map->height_text)

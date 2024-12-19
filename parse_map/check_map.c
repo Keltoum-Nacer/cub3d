@@ -101,10 +101,7 @@ int parse_map(int fd, int fdd, t_map *map)
         return (FAILURE);
     if (!check_doors(map))
         return (FAILURE);
-    if (valid_map(map))
-    {
-        // printf("all is good\n");
-        return (SUCCESS);
-    }
+    if (!valid_map(map))
+        return (FAILURE);
     return (SUCCESS);
 }

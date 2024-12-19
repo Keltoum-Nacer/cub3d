@@ -83,7 +83,7 @@ void draw_wall(t_point p0, t_data *data, double alpha)
     double dis_to_proj;
     double  wall_height;
     double  precise_dist;
-        precise_dist = data->map.p.dist * cos(alpha - degree_to_rad(data->map.p.angle));
+        precise_dist = data->map.p.dist * cos(alpha);
 
         dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(FOV / 2));
         
