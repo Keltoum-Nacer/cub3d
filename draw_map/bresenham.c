@@ -1,6 +1,5 @@
 #include "../include_file/cub3d.h"
 
-
 void init_flag(t_bres_flag *s, t_point p0, t_point p1)
 {
     s->dx = abs((int)p1.x_ind - (int)p0.x_ind);
@@ -15,23 +14,41 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
         s->sy = -1;
     s->err = s->dx - s->dy;
 }
-void bresenham_wall(t_point p0, double wall_height, t_data *data)
+void bresenham_wall(t_point p0, int start, int end, t_data *data)
 {
-    t_bres_flag s;
-    t_point p1;
-    p1.x_ind = p0.x_ind;
-    p1.y_ind = wall_height;
-    init_flag(&s, p0, p1);
+    // t_bres_flag s;
+    // t_point p1;
+    // p1.x_ind = p0.x_ind;
+    p0.y_ind = start;
+    // init_flag(&s, p0, p1);
     while (1)
     {
-        if ((int)p0.y_ind == (int)p1.y_ind)
+        if ((int)p0.y_ind == end)
             break;
-        my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0xFFFFFF);
-        p0.y_ind += s.sy;
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0xFECBD8);
+        p0.y_ind++;
     }
 }
 
-void bresenham(t_point p0, double alpha, t_data *data)
+void draw_wall(t_point p0, t_data *data, double alpha, int i)
+{
+
+    double dis_to_proj;
+    double wall_height;
+    double precise_dist;
+    precise_dist = data->map.p.dist * cos(alpha - degree_to_rad(data->map.p.angle));
+
+    dis_to_proj = (WIN_WIDTH/2) / tan(degree_to_rad(FOV / 2));
+
+    wall_height = (dis_to_proj / precise_dist) * WALL_DIM;
+    // printf("==========================>> %f\n", dis_to_proj);
+     int start = (WIN_HEIGHT / 2) - (int)(wall_height / 2);
+    int end = (WIN_HEIGHT / 2) + (int)(wall_height / 2);
+    p0.x_ind = i;
+    bresenham_wall(p0, start, end, data);
+}
+
+void bresenham(t_point p0, double alpha, t_data *data, int i)
 {
     t_bres_flag s;
     int e2;
@@ -40,15 +57,15 @@ void bresenham(t_point p0, double alpha, t_data *data)
 
     player.x_ind = data->map.p.p_x;
     player.y_ind = data->map.p.p_y;
-    p1.x_ind = p0.x_ind + 20000 * cos(alpha);
-    p1.y_ind = 20000 * sin(alpha) + p0.y_ind;
+    p1.x_ind = p0.x_ind + 2000 * cos(alpha);
+    p1.y_ind = 2000 * sin(alpha) + p0.y_ind;
     init_flag(&s, p0, p1);
     while (1)
     {
         if (data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64] == '1')
         {
             data->map.p.dist = calculate_distance(p0, player);
-            draw_wall(p0, data, alpha);
+            draw_wall(p0,data,  alpha, i);
             break;
         }
         e2 = s.err * 2;

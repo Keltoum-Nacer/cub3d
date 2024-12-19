@@ -8,7 +8,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include "../libft/libft.h"
-#include "../minilibx-linux/mlx_int.h"
+// #include "../minilibx-linux/mlx_int.h"
 #include "../minilibx-linux/mlx.h"
 #include <math.h>
 // macro parsing
@@ -30,41 +30,32 @@
 #define DOOR "Invalid door!\n"
 #define PLAYER "The map should contain one player!\n"
 
-//macro draw
+// macro draw
 
-# define KEY_W 119
-# define KEY_D 100
-# define KEY_S 115
-# define KEY_A 97
-# define ESC 65307
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
-# define KEY_LEFT 65363
-# define KEY_RIGHT 65361
-# define WALL_DIM 64.0
-# define FOV 60
-# define NUM_RAYS 1920
-#define CST 1920 * 64
-
+#define KEY_W 119
+#define KEY_D 100
+#define KEY_S 115
+#define KEY_A 97
+#define ESC 65307
+#define WIN_WIDTH 1920
+#define WIN_HEIGHT 1080
+#define KEY_LEFT 65363
+#define KEY_RIGHT 65361
+#define WALL_DIM 64.0
+#define FOV 60
+#define NUM_RAYS 1920 
 
 #define PI 3.14159265359
-typedef struct s_ray
-{
-    double angle;
-    double distance;
-}t_ray;
 
 typedef struct s_player
 {
     float p_x;
     float p_y;
-    char  p_name;
+    char p_name;
     float angle;
     double dist;
-    t_ray rays[NUM_RAYS];
 
-}t_player;
-
+} t_player;
 
 typedef struct s_map
 {
@@ -72,52 +63,51 @@ typedef struct s_map
     char *west;
     char *east;
     char *south;
-    char *map[MAP_HEIGHT];  // Updated with the parsing changes
+    char *map[MAP_HEIGHT]; // Updated with the parsing changes
     int F_color;
     int C_color;
     int width;
-    int height;  // Added from parsing
+    int height; // Added from parsing
     int height_text;
     t_player p;
 } t_map;
 
 typedef struct s_mlx
 {
-    void    *mlx;
-    void    *window;
-    void    *image;
-    char    *image_addr;
-    int     bits_per_pixel;
-    int     line_length;
-    int     endian;
-}t_mlx;
+    void *mlx;
+    void *window;
+    void *image;
+    char *image_addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+} t_mlx;
 
 typedef struct s_bres_flag
 {
-	int		dx;
-	int		dy;
-	int		sx;
-	int		err;
-	int		sy;
-}			t_bres_flag;
+    int dx;
+    int dy;
+    int sx;
+    int err;
+    int sy;
+} t_bres_flag;
 
 typedef struct s_point
 {
     double x_ind;
     double y_ind;
-}t_point;
+} t_point;
 
 typedef struct s_data
 {
     t_mlx mlx;
     t_map map;
-}
-t_data;
+} t_data;
 // parsing functions
 
 int file_cub(int fd, char *name);
-char    *ft_getline(int fd);
-void    ft_put_str(char *str, char *name);
+char *ft_getline(int fd);
+void ft_put_str(char *str, char *name);
 int parse_direction(int fd, t_map **map);
 char *extract_directory_path(int fd, int flag, t_map **map);
 int validate_position(char *line, int flag);
@@ -128,39 +118,34 @@ long long transform_sequence(char *line);
 int extract_color_value(int fd, int flag, t_map **map);
 int parse_color(int fd, t_map **map);
 int parse_map(int fd, int fdd, t_map *map);
-char	*get_next_line(int fd);
+char *get_next_line(int fd);
 int valid_character(t_map *map);
-int    read_map(int fd, int fdd, t_map *map);
+int read_map(int fd, int fdd, t_map *map);
 int check_0(char **new_map, t_map *map);
-void    free_map(char **arr, t_map *map);
-void    print_err(char *str);
+void free_map(char **arr, t_map *map);
+void print_err(char *str);
 
 // function 2D
 void draw_map(t_data *data);
-void    draw_pixels(int i, int j, int color, t_mlx *mlx);
-void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
+void draw_pixels(int i, int j, int color, t_mlx *mlx);
+void my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 
-
-//test array
-// void	bresenham(t_point p0, t_point p1, t_data *data);
-void bresenham(t_point p0, double alpha, t_data *data);
+// test array
+void bresenham(t_point p0, double alpha, t_data *data, int i);
 void init_flag(t_bres_flag *s, t_point p0, t_point p1);
-// void bresenham(double alpha, t_data *data);
-// void	init_flag(t_bres_flag *s, t_player p, t_point p1);
 void field_of_view_EW(t_map map, t_point *y);
-void    field_of_view_SN(t_map map, t_point *yes);
+void field_of_view_SN(t_map map, t_point *yes);
 void init_mlx(t_mlx *mlx);
 void init_data(t_map map, t_data *data);
 int handle_key(int keycode, t_data *data);
 void move_player(t_data *data);
-double    calculate_distance(t_point p0, t_point p1);
-void draw_wall(t_point p0, t_data *data, double alpha);
-// void bresenham_wall(t_point p0, double wall_height, t_data *data);
-void bresenham_wall(t_point p0, double wall_height, t_data *data);
-//events
+double calculate_distance(t_point p0, t_point p1);
+void draw_wall(t_point p0, t_data *data, double alpha, int i);
+void bresenham_wall(t_point p0, int start, int end, t_data *data);
+// events
+double degree_to_rad(float fov);
 
-
-void    hook_functions(t_data *data);
-int     ft_close(t_data *cub);
+void hook_functions(t_data *data);
+int ft_close(t_data *cub);
 
 #endif
