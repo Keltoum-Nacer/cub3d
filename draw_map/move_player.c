@@ -9,33 +9,65 @@ void move_player(t_data *data)
     mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->mlx.image, 0, 0);
 }
 
+void move_mini_player(t_data *data)
+{
+    data->mini_mlx.image_addr = mlx_get_data_addr(data->mini_mlx.image, &data->mini_mlx.bits_per_pixel, &data->mini_mlx.line_length, &data->mini_mlx.endian);
+    if (data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64] == '1' ) 
+        return;
+    draw_mini_map(data);
+    mlx_put_image_to_window(data->mini_mlx.mlx, data->mini_mlx.window, data->mini_mlx.image, 0, 0);
+}
+
+// int no_event(t_data *data)
+// {
+//     if (data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64] == '1' || !data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64])
+//             return (SUCCESS);
+//     if (data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64] == '1' || !data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64])
+//             return (SUCCESS);
+//     if (!data->map.p.p_y)
+//         return (SUCCESS);
+//     return (FAILURE);
+// }
+
 int no_event(t_data *data)
 {
-    if (data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64] == '1' || !data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64])
-            return (SUCCESS);
-    if (data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64] == '1' || !data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64])
-            return (SUCCESS);
-    if (!data->map.p.p_y)
-        return (SUCCESS);
-    return (FAILURE);
+    float x;
+    float y;
+
+    x = data->map.p.p_x;
+    y = data->map.p.p_y;
+
+    if (data->key == KEY_W)
+        y -= 64;
+    if(data->key == KEY_S)
+        y += 64;
+    if(data->key == KEY_D)
+        x -= 64;
+    if (data->key == KEY_A)
+        x += 64;
+    if(data->map.map[(int)y / 64] [(int)x / 64] == '1' || !data->map.map[(int)y / 64][(int)x / 64])
+        return(SUCCESS);
+    return(FAILURE);
 }
+
 int handle_key(int keycode, t_data *data)
 {
+    data->key = keycode;
     if (keycode == ESC)
         return (mlx_loop_end(data->mlx.mlx), 1);
     if (keycode == KEY_W && !no_event(data))
-        data->map.p.p_y = data->map.p.p_y - 1;
-    if (keycode == KEY_D && !no_event(data))
-        data->map.p.p_x = data->map.p.p_x  + 1;
-    if (keycode == KEY_A && !no_event(data))
-        data->map.p.p_x = data->map.p.p_x - 1;
+        data->map.p.p_y -= 64;
     if (keycode == KEY_S && !no_event(data))
-        data->map.p.p_y = data->map.p.p_y +1;
+        data->map.p.p_y += 64;
+    if (keycode == KEY_D && !no_event(data))
+        data->map.p.p_x -= 64;
+    if (keycode == KEY_A && !no_event(data))
+        data->map.p.p_x += 64;
     if (keycode == KEY_LEFT)
-        data->map.p.angle = data->map.p.angle + 1;
+        data->map.p.angle += 1;
     if (keycode == KEY_RIGHT)
-        data->map.p.angle = data->map.p.angle - 1;
-    return (move_player(data), 1);
+        data->map.p.angle -= 1;
+    return (move_player(data), move_mini_player(data), 1);
 }
 
 

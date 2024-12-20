@@ -25,6 +25,40 @@ void draw_pixels(int i, int j, int color, t_mlx *mlx)
         ver++;
     }
 }
+void draw_pixels_mini_map(int i, int j, int color, t_mlx *mlx)
+{
+    int ver = 0;
+    int hor = 0;
+    while (ver < 30)
+    {
+        hor = 0;
+        while (hor < 30)
+        {
+            my_mlx_pixel_put(mlx, 30 * i + hor, 30 * j + ver, color);
+            hor++;
+        }
+        ver++;
+    }
+}
+
+void draw_mini_player(int x, int y, int color, t_mlx *mlx)
+{
+    int ver;
+    int hor;
+
+    ver = 0;
+    hor = 0;
+    while(ver < 10)
+    {
+        hor = 0;
+        while (hor < 10)
+        {
+            my_mlx_pixel_put(mlx, 10 * x + hor, 10 * y + ver, color);
+            hor++;
+        }
+        ver++;
+    }
+}
 
 double degree_to_rad(float fov)
 {
@@ -91,4 +125,40 @@ void draw_map(t_data *data)
     draw_image(data);
     draw_player(data->map.p.p_x, data->map.p.p_y, 0XFFFFFFFF, &data->mlx);
     draw_raycasting(data);
+}
+
+void    draw_mini_map(t_data *data)
+{
+   
+    int     i;
+    int     j;
+
+    data->mini_mlx = data->mlx;
+    data->mini_mlx.mlx = mlx_init();
+    if (!data->mini_mlx.mlx)
+        return;
+    data->mini_mlx.image = mlx_new_image(data->mini_mlx.mlx, WIN_WIDTH, WIN_HEIGHT);
+    if (!data->mini_mlx.image)
+        return;
+    data->mini_mlx.image_addr = mlx_get_data_addr(data->mini_mlx.image, &data->mini_mlx.bits_per_pixel, &data->mini_mlx.line_length, &data->mini_mlx.endian);
+    data->mini_mlx.window = mlx_new_window(data->mini_mlx.mlx, 450, 390, "mini map");
+    if (!data->mini_mlx.window)
+        return;
+    i = 0;
+    while (data->map.map[i])
+    {
+        j = 0;
+        while (data->map.map[i][j])
+        {
+            if (data->map.map[i][j] == '1')
+                draw_pixels_mini_map(j, i, data->map.C_color, &data->mini_mlx);
+            else
+                draw_pixels_mini_map(j, i, data->map.F_color, &data->mini_mlx);
+            j++;
+        }
+        i++;
+    }
+	 draw_mini_player(data->map.p.p_y / 64, data->map.p.p_x / 64, 0xFFFFFF, &data->mini_mlx);
+    mlx_put_image_to_window(data->mini_mlx.mlx, data->mini_mlx.window, data->mini_mlx.image, 0, 0);
+   
 }

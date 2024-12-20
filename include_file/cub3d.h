@@ -100,8 +100,10 @@ typedef struct s_point
 
 typedef struct s_data
 {
-    t_mlx mlx;
-    t_map map;
+    t_mlx   mlx;
+    t_map   map;
+    int     key;
+    t_mlx   mini_mlx;
 } t_data;
 // parsing functions
 
@@ -129,7 +131,7 @@ void print_err(char *str);
 void draw_map(t_data *data);
 void draw_pixels(int i, int j, int color, t_mlx *mlx);
 void my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
-
+void    draw_mini_map(t_data *data);
 // test array
 void bresenham(t_point p0, double alpha, t_data *data, int i);
 void init_flag(t_bres_flag *s, t_point p0, t_point p1);
@@ -142,6 +144,7 @@ void move_player(t_data *data);
 double calculate_distance(t_point p0, t_point p1);
 void draw_wall(t_point p0, t_data *data, double alpha, int i);
 void bresenham_wall(t_point p0, int start, int end, t_data *data);
+
 // events
 double degree_to_rad(float fov);
 
