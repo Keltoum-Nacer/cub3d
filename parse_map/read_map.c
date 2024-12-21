@@ -16,33 +16,6 @@ int height_map(int fdd)
     return(count);
 }
 
-int    read_map(int fd, int fdd, t_map *map)
-{
-    char    *line;
-    int     i;
-
-    i = 0;
-    map->height = height_map(fdd);
-    while((line = get_next_line(fd)))
-    {
-        while(line && !ft_strcmp(line, "\n") && i == 0)
-        {
-            free(line);
-            line = get_next_line(fd);
-        }
-        if(line && ft_strcmp(line, "\n"))
-        {
-            map->map[i] = ft_strtrim(line, "\n");
-            i++;
-        }
-        else if(line && i < map->height - map->height_text)
-            return ( free(line),print_err(MAP), FAILURE);
-        free(line);
-    }
-    map->map[i] = NULL;
-    map->height = i;
-    return(SUCCESS);
-}
 
 int check_player(t_map *map, char player, int i, int j)
 {
@@ -80,5 +53,33 @@ int valid_character(t_map *map)
     }
     if (count != 1)
         return(print_err(PLAYER), FAILURE);
+    return(SUCCESS);
+}
+
+int    read_map(int fd, int fdd, t_map *map)
+{
+    char    *line;
+    int     i;
+
+    i = 0;
+    map->height = height_map(fdd);
+    while((line = get_next_line(fd)))
+    {
+        while(line && !ft_strcmp(line, "\n") && i == 0)
+        {
+            free(line);
+            line = get_next_line(fd);
+        }
+        if(line && ft_strcmp(line, "\n"))
+        {
+            map->map[i] = ft_strtrim(line, "\n");
+            i++;
+        }
+        else if(line && i < map->height - map->height_text)
+            return ( free(line),print_err(MAP), FAILURE);
+        free(line);
+    }
+    map->map[i] = NULL;
+    map->height = i;
     return(SUCCESS);
 }

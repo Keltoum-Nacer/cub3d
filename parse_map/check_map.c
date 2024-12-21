@@ -65,25 +65,25 @@ char **allocate_map(t_map *map)
 
 int valid_map(t_map *map)
 {
-    char **new_map;
+   // char **new_map;
     int i;
     int j;
 
-    new_map = allocate_map(map);
+    map->new_map = allocate_map(map);
     i = 0;
     while (map->map[i])
     {
         j = 0;
         while (map->map[i][j])
         {
-            new_map[i][j] = map->map[i][j];
+            map->new_map[i][j] = map->map[i][j];
             j++;
         }
         i++;
     }
-    if (!check_0(new_map, map))
+    if (!check_0(map->new_map, map))
         return (FAILURE);
-    free_map(new_map, map);
+    //free_map(new_map, map);
     return (SUCCESS);
 }
 

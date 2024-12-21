@@ -44,7 +44,6 @@ int main(int ac, char **av)
     init_data(map, &data);
     draw_map(&data);
     mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
-    draw_mini_map(&data);
     hook_functions(&data);
     mlx_loop(data.mlx.mlx);
 }

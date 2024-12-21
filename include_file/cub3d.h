@@ -44,6 +44,8 @@
 #define WALL_DIM 64.0
 #define FOV 60
 #define NUM_RAYS 1920 
+#define MINI_DIM 450
+#define MINI_GRID 15
 
 #define PI 3.14159265359
 
@@ -64,6 +66,7 @@ typedef struct s_map
     char *east;
     char *south;
     char *map[MAP_HEIGHT]; // Updated with the parsing changes
+    char **new_map;
     int F_color;
     int C_color;
     int width;
@@ -144,6 +147,7 @@ void move_player(t_data *data);
 double calculate_distance(t_point p0, t_point p1);
 void draw_wall(t_point p0, t_data *data, double alpha, int i);
 void bresenham_wall(t_point p0, int start, int end, t_data *data);
+void    draw_mini_map(t_data *data);
 
 // events
 double degree_to_rad(float fov);

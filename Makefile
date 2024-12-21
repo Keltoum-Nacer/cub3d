@@ -8,7 +8,6 @@ SRC =  main.c \
 		parse_map/check_map_utils.c \
 		parse_map/read_map.c \
 		draw_map/draw_map.c \
-		draw_map/Field_Of_view.c \
 		draw_map/bresenham.c \
 		draw_map/move_player.c \
 		draw_map/events.c \
@@ -24,7 +23,7 @@ INCLUDES = -I . -I include -I $(LIBFT_DIR)
 
 C = cc
 
-CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 #-g3 -fsanitize=address 
+CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 -g3 -fsanitize=address 
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lbsd -lm
 
 
