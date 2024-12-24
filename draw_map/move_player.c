@@ -37,17 +37,36 @@ int handle_key(int keycode, t_data *data)
     if (keycode == ESC)
         return (mlx_loop_end(data->mlx.mlx), 1);
     if (keycode == KEY_W && !no_event(data))
-        data->map.p.p_y -= 64;
+    {
+        data->map.p.p_x += SPEED * cos(data->map.p.angle_orig * PI / 180 );
+        data->map.p.p_y += SPEED * sin(data->map.p.angle_orig * PI / 180 );
+    }
     if (keycode == KEY_S && !no_event(data))
-        data->map.p.p_y += 64;
-    if (keycode == KEY_D && !no_event(data))
-        data->map.p.p_x -= 64;
+    {
+        data->map.p.p_x -= SPEED * cos(data->map.p.angle_orig * PI / 180 );
+        data->map.p.p_y -= SPEED * sin(data->map.p.angle_orig * PI / 180 );
+    }
     if (keycode == KEY_A && !no_event(data))
-        data->map.p.p_x += 64;
+    {
+        data->map.p.p_x -= SPEED * cos(data->map.p.angle_orig * PI / 180 + PI / 2);
+        data->map.p.p_y -= SPEED * sin(data->map.p.angle_orig * PI / 180 + PI / 2);
+    }
+    if (keycode == KEY_D && !no_event(data))
+    {
+        data->map.p.p_x += SPEED * cos(data->map.p.angle_orig * PI / 180 + PI / 2);
+        data->map.p.p_y += SPEED * sin(data->map.p.angle_orig * PI / 180 + PI / 2);
+    }
     if (keycode == KEY_LEFT)
-        data->map.p.angle += 1;
+    {
+        data->map.p.angle += 1;   
+        data->map.p.angle_orig += 1;   
+
+    }
     if (keycode == KEY_RIGHT)
+    {
         data->map.p.angle -= 1;
+        data->map.p.angle_orig -= 1;
+    }
     return (move_player(data), 1);
 }
 

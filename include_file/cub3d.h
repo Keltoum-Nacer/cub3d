@@ -46,15 +46,16 @@
 #define NUM_RAYS 1920 
 #define MINI_DIM 400
 #define MINI_GRID 15
-
-#define PI 3.14159265359
+#define SPEED 5.0
+#define PI 3.14159265358979323846
 
 typedef struct s_player
 {
     float p_x;
     float p_y;
     char p_name;
-    float angle;
+    double angle;
+    double angle_orig;
     double dist;
 
 } t_player;
