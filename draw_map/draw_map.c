@@ -25,25 +25,6 @@ void draw_pixels(int i, int j, int color, t_mlx *mlx)
         ver++;
     }
 }
-void draw_pixels_mini_map(int i, int j, int color, t_mlx *mlx, float scale_x, float scale_y)
-{
-    int x;
-    int y;
-
-    (void)scale_x;
-    (void)scale_y;
-    x = 0;
-    while(x < MINI_GRID)
-    {
-        y = 0;
-        while(y < MINI_GRID)
-        {
-            my_mlx_pixel_put(mlx, (WIN_WIDTH - MINI_DIM) + MINI_GRID * i + x, MINI_GRID * j + y, color);
-            y++;
-        }
-        x++;
-    }
-}
 
 double degree_to_rad(float fov)
 {
@@ -55,19 +36,22 @@ double degree_to_rad(float fov)
 
 void    draw_mini_player(int x, int y, int color, t_mlx *mlx)
 {
-    int i;
-    int j;
+    double i, angle, x1, y1;
+    int r;
 
+    r  = 5;
     i = 0;
-    while( i < 5)
+    while(i <= r)
     {
-        j = 0;
-        while(j < 5)
+        angle = 0;
+        while(angle < 360)
         {
-            my_mlx_pixel_put(mlx, (WIN_WIDTH - MINI_DIM) + x * 15 + i, y * 15 + j, color);
-            j++;
+            x1 = i * cos(angle * PI / 180);
+            y1 = i * sin(angle * PI / 180);
+            my_mlx_pixel_put(mlx, (WIN_WIDTH - MINI_DIM) + x * MINI_GRID + x1, y * MINI_GRID + y1, color);
+            angle += 0.1;
         }
-        i++;
+        i += 0.1;
     }
 }
 
@@ -137,10 +121,6 @@ void bresenham_mini_map(t_point p0, double alpha, t_data *data, int i)
     t_bres_flag s;
     int e2;
     t_point p1;
-    // t_point player;
-
-    // player.x_ind = data->map.p.p_x;
-    // player.y_ind = data->map.p.p_y;
     (void)i;
     p1.x_ind = p0.x_ind + 25 * cos(alpha);
     p1.y_ind = 25 * sin(alpha) + p0.y_ind;
@@ -149,7 +129,6 @@ void bresenham_mini_map(t_point p0, double alpha, t_data *data, int i)
     {
         if ((int)p0.x_ind ==(int) p1.x_ind && (int)p0.y_ind == (int)p1.y_ind)
         {
-            printf("i am here\n");
             break;
         }
         my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0xFFAE41);
@@ -191,84 +170,80 @@ void draw_raycasting_mini_map(t_data *data)
         i++;
     }
 }
-void    draw_mini_map(t_data *data)
-{
-   // float   scale;
-    float   scale_x;
-    float   scale_y;
-    int     i;
-    int     j;
-
-    i = 0;
-    scale_x = ((float)data->map.width / (WIN_WIDTH/ MINI_DIM)) * MINI_GRID;
-    scale_y = ((float)data->map.height / (WIN_WIDTH / MINI_DIM)) * MINI_GRID;
-   // scale = fmin(scale_x, scale_y);
-    while(data->map.map[i])
-    {
-        j = 0;    
-        while(data->map.map[i][j])
-        {
-            if (data->map.map[i][j] == '1')
-                draw_pixels_mini_map(j, i, 0xDB7093, &data->mlx, scale_x, scale_y);
-            else if (data->map.map[i][j] == ' ')
-                draw_pixels_mini_map(j, i, 0xC71585, &data->mlx, scale_x,scale_y);
-            else 
-                draw_pixels_mini_map(j, i, 0xFFB6C1, &data->mlx, scale_x, scale_y);
-
-            j++;
-        }
-        i++;
-    }
-    draw_mini_player(data->map.p.p_x / 64, data->map.p.p_y / 64, 0x000000, &data->mlx);
-    draw_raycasting_mini_map(data);
-}
-
-
 // void    draw_mini_map(t_data *data)
 // {
-//     float   scale_x;
-//     float   scale_y;
-//     int     i, j;
-//     int     player_x = data->map.p.p_x / 64; // Player x in grid coordinates
-//     int     player_y = data->map.p.p_y / 64 ; // Player y in grid coordinates
-//     int     mini_map_size = MINI_DIM; // Mini-map size
-//     int     zoom_level = 3; // Zoom level (e.g., 3x3 area around the player)
-//     int     start_x = player_x - zoom_level / 2;
-//     int     start_y = player_y - zoom_level / 2;
-//     int     end_x = player_x + zoom_level / 2;
-//     int     end_y = player_y + zoom_level / 2;
+//     int     i;
+//     int     j;
 
-//     // Ensure the coordinates are within bounds
-//     if (start_x < 0) start_x = 0;
-//     if (start_y < 0) start_y = 0;
-//     if (end_x >= data->map.width) end_x = data->map.width - 1;
-//     if (end_y >= data->map.height) end_y = data->map.height - 1;
-
-//     scale_x = ((float)data->map.width / (WIN_WIDTH / mini_map_size)) * MINI_GRID;
-//     scale_y = ((float)data->map.height / (WIN_WIDTH / mini_map_size)) * MINI_GRID;
-
-//     // Draw the region of the mini-map around the player
-//     i = start_y;
-//     while (i <= end_y) 
+//     i = 0;
+//     while(data->map.map[i])
 //     {
-//         j = start_x;
-//         while (j <= end_x) 
+//         j = 0;    
+//         while(data->map.map[i][j])
 //         {
 //             if (data->map.map[i][j] == '1')
-//                 draw_pixels_mini_map(j, i, 0xDB7093, &data->mlx, scale_x, scale_y);
+//                 draw_pixels_mini_map(j, i, 0xDB7093, &data->mlx);
 //             else if (data->map.map[i][j] == ' ')
-//                 draw_pixels_mini_map(j, i, 0xC71585, &data->mlx, scale_x, scale_y);
-//             else
-//                 draw_pixels_mini_map(j, i, 0xFFB6C1, &data->mlx, scale_x, scale_y);
+//                 draw_pixels_mini_map(j, i, 0xC71585, &data->mlx);
+//             else 
+//                 draw_pixels_mini_map(j, i, 0xFFB6C1, &data->mlx);
 
 //             j++;
 //         }
 //         i++;
 //     }
-
-//     // Draw the player at the center of the zoomed-in mini-map
-//     draw_mini_player((player_x - start_x) * MINI_GRID, (player_y - start_y) * MINI_GRID, 0x000000, &data->mlx);
-
-//     // Optionally, draw raycasting information or other data
+//     draw_mini_player(data->map.p.p_x / 64, data->map.p.p_y / 64, 0x000000, &data->mlx);
 //     draw_raycasting_mini_map(data);
 // }
+void draw_pixels_mini_map(int i, int j, int color, t_mlx *mlx)
+{
+    int x;
+    int y;
+
+    x = 0;
+    while (x < MINI_GRID)
+    {
+        y = 0;
+        while (y < MINI_GRID)
+        {
+            my_mlx_pixel_put(mlx, (WIN_WIDTH - MINI_DIM) + MINI_GRID * i + x, MINI_GRID * j + y, color);
+            y++;
+        }
+        x++;
+    }
+}
+
+
+void draw_mini_map(t_data *data)
+{
+    int i, j;
+    int player_x, player_y;
+    int view_radius = 5; 
+
+    player_x = data->map.p.p_x / 64; 
+    player_y = data->map.p.p_y / 64;
+
+    i = 0;
+    while (data->map.map[i]) 
+    {
+        j = 0;
+        while (data->map.map[i][j]) 
+        {
+            if (abs(i - player_y) <= view_radius && abs(j - player_x) <= view_radius) 
+            {
+                if (data->map.map[i][j] == '1')
+                    draw_pixels_mini_map(j, i, 0xDB7093, &data->mlx);
+                else if (data->map.map[i][j] == ' ')
+                    draw_pixels_mini_map(j, i, 0xC71585, &data->mlx);
+                else 
+                    draw_pixels_mini_map(j, i, 0xFFB6C1, &data->mlx);
+            }
+            j++;
+        }
+        i++;
+    }
+    draw_mini_player(player_x, player_y, 0x000000, &data->mlx);
+    draw_raycasting_mini_map(data);
+}
+
+

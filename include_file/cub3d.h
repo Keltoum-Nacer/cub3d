@@ -44,7 +44,7 @@
 #define WALL_DIM 64.0
 #define FOV 60
 #define NUM_RAYS 1920 
-#define MINI_DIM 450
+#define MINI_DIM 400
 #define MINI_GRID 15
 
 #define PI 3.14159265359
