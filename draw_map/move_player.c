@@ -10,65 +10,66 @@ void move_player(t_data *data)
 }
 
 
-int no_event(t_data *data)
-{
-    float x;
-    float y;
-
-    x = data->map.p.p_x;
-    y = data->map.p.p_y;
-
-    if (data->key == KEY_W)
-        y -= 64;
-    if(data->key == KEY_S)
-        y += 64;
-    if(data->key == KEY_D)
-        x -= 64;
-    if (data->key == KEY_A)
-        x += 64;
-    if(data->map.map[(int)y / 64] [(int)x / 64] == '1' || !data->map.map[(int)y / 64][(int)x / 64])
-        return(SUCCESS);
-    return(FAILURE);
-}
-
 int handle_key(int keycode, t_data *data)
 {
     data->key = keycode;
+    double tmp;
+    tmp = data->map.p.p_x;
     if (keycode == ESC)
         return (mlx_loop_end(data->mlx.mlx), 1);
-    if (keycode == KEY_W && !no_event(data))
+    double angle = data->map.p.angle_orig * PI / 180 + data->map.p.angle * PI / 180;
+
+    if (angle > 2 * PI)
+        angle -= 2 * PI;
+    if (angle < 0)
+        angle += 2 * PI;
+
+    if (keycode == KEY_W)
     {
-        data->map.p.p_x += SPEED * cos(data->map.p.angle_orig * PI / 180 );
-        data->map.p.p_y += SPEED * sin(data->map.p.angle_orig * PI / 180 );
+        if (data->map.map[(int)data->map.p.p_y / 64][(int)(data->map.p.p_x + SPEED * cos(angle)) / 64] != '1')
+            data->map.p.p_x += SPEED * cos(angle);
+        if (data->map.map[(int)(data->map.p.p_y + SPEED * sin(angle)) / 64][(int)tmp / 64] != '1')
+            data->map.p.p_y += SPEED * sin(angle);
     }
-    if (keycode == KEY_S && !no_event(data))
+
+    if (keycode == KEY_S)
     {
-        data->map.p.p_x -= SPEED * cos(data->map.p.angle_orig * PI / 180 );
-        data->map.p.p_y -= SPEED * sin(data->map.p.angle_orig * PI / 180 );
+        if (data->map.map[(int)data->map.p.p_y / 64][(int)(data->map.p.p_x - SPEED * cos(angle)) / 64] != '1')
+            data->map.p.p_x -= SPEED * cos(angle);
+        if (data->map.map[(int)(data->map.p.p_y - SPEED * sin(angle)) / 64][(int)tmp / 64] != '1')
+            data->map.p.p_y -= SPEED * sin(angle);
     }
-    if (keycode == KEY_A && !no_event(data))
+    if (keycode == KEY_A)
     {
-        data->map.p.p_x -= SPEED * cos(data->map.p.angle_orig * PI / 180 + PI / 2);
-        data->map.p.p_y -= SPEED * sin(data->map.p.angle_orig * PI / 180 + PI / 2);
+        if (data->map.map[(int)data->map.p.p_y / 64][(int)(data->map.p.p_x - SPEED * cos(angle + PI / 2)) / 64] != '1')
+            data->map.p.p_x -= SPEED * cos(angle + PI / 2);
+        if (data->map.map[(int)(data->map.p.p_y - SPEED * sin(angle + PI / 2)) / 64][(int)tmp / 64] != '1')
+            data->map.p.p_y -= SPEED * sin(angle + PI / 2);
     }
-    if (keycode == KEY_D && !no_event(data))
+    if (keycode == KEY_D)
     {
-        data->map.p.p_x += SPEED * cos(data->map.p.angle_orig * PI / 180 + PI / 2);
-        data->map.p.p_y += SPEED * sin(data->map.p.angle_orig * PI / 180 + PI / 2);
+        if (data->map.map[(int)data->map.p.p_y / 64][(int)(data->map.p.p_x + SPEED * cos(angle + PI / 2))] != '1')
+            data->map.p.p_x += SPEED * cos(angle + PI / 2);
+        if (data->map.map[(int)(data->map.p.p_y + SPEED * sin(angle + PI / 2)) / 64][(int)tmp / 64] != '1')
+            data->map.p.p_y += SPEED * sin(angle + PI / 2);
     }
     if (keycode == KEY_LEFT)
     {
-        data->map.p.angle += 1;   
-        data->map.p.angle_orig += 1;   
-
+        data->map.p.angle += 1;
+        data->map.p.angle_orig += 1;
+        if (data->map.p.angle > 360)
+            data->map.p.angle -= 360;
+        if (data->map.p.angle_orig > 360)
+            data->map.p.angle_orig -= 360;
     }
     if (keycode == KEY_RIGHT)
     {
         data->map.p.angle -= 1;
         data->map.p.angle_orig -= 1;
+        if (data->map.p.angle < 0)
+            data->map.p.angle += 360;
+        if (data->map.p.angle_orig < 0)
+            data->map.p.angle_orig += 360;
     }
     return (move_player(data), 1);
 }
-
-
-
