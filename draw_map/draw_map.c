@@ -34,7 +34,7 @@ double degree_to_rad(float fov)
     return (rad);
 }
 
-void    draw_mini_player(int x, int y, int color, t_mlx *mlx)
+void     draw_mini_player(int x, int y, int color, t_mlx *mlx)
 {
     double i, angle, x1, y1;
     int r;
@@ -170,35 +170,14 @@ void draw_raycasting_mini_map(t_data *data)
         i++;
     }
 }
-// void    draw_mini_map(t_data *data)
-// {
-//     int     i;
-//     int     j;
 
-//     i = 0;
-//     while(data->map.map[i])
-//     {
-//         j = 0;    
-//         while(data->map.map[i][j])
-//         {
-//             if (data->map.map[i][j] == '1')
-//                 draw_pixels_mini_map(j, i, 0xDB7093, &data->mlx);
-//             else if (data->map.map[i][j] == ' ')
-//                 draw_pixels_mini_map(j, i, 0xC71585, &data->mlx);
-//             else 
-//                 draw_pixels_mini_map(j, i, 0xFFB6C1, &data->mlx);
 
-//             j++;
-//         }
-//         i++;
-//     }
-//     draw_mini_player(data->map.p.p_x / 64, data->map.p.p_y / 64, 0x000000, &data->mlx);
-//     draw_raycasting_mini_map(data);
-// }
 void draw_pixels_mini_map(int i, int j, int color, t_mlx *mlx)
 {
     int x;
     int y;
+    int hor;
+    int ver;
 
     x = 0;
     while (x < MINI_GRID)
@@ -206,30 +185,51 @@ void draw_pixels_mini_map(int i, int j, int color, t_mlx *mlx)
         y = 0;
         while (y < MINI_GRID)
         {
-            my_mlx_pixel_put(mlx, (WIN_WIDTH - MINI_DIM) + MINI_GRID * i + x, MINI_GRID * j + y, color);
+            hor = (WIN_WIDTH - MINI_DIM) + i * MINI_GRID + x;
+            ver = MINI_GRID * j + y;
+
+            my_mlx_pixel_put(mlx, hor, ver, color);
             y++;
         }
         x++;
     }
 }
 
+void draw_circle(double x, double y,int color, t_mlx *mlx)
+{
+    double  angle;
+    double  i;
+    double  j;
+    int r;
+
+    angle = 0;
+    r = 90;
+    while(angle < 360)
+    {
+        i = r * cos(angle * PI / 180);
+        j = r * sin(angle * PI / 180);
+        my_mlx_pixel_put(mlx, (WIN_WIDTH - MINI_DIM) + x * MINI_GRID + i, y * MINI_GRID + j, color);
+        angle += 0.1;
+    }
+}
 
 void draw_mini_map(t_data *data)
 {
     int i, j;
-    int player_x, player_y;
-    int view_radius = 5; 
-
-    player_x = data->map.p.p_x / 64; 
-    player_y = data->map.p.p_y / 64;
-
+    double center_x, center_y;
+    double dx, dy, dist_squared;
+    center_x = data->map.p.p_x / 64; 
+    center_y = data->map.p.p_y / 64;
     i = 0;
     while (data->map.map[i]) 
     {
         j = 0;
         while (data->map.map[i][j]) 
         {
-            if (abs(i - player_y) <= view_radius && abs(j - player_x) <= view_radius) 
+            dx = j - center_x;
+            dy = i - center_y;
+            dist_squared = dx * dx + dy * dy;
+            if (dist_squared <= VIEW_RADIUS * VIEW_RADIUS)
             {
                 if (data->map.map[i][j] == '1')
                     draw_pixels_mini_map(j, i, 0xDB7093, &data->mlx);
@@ -242,8 +242,11 @@ void draw_mini_map(t_data *data)
         }
         i++;
     }
-    draw_mini_player(player_x, player_y, 0x000000, &data->mlx);
+    draw_mini_player(center_x, center_y, 0x000000, &data->mlx);
+    //draw_circle(center_x, center_y, 0x000000, &data->mlx);
     draw_raycasting_mini_map(data);
 }
+
+
 
 

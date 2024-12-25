@@ -46,6 +46,7 @@
 #define NUM_RAYS 1920 
 #define MINI_DIM 400
 #define MINI_GRID 15
+#define VIEW_RADIUS 5
 
 #define PI 3.14159265359
 
