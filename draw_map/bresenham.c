@@ -16,17 +16,22 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
 }
 void bresenham_wall(t_point p0, int start, int end, t_data *data)
 {
-    // t_bres_flag s;
-    // t_point p1;
-    // p1.x_ind = p0.x_ind;
-    p0.y_ind = start;
-    // init_flag(&s, p0, p1);
-    while (1)
+    int i = 0;
+    while ( i < start)
     {
-        if ((int)p0.y_ind == end)
-            break;
-        my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0xFECBD8);
-        p0.y_ind++;
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xFFFFFF);
+        i++;
+    }
+    p0.y_ind = start;
+    while (i < end)
+    {
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xFECBD8);
+        i++;
+    }
+     while (i < WIN_HEIGHT)
+    {
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xABCD286);
+        i++;
     }
 }
 

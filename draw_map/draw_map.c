@@ -59,7 +59,6 @@ void draw_player(int x, int y, int color, t_mlx *mlx)
 {
     my_mlx_pixel_put(mlx, x, y, color);
 }
-
 void draw_raycasting(t_data *data)
 {
     double fov = degree_to_rad(FOV);
@@ -108,10 +107,11 @@ void	draw_image(t_data *data)
 		x++;
 	}
 }
+
 void draw_map(t_data *data)
 {
-    draw_image(data);
-    draw_player(data->map.p.p_x, data->map.p.p_y, 0XFFFFFFFF, &data->mlx);
+    // draw_image(data);
+    // draw_player(data->map.p.p_x, data->map.p.p_y, 0XFFFFFFFF, &data->mlx);
     draw_raycasting(data);
     draw_mini_map(data);
 }
