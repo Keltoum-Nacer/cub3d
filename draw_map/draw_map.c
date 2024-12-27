@@ -70,7 +70,6 @@ void draw_raycasting(t_data *data)
     ray_angle = degree_to_rad(data->map.p.angle) - (fov / 2);
     x.x_ind = data->map.p.p_x;
     x.y_ind = data->map.p.p_y;
-
     i = 0;
     while (i < NUM_RAYS)
     {
@@ -243,7 +242,7 @@ void draw_mini_map(t_data *data)
         i++;
     }
     draw_mini_player(center_x, center_y, 0x000000, &data->mlx);
-    draw_circle(center_x, center_y, 0x000000, &data->mlx);
+    //draw_circle(center_x, center_y, 0x000000, &data->mlx);
     draw_raycasting_mini_map(data);
 }
 
@@ -348,5 +347,6 @@ void draw_mini_map(t_data *data)
 //     draw_mini_player(x->map.p.p_x /64, x->map.p.p_y / 64, 0x000000, &x->mlx);
 // 	//draw_line_angle(x, (width * MINI_GRID) / 2, (height * MINI_GRID)/ 2);
 // }
+
 
 

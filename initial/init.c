@@ -27,6 +27,5 @@ void init_data(t_map map, t_data *data)
         data->map.p.angle = 90;
     if (map.p.p_name == 'E')
         data->map.p.angle = 0;
-    data->map.p.angle_orig = 0;
     init_mlx(&data->mlx);
 }
