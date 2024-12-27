@@ -30,7 +30,7 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
     }
      while (i < WIN_HEIGHT)
     {
-        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xABCD286);
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xABCD286 );
         i++;
     }
 }
@@ -46,7 +46,13 @@ void draw_wall(t_point p0, t_data *data, double alpha, int i)
     dis_to_proj = (WIN_WIDTH/2) / tan(degree_to_rad(FOV / 2));
 
     wall_height = (dis_to_proj / precise_dist) * WALL_DIM;
-    // printf("==========================>> %f\n", dis_to_proj);
+    double ww= wall_height*10;
+    if ((int)(ww) % 10 > 5)
+    {
+        // printf("-------------------wall_height == %f\n", wall_height);
+        wall_height++;
+        // printf("-------------------wall_height === %f\n",wall_height);
+    }
      int start = (WIN_HEIGHT / 2) - (int)(wall_height / 2);
     int end = (WIN_HEIGHT / 2) + (int)(wall_height / 2);
     p0.x_ind = i;
@@ -62,8 +68,9 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
 
     player.x_ind = data->map.p.p_x;
     player.y_ind = data->map.p.p_y;
-    p1.x_ind = p0.x_ind + 2000 * cos(alpha);
-    p1.y_ind = 2000 * sin(alpha) + p0.y_ind;
+    double max_ray_length = sqrt(pow(data->map.width * 64, 2) + pow(data->map.height * 64, 2));
+    p1.x_ind = p0.x_ind + max_ray_length * cos(alpha);
+    p1.y_ind = max_ray_length * sin(alpha) + p0.y_ind;
     init_flag(&s, p0, p1);
     while (1)
     {
