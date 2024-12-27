@@ -243,10 +243,110 @@ void draw_mini_map(t_data *data)
         i++;
     }
     draw_mini_player(center_x, center_y, 0x000000, &data->mlx);
-    //draw_circle(center_x, center_y, 0x000000, &data->mlx);
+    draw_circle(center_x, center_y, 0x000000, &data->mlx);
     draw_raycasting_mini_map(data);
 }
 
+// int	is_corner(char c)
+// {
+// 	if (!c || c == ' ' || c == '\n')
+// 		return (0);
+// 	return (1);
+// }
 
+// void	draw_pixels_mini_map(t_data *x, double i, double j, t_point start)
+// {
+// 	double	b;
+// 	double	a;
+
+// 	a = start.y_ind / 64 + i / MINI_GRID;
+// 	b = start.x_ind / 64 + j / MINI_GRID;
+// 	// if (a >= 0 && a < x->map.height && b >= 0 && b < x->map.width && is_corner(x->map.map[(int)a][(int)b]) && ((int)(start.x_ind * MINI_GRID / 64 + j) % MINI_GRID == 0 || (int)(start.y_ind * MINI_GRID / 64 + i) % MINI_GRID == 0))
+// 	// 	my_mlx_pixel_put(&x->mlx, (WIN_WIDTH - MINI_DIM) + j, i, 0x000000);
+// 	if (x->map.map
+// 		&& x->map.map[(int)a][(int)b] == '1')
+// 		my_mlx_pixel_put(&x->mlx, (WIN_WIDTH - MINI_DIM) + j, i, 0xDB7093);
+// 	else if (a >= 0 && a < x->map.height && b >= 0 && b < x->map.width
+// 		&& x->map.map[(int)a][(int)b] == '0')
+// 		my_mlx_pixel_put(&x->mlx, (WIN_WIDTH - MINI_DIM) + j, i, 0xd0d3d4);
+// 	else if (a >= 0 && a < x->map.height && b >= 0 && b < x->map.width
+// 		&& (x->map.map[(int)a][(int)b] == 'D'))
+// 		my_mlx_pixel_put(&x->mlx, (WIN_WIDTH - MINI_DIM) + j, i, 0x0);
+// 	else if (a >= 0 && a < x->map.height && b >= 0 && b < x->map.width
+// 		&& (x->map.map[(int)a][(int)b] == ' '))
+// 		my_mlx_pixel_put(&x->mlx, (WIN_WIDTH - MINI_DIM) + j, i, 0xFFFFFF);
+// }
+
+// void	color_one_square(int start_x, int start_y, void *x)
+// {
+// 	int		i;
+// 	int		j;
+// 	double	s_x;
+// 	double	s_y;
+// 	int		color;
+
+// 	i = 0;
+// 	j = 0;
+// 	s_x = start_x - MINI_GRID / 2;
+// 	s_y = start_y - MINI_GRID / 2;
+// 	color = 0xf1c40f;
+// 	while (i <= MINI_GRID)
+// 	{
+// 		j = 0;
+// 		while (j <= MINI_GRID)
+// 		{
+// 			if (i <= (MINI_GRID - 3) && j <= (MINI_GRID - 3) && i >= 3
+// 				&& j >= 3)
+// 				my_mlx_pixel_put(x, (WIN_WIDTH - MINI_DIM) + (s_x + i), (s_y + j), color);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
+// void	draw_line_angle(t_data *data, int x0, int y0)
+// {
+// 	int	i;
+// 	int	x;
+// 	int	y;
+
+// 	i = 0;
+// 	while (i < 20)
+// 	{
+// 		x = x0 + i * cos(data->map.p.angle);
+// 		y = y0 + i * sin(data->map.p.angle);
+// 		if (x >= 0 && y >= 0)
+// 			my_mlx_pixel_put(&data->mlx, x, y, 0xff0000);
+// 		i++;
+// 	}
+// }
+
+// void	draw_mini_map(t_data *x)
+// {
+// 	double			width;
+// 	double			height;
+// 	t_point	start;
+// 	double			i;
+// 	double			j;
+
+// 	width = 40;
+// 	height = 40;
+// 	start.x_ind = (x->map.p.p_x - 64 * width / 2) / 64 * MINI_GRID;
+// 	start.y_ind = (x->map.p.p_y - 64 * height / 2) / 64 * MINI_GRID;
+// 	i = MINI_GRID;
+// 	while (i < height * MINI_GRID)
+// 	{
+// 		j = MINI_GRID;
+// 		while (j < width * MINI_GRID)
+// 		{
+// 			draw_pixels_mini_map(x, i, j, start);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	//color_one_square((width * MINI_GRID) / 2, (height * MINI_GRID) / 2, x);
+//     draw_mini_player(x->map.p.p_x /64, x->map.p.p_y / 64, 0x000000, &x->mlx);
+// 	//draw_line_angle(x, (width * MINI_GRID) / 2, (height * MINI_GRID)/ 2);
+// }
 
 

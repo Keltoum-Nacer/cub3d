@@ -68,6 +68,7 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
             draw_wall(p0,data,  alpha, i);
             break;
         }
+        //printf("%c\n", data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64]);
         e2 = s.err * 2;
         if (e2 > -s.dy)
         {
