@@ -14,8 +14,6 @@ void    validate_move(t_data *data, double new_x, double new_y)
         data->map.p.p_x = new_x;
     if (data->map.map[(int)new_y/ 64][(int)data->map.p.p_x / 64] != '1')
         data->map.p.p_y = new_y;
-    // printf("--------%f-----------%f\n", data->map.p.p_y,data->map.p.p_x);   
-    // printf("***%c\n", data->map.map[(int)data->map.p.p_y/ 64][(int)data->map.p.p_x / 64] );
 }
 int handle_key(int keycode, t_data *data)
 {

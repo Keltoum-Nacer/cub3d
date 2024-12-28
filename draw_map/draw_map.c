@@ -234,17 +234,45 @@ void draw_mini_map(t_data *data)
         }
         i++;
     }
-    draw_mini_player(center_x , center_y, 0x000000, &data->mlx);
+    // draw_mini_player(center_x , center_y, 0x000000, &data->mlx);
     //draw_circle(center_x, center_y, 0x000000, &data->mlx);
     draw_raycasting_mini_map(data);
 }
 
+void    mini_map(t_data *data)
+{
+   double i, angle, x1, y1;
+    int r;
+
+    r  = 70;
+    i = 0;
+    double pos_x = (data->map.p.p_x/64)*15;
+    double pos_y = (data->map.p.p_y/64)*15;
+    while(i <= r)
+    {
+        angle = 0;
+        while(angle < 360)
+        {
+            x1 = i * cos(angle * PI / 180);
+            y1 = i * sin(angle * PI / 180);
+            if (data->map.map[(int)(y1 + pos_y)/15][(int)(x1 + pos_x)/15] == '1')
+                my_mlx_pixel_put(&data->mlx, x1+ 150 , y1+150 , 0xFECBD8);
+            else
+                my_mlx_pixel_put(&data->mlx, x1+150 , y1 +150, 0xABCD286);
+
+            angle += 0.1;
+        }
+        i += 0.1;
+    }
+
+}
 void draw_map(t_data *data)
 {
     // draw_image(data);
     // draw_player(data->map.p.p_x, data->map.p.p_y, 0XFFFFFFFF, &data->mlx);
     draw_raycasting(data);
-    draw_mini_map(data);
+    mini_map(data);
+    // draw_mini_map(data);
 }
 
 
