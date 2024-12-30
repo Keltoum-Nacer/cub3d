@@ -134,6 +134,7 @@ void print_err(char *str);
 
 // function 2D
 void draw_map(t_data *data);
+void draw_mini_map(t_data *data);
 void draw_pixels(int i, int j, int color, t_mlx *mlx);
 void my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 // test array
