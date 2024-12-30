@@ -58,7 +58,7 @@ typedef struct s_player
     char p_name;
     double angle;
     double dist;
-
+    int flag;
 } t_player;
 
 typedef struct s_map
@@ -88,6 +88,15 @@ typedef struct s_mlx
     int endian;
 } t_mlx;
 
+typedef struct s_text
+{
+    t_mlx   img;
+    int     width;
+    int     height;
+    char    *name;
+    struct s_text *next;
+} t_text;
+
 typedef struct s_bres_flag
 {
     int dx;
@@ -109,6 +118,7 @@ typedef struct s_data
     t_map   map;
     int     key;
     t_mlx   mini_mlx;
+    t_text  text;
 } t_data;
 // parsing functions
 

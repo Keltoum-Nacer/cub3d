@@ -14,6 +14,25 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
         s->sy = -1;
     s->err = s->dx - s->dy;
 }
+
+void    check_texture(t_data *data)
+{
+    if (data->map.p.flag)
+    {
+        if (sin(degree_to_rad(data->map.p.angle)) > 0)
+            data->text.name = data->map.north;
+        else
+            data->text.name = data->map.south;
+    }
+    else
+    {
+        if (cos(degree_to_rad(data->map.p.angle)) > 0)
+            data->text.name = data->map.west;
+        else
+            data->text.name = data->map.east;
+    }
+}
+
 void bresenham_wall(t_point p0, int start, int end, t_data *data)
 {
     int i = 0;
@@ -23,6 +42,7 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
         i++;
     }
     p0.y_ind = start;
+    check_texture(data);
     while (i < end)
     {
         my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xFECBD8);
@@ -44,19 +64,11 @@ void draw_wall(t_point p0, t_data *data, double alpha, int i)
     precise_dist = data->map.p.dist * cos(alpha - degree_to_rad(data->map.p.angle));
 
     dis_to_proj = (WIN_WIDTH/2) / tan(degree_to_rad(FOV / 2));
-
-    wall_height = (dis_to_proj / precise_dist) * WALL_DIM;
-    double ww= wall_height*10;
-    if ((int)(ww) % 10 > 5)
-    {
-        // printf("-------------------wall_height == %f\n", wall_height);
-        wall_height++;
-        // printf("-------------------wall_height === %f\n",wall_height);
-    }
+    wall_height = round((dis_to_proj / precise_dist) * WALL_DIM);
      int start = (WIN_HEIGHT / 2) - (int)(wall_height / 2);
     int end = (WIN_HEIGHT / 2) + (int)(wall_height / 2);
     p0.x_ind = i;
-    bresenham_wall(p0, start, end, data);
+   bresenham_wall(p0, start, end, data);
 }
 
 void bresenham(t_point p0, double alpha, t_data *data, int i)
@@ -86,11 +98,13 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
         {
             s.err -= s.dy;
             p0.x_ind += s.sx;
+            data->map.p.flag = 1;
         }
         if (e2 < s.dx)
         {
             s.err += s.dx;
             p0.y_ind += s.sy;
+            data->map.p.flag = 0;
         }
     }
 }
