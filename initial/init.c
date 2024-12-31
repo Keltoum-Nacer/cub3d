@@ -1,6 +1,5 @@
 #include "../include_file/cub3d.h"
 
-
 void init_mlx(t_mlx *mlx)
 {
     mlx->mlx = mlx_init();
@@ -12,7 +11,6 @@ void init_mlx(t_mlx *mlx)
     if (!mlx->window)
         return;
 }
-
 
 void init_data(t_map map, t_data *data)
 {

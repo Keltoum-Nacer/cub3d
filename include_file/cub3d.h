@@ -49,16 +49,27 @@
 #define SPEED 11.0
 #define PI 3.14159265358979323846
 #define VIEW_RADIUS 5
+#define TEX_HEIGHT 64
+#define TEX_WIDTH 64
 
+typedef struct s_point
+{
+    double x_ind;
+    double y_ind;
+} t_point;
 
 typedef struct s_player
 {
-    float p_x;
-    float p_y;
+    double p_x;
+    double p_y;
     char p_name;
     double angle;
     double dist;
-
+    int flag;
+    t_point ray;//intersection of ray and wall
+    int texture_x;
+    int texture_y;
+    double wall_height;
 } t_player;
 
 typedef struct s_map
@@ -88,6 +99,14 @@ typedef struct s_mlx
     int endian;
 } t_mlx;
 
+typedef struct s_text
+{
+    t_mlx   text_mlx;
+    int     width;
+    int     height;
+    char    *name;
+} t_text;
+
 typedef struct s_bres_flag
 {
     int dx;
@@ -97,11 +116,6 @@ typedef struct s_bres_flag
     int sy;
 } t_bres_flag;
 
-typedef struct s_point
-{
-    double x_ind;
-    double y_ind;
-} t_point;
 
 typedef struct s_data
 {
@@ -109,6 +123,7 @@ typedef struct s_data
     t_map   map;
     int     key;
     t_mlx   mini_mlx;
+    t_text  text;
 } t_data;
 // parsing functions
 

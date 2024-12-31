@@ -14,23 +14,59 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
         s->sy = -1;
     s->err = s->dx - s->dy;
 }
+
+void check_texture(t_data *data)
+{
+    if (data->map.p.flag)
+    {
+        if (sin(degree_to_rad(data->map.p.angle)) > 0)
+            data->text.name = data->map.north;
+        else
+            data->text.name = data->map.south;
+    }
+    else
+    {
+        if (cos(degree_to_rad(data->map.p.angle)) > 0)
+            data->text.name = data->map.west;
+        else
+            data->text.name = data->map.east;
+    }
+    data->text.text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, data->text.name, &data->text.width, &data->text.height);
+    data->text.text_mlx.image_addr = mlx_get_data_addr(data->text.text_mlx.image, &data->text.text_mlx.bits_per_pixel, &data->text.text_mlx.line_length, &data->text.text_mlx.endian);
+    if (data->map.p.flag)
+        data->map.p.texture_x = ((int)data->map.p.ray.x_ind % 64) * 64 / data->text.width;
+    else
+        data->map.p.texture_y = ((int)data->map.p.ray.y_ind % 64) * 64 / data->text.height;
+}
+
 void bresenham_wall(t_point p0, int start, int end, t_data *data)
 {
     int i = 0;
-    while ( i < start)
+    while (i < start)
     {
         my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xFFFFFF);
         i++;
     }
     p0.y_ind = start;
+    check_texture(data);
+    double texture_step = (double)data->text.height / data->map.p.wall_height; // Vertical scaling factor
+    double texture_pos = 0.0;                                                  // Start position in the texture
     while (i < end)
     {
-        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xFECBD8);
+        int tex_y = (int)texture_pos;
+        int color = *(int *)(data->text.text_mlx.image_addr +
+                             (tex_y * data->text.text_mlx.line_length) +
+                             (data->map.p.texture_x * (data->text.text_mlx.bits_per_pixel / 8)));
+
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
+
+        texture_pos += texture_step; // Move to the next row in the texture
         i++;
     }
-     while (i < WIN_HEIGHT)
+
+    while (i < WIN_HEIGHT)
     {
-        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xABCD286 );
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0xABCD286);
         i++;
     }
 }
@@ -39,18 +75,14 @@ void draw_wall(t_point p0, t_data *data, double alpha, int i)
 {
 
     double dis_to_proj;
-    double wall_height;
     double precise_dist;
     precise_dist = data->map.p.dist * cos(alpha - degree_to_rad(data->map.p.angle));
-
-    dis_to_proj = (WIN_WIDTH/2) / tan(degree_to_rad(FOV / 2));
-
-    wall_height = (dis_to_proj / precise_dist) * WALL_DIM;
-    double ww= wall_height*10;
-    if ((int)(ww) % 10 > 5)
-        wall_height++;
-     int start = (WIN_HEIGHT / 2) - (int)(wall_height / 2);
-    int end = (WIN_HEIGHT / 2) + (int)(wall_height / 2);
+    data->map.p.ray.x_ind = p0.x_ind;
+    data->map.p.ray.y_ind = p0.y_ind;
+    dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(FOV / 2));
+    data->map.p.wall_height = round((dis_to_proj / precise_dist) * WALL_DIM);
+    int start = (WIN_HEIGHT / 2) - (int)(data->map.p.wall_height / 2);
+    int end = (WIN_HEIGHT / 2) + (int)(data->map.p.wall_height / 2);
     p0.x_ind = i;
     bresenham_wall(p0, start, end, data);
 }
@@ -73,20 +105,22 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
         if (data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64] == '1')
         {
             data->map.p.dist = calculate_distance(p0, player);
-            draw_wall(p0,data,  alpha, i);
+            draw_wall(p0, data, alpha, i);
             break;
         }
-        //printf("%c\n", data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64]);
+        // printf("%c\n", data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64]);
         e2 = s.err * 2;
         if (e2 > -s.dy)
         {
             s.err -= s.dy;
             p0.x_ind += s.sx;
+            data->map.p.flag = 1;
         }
         if (e2 < s.dx)
         {
             s.err += s.dx;
             p0.y_ind += s.sy;
+            data->map.p.flag = 0;
         }
     }
 }
