@@ -39,8 +39,6 @@ int main(int ac, char **av)
         write(2, WR_NBR, 26);
         return (EXIT_FAILURE);
     }
-    // printf("\033[30m\033[102m Usage \033[0m : ./cub3D [map path]\n");
-
     if (!parse_Gmap(av[1], &map))
         return (FAILURE);
     init_data(map, &data);

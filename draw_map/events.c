@@ -2,8 +2,9 @@
 
 int ft_close(t_data *cub)
 {
-        mlx_loop_end(cub->mlx.mlx);
-	    return(0);
+    mlx_destroy_image(cub->mlx.mlx, cub->mlx.image);
+	mlx_destroy_window(cub->mlx.mlx, cub->mlx.window);
+	exit(0);
 }
 
 void    hook_functions(t_data *data)

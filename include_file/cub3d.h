@@ -67,8 +67,9 @@ typedef struct s_player
     double dist;
     int flag;
     t_point ray;//intersection of ray and wall
-    int texture_x;
-    int texture_y;
+    double  ray_angle;
+    double texture_x;
+    double texture_y;
     double wall_height;
 } t_player;
 
@@ -105,6 +106,8 @@ typedef struct s_text
     int     width;
     int     height;
     char    *name;
+    int     x;
+    int     y;
 } t_text;
 
 typedef struct s_bres_flag

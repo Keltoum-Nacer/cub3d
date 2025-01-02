@@ -260,12 +260,14 @@ void    mini_map(t_data *data)
     }
 
 }
+
+
 void draw_map(t_data *data)
 {
     // draw_image(data);
-    // draw_player(data->map.p.p_x, data->map.p.p_y, 0XFFFFFFFF, &data->mlx);
+    //clear_image(data);
     draw_raycasting(data);
-    mini_map(data);
+    //mini_map(data);
     // draw_mini_map(data);
     // draw_mini_player(5, 5, 0x000000, &data->mlx);
     // draw_raycasting_mini_map(data);

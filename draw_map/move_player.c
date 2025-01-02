@@ -18,6 +18,7 @@ void    validate_move(t_data *data, double new_x, double new_y)
 int handle_key(int keycode, t_data *data)
 {
     data->key = keycode;
+    //mlx_clear_window(data->mlx.mlx, data->mlx.window);
     if (keycode == ESC)
         return (mlx_loop_end(data->mlx.mlx), 1);
     double angle = data->map.p.angle * PI / 180;
