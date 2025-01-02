@@ -36,11 +36,11 @@ void init_mlx(t_data *data)
     init_textures(data);
 }
 
-void init_data(t_map map, t_data *data)
+void    init_data(t_map map, t_data *data)
 {
     data->map = map;
-    data->map.p.p_y *= 64 ;
-    data->map.p.p_x *= 64;
+    data->map.p.p_y *= WALL_DIM ;
+    data->map.p.p_x *= WALL_DIM;
     if (map.p.p_name == 'N')
         data->map.p.angle = 270;
     if (map.p.p_name == 'W')

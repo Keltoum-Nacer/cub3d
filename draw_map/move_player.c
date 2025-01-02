@@ -9,9 +9,9 @@ void move_player(t_data *data)
 }
 void    validate_move(t_data *data, double new_x, double new_y)
 {
-    if (data->map.map[(int)data->map.p.p_y/ 64][(int)new_x/ 64] != '1')
+    if (data->map.map[(int)(data->map.p.p_y/ WALL_DIM)][(int)(new_x/ WALL_DIM)] != '1')
         data->map.p.p_x = new_x;
-    if (data->map.map[(int)new_y/ 64][(int)data->map.p.p_x / 64] != '1')
+    if (data->map.map[(int)(new_y/ WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] != '1')
         data->map.p.p_y = new_y;
 }
 int handle_key(int keycode, t_data *data)
