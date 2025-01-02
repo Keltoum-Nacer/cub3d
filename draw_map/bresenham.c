@@ -36,7 +36,7 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
 // 	return ((r << 16) | (g << 8) | b);
 // }
 
-int	set_wall_color(t_data *data)
+int set_wall_color(t_data *data)
 {
     // double normalized_angle;
 
@@ -61,13 +61,21 @@ int	set_wall_color(t_data *data)
     // }
     // return (0);
     if (!data->map.p.flag)
-    return (0xFF0000); // Red for horizontal
-else
-    return (0x0000FF); // Blue for vertical
-
+    {
+        if (data->map.p.ray.y_ind - data->map.p.p_y > 0)
+            return (0xFF0000); // Red for horizontal
+        else
+            return (0xFFFF00);
+    }
+    else 
+    {
+        if (data->map.p.ray.x_ind - data->map.p.p_x)
+            return (0x0000FF);
+        else
+            return(0x00FFFF);
+    }
+        return (0xABCD3578); // Blue for vertical
 }
-
-
 
 void check_texture(t_data *data)
 {
@@ -80,7 +88,7 @@ void check_texture(t_data *data)
     }
     else
     {
-         if (data->map.p.ray_angle > 3 * (PI / 2) && data->map.p.ray_angle < PI / 2)
+        if (data->map.p.ray_angle > 3 * (PI / 2) && data->map.p.ray_angle < PI / 2)
             data->text.name = data->map.east;
         else
             data->text.name = data->map.west;
@@ -109,9 +117,9 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
     p0.y_ind = start;
     // check_texture(data);
     // double texture_step = (double)data->text.height / data->map.p.wall_height;
-    // double texture_pos = 0.0; 
+    // double texture_pos = 0.0;
     // if (end > WIN_HEIGHT)
-    //     end = WIN_HEIGHT;                                        
+    //     end = WIN_HEIGHT;
     while (i < end)
     {
         // double tex_y = texture_pos;
@@ -121,15 +129,15 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
         //                         ((int)tex_y * data->text.text_mlx.line_length) +
         //                         ((int)data->map.p.texture_x * (data->text.text_mlx.bits_per_pixel / 8)));
         //    // color = darkness(color, data->map.p.dist, WIN_HEIGHT);
-            int color = set_wall_color(data);
-                my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
+        int color = set_wall_color(data);
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
 
-      // }
+        // }
         // texture_pos += texture_step;
-        // if (texture_pos < 0) 
+        // if (texture_pos < 0)
         //     texture_pos = 0;
         // if (texture_pos >= data->text.height)
-        //     texture_pos = data->text.height - 1; 
+        //     texture_pos = data->text.height - 1;
         i++;
     }
 
@@ -145,8 +153,10 @@ void draw_wall(t_point p0, t_data *data, double alpha, int i)
     double dis_to_proj;
     double precise_dist;
 
-    if (alpha < 0) alpha += 2 * PI;
-    if (alpha >= 2 * PI) alpha -= 2 * PI;
+    if (alpha < 0)
+        alpha += 2 * PI;
+    if (alpha >= 2 * PI)
+        alpha -= 2 * PI;
 
     data->map.p.ray_angle = alpha;
     precise_dist = data->map.p.dist * cos(alpha - degree_to_rad(data->map.p.angle));
@@ -173,32 +183,26 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
     p1.x_ind = p0.x_ind + max_ray_length * cos(alpha);
     p1.y_ind = max_ray_length * sin(alpha) + p0.y_ind;
     init_flag(&s, p0, p1);
-   data->map.p.flag = -1;
+    data->map.p.flag = -1;
     while (1)
     {
         if (data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64] == '1')
         {
-           if (fabs(p0.x_ind - player.x_ind) < fabs(p0.y_ind - player.y_ind))
-                data->map.p.flag = 1;
-            else
-                data->map.p.flag = 0; 
-
             data->map.p.dist = calculate_distance(p0, player);
             draw_wall(p0, data, alpha, i);
             break;
         }
-        // printf("%c\n", data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64]);
-        e2 = s.err * 2;
         if (e2 > -s.dy)
         {
             s.err -= s.dy;
             p0.x_ind += s.sx;
+            data->map.p.flag = 1;
         }
-        if (e2 < s.dx)
+        else if (e2 < s.dx)
         {
+            data->map.p.flag = 0;
             s.err += s.dx;
             p0.y_ind += s.sy;
-           
         }
     }
 }

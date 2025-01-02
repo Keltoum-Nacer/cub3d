@@ -71,6 +71,7 @@ typedef struct s_player
     double texture_x;
     double texture_y;
     double wall_height;
+    int wall_direction;
 } t_player;
 
 typedef struct s_map
