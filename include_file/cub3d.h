@@ -43,7 +43,7 @@
 #define KEY_RIGHT 65361
 #define WALL_DIM 64.0
 #define FOV 60
-#define NUM_RAYS 1920 
+#define NUM_RAYS 1920
 #define MINI_DIM 400
 #define MINI_GRID 15
 #define SPEED 11.0
@@ -57,6 +57,15 @@ typedef struct s_point
     double x_ind;
     double y_ind;
 } t_point;
+typedef struct s_ray
+{
+    t_point wall_intersection;
+    double texture_x;
+    double texture_y;
+    double angle;
+    int ver_hor;
+    double wall_dist;
+} t_ray;
 
 typedef struct s_player
 {
@@ -64,14 +73,8 @@ typedef struct s_player
     double p_y;
     char p_name;
     double angle;
-    double dist;
-    int flag;
-    t_point ray;//intersection of ray and wall
-    double  ray_angle;
-    double texture_x;
-    double texture_y;
     double wall_height;
-    int wall_direction;
+    t_ray ray;
 } t_player;
 
 typedef struct s_map
@@ -103,12 +106,12 @@ typedef struct s_mlx
 
 typedef struct s_text
 {
-    t_mlx   text_mlx;
-    int     width;
-    int     height;
-    char    *name;
-    int     x;
-    int     y;
+    t_mlx text_mlx;
+    int width;
+    int height;
+    char *name;
+    int x;
+    int y;
 } t_text;
 
 typedef struct s_bres_flag
@@ -120,14 +123,13 @@ typedef struct s_bres_flag
     int sy;
 } t_bres_flag;
 
-
 typedef struct s_data
 {
-    t_mlx   mlx;
-    t_map   map;
-    int     key;
-    t_mlx   mini_mlx;
-    t_text  text;
+    t_mlx mlx;
+    t_map map;
+    int key;
+    t_mlx mini_mlx;
+    t_text text;
 } t_data;
 // parsing functions
 

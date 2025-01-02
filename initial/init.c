@@ -12,7 +12,7 @@ void init_mlx(t_mlx *mlx)
         return;
 }
 
-void init_data(t_map map, t_data *data)
+void    init_data(t_map map, t_data *data)
 {
     data->map = map;
     data->map.p.p_y *= 64 ;
@@ -26,4 +26,5 @@ void init_data(t_map map, t_data *data)
     if (map.p.p_name == 'E')
         data->map.p.angle = 0;
     init_mlx(&data->mlx);
+    data->text.text_mlx.image = NULL;
 }
