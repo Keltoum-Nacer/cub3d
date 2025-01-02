@@ -102,13 +102,13 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
     j = check_texture(data);
     double texture_step = (double)data->text.height / data->map.p.wall_height;
     double texture_pos = 0.0; 
-    if (end > WIN_HEIGHT)
-        end = WIN_HEIGHT;                                        
+    // if (end > WIN_HEIGHT)
+    //     end = WIN_HEIGHT;                                        
     while (i < end)
     {
         double tex_y = texture_pos;
-        if (data->map.p.texture_x >= 0 && data->map.p.texture_x < data->text.width)
-        {
+        // if (data->map.p.texture_x >= 0 && data->map.p.texture_x < data->text.width)
+        // {
             int color = *(int *)(data->textures[j].text_mlx.image_addr +
                                 ((int)tex_y * data->textures[j].text_mlx.line_length) +
                                 ((int)data->map.p.texture_x * (data->textures[j].text_mlx.bits_per_pixel / 8)));
@@ -116,12 +116,12 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
             //int color = set_wall_color(data);
                 my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
 
-      }
+    //   }
         texture_pos += texture_step;
-        if (texture_pos < 0) 
-            texture_pos = 0;
-        if (texture_pos >= data->text.height)
-            texture_pos = data->text.height - 1; 
+        // if (texture_pos < 0) 
+        //     texture_pos = 0;
+        // if (texture_pos >= data->text.height)
+        //     texture_pos = data->text.height - 1; 
         i++;
     }
 
