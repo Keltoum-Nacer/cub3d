@@ -262,7 +262,7 @@ void    mini_map(t_data *data)
 }
 
 
-void draw_map(t_data *data)
+int draw_map(t_data *data)
 {
     // draw_image(data);
     //clear_image(data);
@@ -271,6 +271,7 @@ void draw_map(t_data *data)
     // draw_mini_map(data);
     // draw_mini_player(5, 5, 0x000000, &data->mlx);
     // draw_raycasting_mini_map(data);
+    return(0);
 }
 
 // void draw_mini_map(t_data *data)

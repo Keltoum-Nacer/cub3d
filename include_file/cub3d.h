@@ -125,11 +125,12 @@ typedef struct s_bres_flag
 
 typedef struct s_data
 {
-    t_mlx mlx;
-    t_map map;
-    int key;
-    t_mlx mini_mlx;
-    t_text text;
+    t_mlx   mlx;
+    t_map   map;
+    int     key;
+    t_mlx   mini_mlx;
+    t_text  text;
+    t_text  textures[4];
 } t_data;
 // parsing functions
 
@@ -154,14 +155,14 @@ void free_map(char **arr, t_map *map);
 void print_err(char *str);
 
 // function 2D
-void draw_map(t_data *data);
+int draw_map(t_data *data);
 void draw_mini_map(t_data *data);
 void draw_pixels(int i, int j, int color, t_mlx *mlx);
 void my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 // test array
 void bresenham(t_point p0, double alpha, t_data *data, int i);
 void init_flag(t_bres_flag *s, t_point p0, t_point p1);
-void init_mlx(t_mlx *mlx);
+void init_mlx(t_data *data);
 void init_data(t_map map, t_data *data);
 int handle_key(int keycode, t_data *data);
 void move_player(t_data *data);
