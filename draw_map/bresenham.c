@@ -38,32 +38,32 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
 
 int	set_wall_color(t_data *data)
 {
-    // double normalized_angle;
+    double normalized_angle;
 
-    // // Normalize the ray angle to [0, 2*PI]
-    // normalized_angle = fmod(data->map.p.ray_angle, 2 * PI);
-    // if (normalized_angle < 0)
-    //     normalized_angle += 2 * PI;
+    // Normalize the ray angle to [0, 2*PI]
+    normalized_angle = fmod(data->map.p.ray_angle, 2 * PI);
+    if (normalized_angle < 0)
+        normalized_angle += 2 * PI;
 
-    // if (!data->map.p.flag) // Horizontal hit
-    // {
-    //     if (normalized_angle > 0 && normalized_angle < PI)
-    //         return (0xD239FF); // South-facing wall
-    //     else
-    //         return (0xFF25CD); // North-facing wall
-    // }
-    // else // Vertical hit
-    // {
-    //     if (normalized_angle > 3 * (PI / 2) || normalized_angle < PI / 2)
-    //         return (0x66D7FF); // East-facing wall
-    //     else
-    //         return (0xFFF666); // West-facing wall
-    // }
-    // return (0);
-    if (!data->map.p.flag)
-    return (0xFF0000); // Red for horizontal
-else
-    return (0x0000FF); // Blue for vertical
+    if (!data->map.p.flag) // Horizontal hit
+    {
+        if (normalized_angle > 0 && normalized_angle < PI)
+            return (0xD239FF); // South-facing wall
+        else
+            return (0xFF25CD); // North-facing wall
+    }
+    else // Vertical hit
+    {
+        if (normalized_angle > 3 * (PI / 2) || normalized_angle < PI / 2)
+            return (0x66D7FF); // East-facing wall
+        else
+            return (0x000000); // West-facing wall
+    }
+    return (0);
+//     if (!data->map.p.flag)
+//     return (0xFF0000); // Red for horizontal
+// else
+//     return (0x0000FF); // Blue for vertical
 
 }
 
@@ -173,32 +173,33 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
     p1.x_ind = p0.x_ind + max_ray_length * cos(alpha);
     p1.y_ind = max_ray_length * sin(alpha) + p0.y_ind;
     init_flag(&s, p0, p1);
-   data->map.p.flag = -1;
-    while (1)
+   int last_step;
+while (1)
+{
+    if (data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64] == '1')
     {
-        if (data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64] == '1')
-        {
-           if (fabs(p0.x_ind - player.x_ind) < fabs(p0.y_ind - player.y_ind))
-                data->map.p.flag = 1;
-            else
-                data->map.p.flag = 0; 
-
-            data->map.p.dist = calculate_distance(p0, player);
-            draw_wall(p0, data, alpha, i);
-            break;
-        }
-        // printf("%c\n", data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64]);
-        e2 = s.err * 2;
-        if (e2 > -s.dy)
-        {
-            s.err -= s.dy;
-            p0.x_ind += s.sx;
-        }
-        if (e2 < s.dx)
-        {
-            s.err += s.dx;
-            p0.y_ind += s.sy;
-           
-        }
+        if (last_step == 2)
+            data->map.p.flag = 1;
+        else
+            data->map.p.flag = 0; 
+        data->map.p.dist = calculate_distance(p0, player);
+        draw_wall(p0, data, alpha, i);
+        break;
     }
+
+    e2 = s.err * 2;
+    if (e2 > -s.dy)
+    {
+        s.err -= s.dy;
+        p0.x_ind += s.sx; // Step horizontally
+        last_step = 2;
+    }
+    else if (e2 < s.dx)
+    {
+        s.err += s.dx;
+        p0.y_ind += s.sy; // Step vertically
+        last_step = 1;
+    }
+}
+
 }
