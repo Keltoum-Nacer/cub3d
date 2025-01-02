@@ -1,8 +1,7 @@
-                           NO textures/wolfenstein/grey_stone.xpm
-                        SO textures/wolfenstein/red_brick.xpm
-WE textures/wolfenstein/eagle.xpm
-EA textures/wolfenstein/mossy.xpm
-
+                           NO textures/simonkraft/keffiah.xpm
+                        SO textures/simonkraft/keffiah.xpm
+WE textures/simonkraft/keffiah.xpm
+EA textures/simonkraft/keffiah.xpm
 
                    F   255,128,0
 C 0,0,0

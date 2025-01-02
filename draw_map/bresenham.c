@@ -161,14 +161,14 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
 
     player.x_ind = data->map.p.p_x;
     player.y_ind = data->map.p.p_y;
-    double max_ray_length = sqrt(pow(data->map.width * 64, 2) + pow(MAP_HEIGHT * 64, 2));
+    double max_ray_length = sqrt(pow(data->map.width * WALL_DIM, 2) + pow(MAP_HEIGHT * WALL_DIM, 2));
     p1.x_ind = p0.x_ind + max_ray_length * cos(alpha);
     p1.y_ind = max_ray_length * sin(alpha) + p0.y_ind;
     data->map.p.ray.angle = alpha;
     init_flag(&s, p0, p1);
     while (1)
     {
-        if (data->map.map[(int)p0.y_ind / 64][(int)p0.x_ind / 64] == '1')
+        if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == '1')
         {
             data->map.p.ray.wall_dist = calculate_distance(p0, player);
             draw_wall(p0, data, alpha, i);

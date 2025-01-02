@@ -41,12 +41,12 @@
 #define WIN_HEIGHT 1080
 #define KEY_LEFT 65363
 #define KEY_RIGHT 65361
-#define WALL_DIM 64.0
+#define WALL_DIM 256.0
 #define FOV 60
 #define NUM_RAYS 1920
 #define MINI_DIM 400
 #define MINI_GRID 15
-#define SPEED 11.0
+#define SPEED 20.0
 #define PI 3.14159265358979323846
 #define VIEW_RADIUS 5
 #define TEX_HEIGHT 64
