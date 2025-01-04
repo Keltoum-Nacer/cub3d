@@ -3,9 +3,8 @@
 void move_player(t_data *data)
 {
     data->mlx.image_addr = mlx_get_data_addr(data->mlx.image, &data->mlx.bits_per_pixel, &data->mlx.line_length, &data->mlx.endian);
-    // if (data->map.map[(int)data->map.p.p_y / 64][(int)data->map.p.p_x / 64] == '1' )
-    //     return;
     draw_map(data);
+    draw_mini_map(data);
     mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->mlx.image, 0, 0);
 }
 void    validate_move(t_data *data, double new_x, double new_y)
@@ -59,5 +58,7 @@ int handle_key(int keycode, t_data *data)
         if (data->map.p.angle < 0)
             data->map.p.angle += 360;
     }
+    if (keycode == OPEN)
+        data->map.open_door = 1;
     return (move_player(data), 1);
 }

@@ -1,5 +1,5 @@
 /* XPM */
-static char * bluestone_xpm[] = {
+static char * one_xpm[] = {
 "64 64 20 1",
 " 	c #383838",
 ".	c #000070",
