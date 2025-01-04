@@ -2,22 +2,23 @@
 
 void    init_textures(t_data *data)
 {
-    char *names[4];
+    char *names[5];
 
     names[0] = data->map.south;
     names[1] = data->map.north;
     names[2] = data->map.east;
     names[3] = data->map.west;
+    names[4] = ft_strdup("textures/simonkraft/door.xpm");
     int i = 0;
-    while(i < 4)
+    while(i < 5)
     {
-     data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, names[i], &data->text.width, &data->text.height);
-    if (!data->textures[i].text_mlx.image)
-    {
-        printf("the image cannot be loaded successfully\n");
-        return;
-    }
-    data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
+        data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, names[i], &data->text.width, &data->text.height);
+        if (!data->textures[i].text_mlx.image)
+        {
+            printf("the image cannot be loaded successfully\n");
+            return;
+        }
+        data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
         i++;
     }
 }
@@ -39,6 +40,7 @@ void init_mlx(t_data *data)
 void    init_data(t_map map, t_data *data)
 {
     data->map = map;
+    data->map.open_door = 0;
     data->map.p.p_y *= WALL_DIM ;
     data->map.p.p_x *= WALL_DIM;
     if (map.p.p_name == 'N')

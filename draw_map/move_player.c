@@ -58,5 +58,7 @@ int handle_key(int keycode, t_data *data)
         if (data->map.p.angle < 0)
             data->map.p.angle += 360;
     }
+    if (keycode == OPEN)
+        data->map.open_door = 1;
     return (move_player(data), 1);
 }

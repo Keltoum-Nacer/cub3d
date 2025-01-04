@@ -37,6 +37,7 @@
 #define KEY_S 115
 #define KEY_A 97
 #define ESC 65307
+#define OPEN 111
 #define WIN_WIDTH 1920
 #define WIN_HEIGHT 1080
 #define KEY_LEFT 65363
@@ -87,6 +88,8 @@ typedef struct s_map
     char **new_map;
     int F_color;
     int C_color;
+    int is_door;
+    int open_door;
     int width;
     int height; // Added from parsing
     int height_text;
@@ -130,7 +133,7 @@ typedef struct s_data
     int     key;
     t_mlx   mini_mlx;
     t_text  text;
-    t_text  textures[4];
+    t_text  textures[5];
 } t_data;
 // parsing functions
 

@@ -22,7 +22,7 @@ unsigned int	darkness(unsigned int color, double distance, int max_distance)
 	int		g;
 	int		b;
 
-	dark_factor = 1 - (distance / max_distance);
+	dark_factor = 3 - (distance / max_distance);
 	if (dark_factor < 0)
 		dark_factor = 0;
 	if (dark_factor > 1)
@@ -67,10 +67,12 @@ int set_wall_color(t_data *data)
 
 int check_texture(t_data *data)
 {
-     if (!data->map.p.ray.ver_hor)
+    if (!data->map.p.ray.ver_hor)
         data->map.p.ray.texture_x= fmod(data->map.p.ray.wall_intersection.x_ind, WALL_DIM) / WALL_DIM * data->text.width;
     else
         data->map.p.ray.texture_x= fmod(data->map.p.ray.wall_intersection.y_ind, WALL_DIM) / WALL_DIM * data->text.width;
+    if (data->map.is_door)
+        return(data->textures[4].name = "textures/simonkraft/door.xpm", 4);
     if (!data->map.p.ray.ver_hor)
     {
         if (data->map.p.ray.angle > 0 && data->map.p.ray.angle < PI)
@@ -80,7 +82,7 @@ int check_texture(t_data *data)
     }
     else
     {
-         if (data->map.p.ray.angle > (3 * PI ) / 2 || data->map.p.ray.angle < PI / 2)
+        if (data->map.p.ray.angle > (3 * PI ) / 2 || data->map.p.ray.angle < PI / 2)
             return(data->textures[2].name = data->map.east, 2);
         else
             return(data->textures[3].name = data->map.west, 3);
@@ -106,21 +108,17 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
     while (i < end)
     {
         double tex_y = texture_pos;
-        // if (data->map.p.texture_x >= 0 && data->map.p.texture_x < data->text.width)
-        // {
+        if (data->map.p.ray.texture_x >= 0 && data->map.p.ray.texture_x < data->text.width)
+        {
             int color = *(int *)(data->textures[j].text_mlx.image_addr +
                                 ((int)tex_y * data->textures[j].text_mlx.line_length) +
                                 ((int)data->map.p.ray.texture_x* (data->textures[j].text_mlx.bits_per_pixel / 8)));
-           // color = darkness(color, data->map.p.dist, WIN_HEIGHT);
+            //color = darkness(color, data->map.p.ray.wall_dist, WIN_HEIGHT);
             //int color = set_wall_color(data);
                 my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
 
-    //   }
+       }
         texture_pos += texture_step;
-        // if (texture_pos < 0) 
-        //     texture_pos = 0;
-        // if (texture_pos >= data->text.height)
-        //     texture_pos = data->text.height - 1; 
         i++;
     }
 
@@ -170,21 +168,30 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
     {
         if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == '1')
         {
+            data->map.is_door = 0;
             data->map.p.ray.wall_dist = calculate_distance(p0, player);
             draw_wall(p0, data, alpha, i);
             break;
         }
+        else if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == 'D' && !data->map.open_door)
+        {
+            data->map.is_door = 1;
+            data->map.p.ray.wall_dist = calculate_distance(p0, player);
+            draw_wall(p0, data, alpha, i);
+            break;
+        }
+
         e2 = s.err * 2;
         if (e2 > -s.dy)
         {
             s.err -= s.dy;
-            p0.x_ind += s.sx; // Step horizontally
+            p0.x_ind += s.sx;
             data->map.p.ray.ver_hor = 1;
         }
         else if (e2 < s.dx)
         {
             s.err += s.dx;
-            p0.y_ind += s.sy; // Step vertically
+            p0.y_ind += s.sy;                                                   
             data->map.p.ray.ver_hor = 0;
         }
     }
