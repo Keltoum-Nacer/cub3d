@@ -15,25 +15,25 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
     s->err = s->dx - s->dy;
 }
 
-unsigned int	darkness(unsigned int color, double distance, int max_distance)
+unsigned int darkness(unsigned int color, double distance, int max_distance)
 {
-	double	dark_factor;
-	int		r;
-	int		g;
-	int		b;
+    double dark_factor;
+    int r;
+    int g;
+    int b;
 
-	dark_factor = 1 - (distance / max_distance);
-	if (dark_factor < 0)
-		dark_factor = 0;
-	if (dark_factor > 1)
-		dark_factor = 1;
-	r = (color >> 16) & 0xFF;
-	g = (color >> 8) & 0xFF;
-	b = color & 0xFF;
-	r = r * dark_factor;
-	g = g * dark_factor;
-	b = b * dark_factor;
-	return ((r << 16) | (g << 8) | b);
+    dark_factor = 1 - (distance / max_distance);
+    if (dark_factor < 0)
+        dark_factor = 0;
+    if (dark_factor > 1)
+        dark_factor = 1;
+    r = (color >> 16) & 0xFF;
+    g = (color >> 8) & 0xFF;
+    b = color & 0xFF;
+    r = r * dark_factor;
+    g = g * dark_factor;
+    b = b * dark_factor;
+    return ((r << 16) | (g << 8) | b);
 }
 
 int set_wall_color(t_data *data)
@@ -60,33 +60,29 @@ int set_wall_color(t_data *data)
             return (0x000000); // West-facing wall
     }
     return (0);
-
 }
-
-
 
 int check_texture(t_data *data)
 {
-     if (!data->map.p.ray.ver_hor)
-        data->map.p.ray.texture_x= fmod(data->map.p.ray.wall_intersection.x_ind, WALL_DIM) / WALL_DIM * data->text.width;
+    if (!data->map.p.ray.ver_hor)
+        data->map.p.ray.texture_x = fmod(data->map.p.ray.wall_intersection.x_ind, WALL_DIM) / WALL_DIM * data->text.width;
     else
-        data->map.p.ray.texture_x= fmod(data->map.p.ray.wall_intersection.y_ind, WALL_DIM) / WALL_DIM * data->text.width;
+        data->map.p.ray.texture_x = fmod(data->map.p.ray.wall_intersection.y_ind, WALL_DIM) / WALL_DIM * data->text.width;
     if (!data->map.p.ray.ver_hor)
     {
         if (data->map.p.ray.angle > 0 && data->map.p.ray.angle < PI)
-            return(data->textures[0].name = data->map.south, 0);
+            return (data->textures[0].name = data->map.south, 0);
         else
-            return(data->textures[1].name = data->map.north, 1);
+            return (data->textures[1].name = data->map.north, 1);
     }
     else
     {
-         if (data->map.p.ray.angle > (3 * PI ) / 2 || data->map.p.ray.angle < PI / 2)
-            return(data->textures[2].name = data->map.east, 2);
+        if (data->map.p.ray.angle > (3 * PI) / 2 || data->map.p.ray.angle < PI / 2)
+            return (data->textures[2].name = data->map.east, 2);
         else
-            return(data->textures[3].name = data->map.west, 3);
+            return (data->textures[3].name = data->map.west, 3);
     }
-    return(0);
-    
+    return (0);
 }
 void bresenham_wall(t_point p0, int start, int end, t_data *data)
 {
@@ -99,28 +95,28 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
     }
     p0.y_ind = start;
     j = check_texture(data);
-    double texture_step = (double)data->text.height / data->map.p.wall_height;
-    double texture_pos = 0.0; 
+    double texture_step = (double)data->text.height /data->map.p.wall_height;
+    double texture_pos = 0.0;
     if (end > WIN_HEIGHT)
-        end = WIN_HEIGHT;                                        
-    while (i < end)
+        end = WIN_HEIGHT;
+    double tex_y ;
+     while (i < end)
     {
-        double tex_y = texture_pos;
-        if (data->map.p.ray.texture_x>= 0 && data->map.p.ray.texture_x< data->text.width)
+        tex_y = texture_pos;
+        if (data->map.p.ray.texture_x >= 0 && data->map.p.ray.texture_x < data->text.width)
         {
             int color = *(int *)(data->textures[j].text_mlx.image_addr +
-                                ((int)tex_y * data->textures[j].text_mlx.line_length) +
-                                ((int)data->map.p.ray.texture_x* (data->textures[j].text_mlx.bits_per_pixel / 8)));
-           // color = darkness(color, data->map.p.dist, WIN_HEIGHT);
-            //int color = set_wall_color(data);
-                my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
-
-      }
+                                 ((int)tex_y * data->textures[j].text_mlx.line_length) +
+                                 ((int)data->map.p.ray.texture_x * (data->textures[j].text_mlx.bits_per_pixel / 8)));
+            // color = darkness(color, data->map.p.dist, WIN_HEIGHT);
+            // int color = set_wall_color(data);
+            my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
+        }
         texture_pos += texture_step;
-        if (texture_pos < 0) 
-            texture_pos = 0;
-        if (texture_pos >= data->text.height)
-            texture_pos = data->text.height - 1; 
+        // if (texture_pos < 0)
+        //     texture_pos = 0;
+        // if (texture_pos >= data->text.height)
+        //     texture_pos = data->text.height - 1;
         i++;
     }
 
