@@ -194,10 +194,10 @@ void draw_mini_map(t_data *data)
     int i, j;
     double center_x, center_y;
     double dx, dy, dist_squared;
-   // int radius = VIEW_RADIUS * MINI_GRID * 15;
+    //int radius = VIEW_RADIUS * MINI_GRID;
 
-    center_x = (data->map.p.p_x / 64) + 0.2;
-    center_y = (data->map.p.p_y / 64) + 0.2;
+    center_x = (data->map.p.p_x / WALL_DIM) + 0.2;
+    center_y = (data->map.p.p_y / WALL_DIM) + 0.2;
 
     i = 0;
     while (data->map.map[i])
@@ -216,11 +216,13 @@ void draw_mini_map(t_data *data)
                 // if (tile_x * tile_x + tile_y * tile_y <= radius * radius)
                 // {
                     if (data->map.map[i][j] == '1')
-                        draw_pixels_mini_map(tile_x, tile_y, 0xDB7093, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0xB22222, &data->mlx);
                     else if (data->map.map[i][j] == ' ')
-                        draw_pixels_mini_map(tile_x, tile_y, 0xC71585, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0x000000, &data->mlx);
+                    else if (data->map.map[i][j] == 'D' && !data->map.open_door)
+                        draw_pixels_mini_map(tile_x, tile_y, 0x2E8B57, &data->mlx);
                     else
-                        draw_pixels_mini_map(tile_x, tile_y, 0xFFB6C1, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0xFFFFFF, &data->mlx);
                 // }
             }
             j++;
@@ -263,12 +265,9 @@ void    mini_map(t_data *data)
 
 int draw_map(t_data *data)
 {
-    // draw_image(data);
-    //clear_image(data);
     draw_raycasting(data);
+    draw_mini_map(data);
     //mini_map(data);
-    // draw_mini_player(5, 5, 0x000000, &data->mlx);
-    // draw_raycasting_mini_map(data);
     return(0);
 }
 

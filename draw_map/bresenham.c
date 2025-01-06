@@ -66,12 +66,14 @@ int set_wall_color(t_data *data)
 
 int check_texture(t_data *data)
 {
-   
+    if (!data->map.p.ray.ver_hor)
+        data->map.p.ray.texture_x = fmod(data->map.p.ray.wall_intersection.x_ind, WALL_DIM) / WALL_DIM * data->text.width;
+    else
+        data->map.p.ray.texture_x = fmod(data->map.p.ray.wall_intersection.y_ind, WALL_DIM) / WALL_DIM * data->text.width;
     if (data->map.is_door)
         return(data->textures[4].name = "textures/simonkraft/door.xpm", 4);
     if (!data->map.p.ray.ver_hor)
     {
-        data->map.p.ray.texture_x = fmod(data->map.p.ray.wall_intersection.x_ind, WALL_DIM) / WALL_DIM * data->text.width;
         if (data->map.p.ray.angle > 0 && data->map.p.ray.angle < PI)
             return(data->textures[0].name = data->map.south, 0);
         else
@@ -79,7 +81,6 @@ int check_texture(t_data *data)
     }
     else
     {
-        data->map.p.ray.texture_x = fmod(data->map.p.ray.wall_intersection.y_ind, WALL_DIM) / WALL_DIM * data->text.width;
         if (data->map.p.ray.angle > (3 * PI ) / 2 || data->map.p.ray.angle < PI / 2)
             return(data->textures[2].name = data->map.east, 2);
         else
@@ -100,10 +101,6 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
     }
     p0.y_ind = start;
     j = check_texture(data);
-    if (end > WIN_HEIGHT)
-		end = WIN_HEIGHT;
-	if (i < 0)
-		i = 0;
     double texture_step = (double)data->text.height / data->map.p.wall_height ;
     double texture_pos = 0.0;                                       
     while (i < end)
@@ -117,8 +114,7 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
         }
             //color = darkness(color, data->map.p.ray.wall_dist, WIN_HEIGHT);
             //int color = set_wall_color(data);
-                my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
-
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
         texture_pos += texture_step;
         i++;
     }
@@ -146,8 +142,8 @@ void draw_wall(t_point p0, t_data *data, double alpha, int i)
     int start = (WIN_HEIGHT / 2) - (int)(data->map.p.wall_height / 2);
     int end = (WIN_HEIGHT / 2) + (int)(data->map.p.wall_height / 2);
     data->map.p.ray.wall_intersection.x_ind = p0.x_ind;
-    p0.x_ind = i;
     data->map.p.ray.wall_intersection.y_ind = p0.y_ind;
+    p0.x_ind = i;
     bresenham_wall(p0, start, end, data);
 }
 
