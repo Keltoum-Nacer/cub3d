@@ -46,13 +46,13 @@ int handle_key(int keycode, t_data *data)
     // }
     if (keycode == KEY_LEFT)
     {
-        data->map.p.angle += 0.01;
+        data->map.p.angle += 0.10;
         if (data->map.p.angle > 2 * PI)
             data->map.p.angle -= 2 * PI;
     }
     if (keycode == KEY_RIGHT)
     {
-        data->map.p.angle -= 0.01;
+        data->map.p.angle -= 0.10;
         if (data->map.p.angle < 0)
             data->map.p.angle += 2 * PI;
     }

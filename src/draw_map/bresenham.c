@@ -25,7 +25,9 @@ void draw_wall(t_point p0, int start, int end, t_data *data)
     }
     p0.y_ind = start;
     j = check_texture(data);
+    // printf("*********%====%f\n", data->text.height, data->map.p.wall_height);
     double texture_step = (double)data->text.height / data->map.p.wall_height;
+    // printf("::::::::::::::%f\n", texture_step);
     double texture_pos = 0.0;                                  
     while (i < end)
     {

@@ -1,15 +1,14 @@
-#include "../../include_file/cub3d.h"
+#include "../include_file/cub3d.h"
 
 
-
-unsigned int darkness(unsigned int color, double distance, int max_distance)
+unsigned int	darkness(unsigned int color, double distance, int max_distance)
 {
-    double dark_factor;
-    int r;
-    int g;
-    int b;
+	double	dark_factor;
+	int		r;
+	int		g;
+	int		b;
 
-	dark_factor = 3 - (distance / max_distance);
+	dark_factor = 1 - (distance / max_distance);
 	if (dark_factor < 0)
 		dark_factor = 0;
 	if (dark_factor > 1)
@@ -32,7 +31,7 @@ int set_wall_color(t_data *data)
     if (normalized_angle < 0)
         normalized_angle += 2 * PI;
 
-    if (data->map.p.flag == HOR) // Horizontal hit
+    if (!data->map.p.flag) // Horizontal hit
     {
         if (normalized_angle > 0 && normalized_angle < PI)
             return (0xD239FF); // South-facing wall
@@ -47,6 +46,7 @@ int set_wall_color(t_data *data)
             return (0x000000); // West-facing wall
     }
     return (0);
+
 }
 
 
@@ -74,15 +74,20 @@ int set_wall_color(t_data *data)
 //     return(0);
     
 // }
+
+
 int check_texture(t_data *data)
 {
-    if (data->map.p.flag == HOR)
-        data->map.p.offset_x= fmod(data->map.p.hit_x, WALL_DIM) / WALL_DIM * data->text.width;
+    if (!data->map.p.flag)
+        data->map.p.offset_x = fmod(data->map.p.hit_y, data->text.width);
     else
-        data->map.p.offset_x= fmod(data->map.p.hit_y, WALL_DIM) / WALL_DIM * data->text.width;
-    if (data->map.is_door)
-        return(data->textures[4].name = "textures/simonkraft/door.xpm", 4);
-    if (data->map.p.flag == HOR)
+        data->map.p.offset_x = fmod(data->map.p.hit_y, data->text.height)/ WALL_DIM ;
+
+    // if (data->map.p.ray.offset_x < 0)
+    //     data->map.p.ray.offset_x = 0;
+    // if (data->map.p.ray.offset_x >= data->text.width)
+    //     data->map.p.ray.offset_x = data->text.width - 1;
+    if (!data->map.p.flag)
     {
         if (data->map.p.ray_angle > 0 && data->map.p.ray_angle < PI)
             return (data->textures[0].name = data->map.south, 0);
@@ -91,10 +96,13 @@ int check_texture(t_data *data)
     }
     else
     {
-        if (data->map.p.ray_angle > (3 * PI ) / 2 || data->map.p.ray_angle < PI / 2)
-            return(data->textures[2].name = data->map.east, 2);
+        if (data->map.p.ray_angle > (3 * PI) / 2 || data->map.p.ray_angle < PI / 2)
+            return (data->textures[2].name = data->map.east, 2);
         else
             return (data->textures[3].name = data->map.west, 3);
     }
-    return (0);
+
+    return 0;
 }
+
+
