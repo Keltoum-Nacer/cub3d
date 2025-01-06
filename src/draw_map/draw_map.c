@@ -109,7 +109,7 @@ void	draw_image(t_data *data)
 
 
 
-int draw_map(t_data *data)
+int     draw_map(t_data *data)
 {
     // draw_image(data);
     //clear_image(data);

@@ -11,7 +11,7 @@ SRC =  main.c \
 		src/draw_map/bresenham.c \
 		src/draw_map/move_player.c \
 		src/draw_map/events.c \
-		src/initial/init.c \
+		src/draw_map/init.c \
 		src/draw_map/texters.c
 		
 		

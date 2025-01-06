@@ -18,6 +18,7 @@ void draw_wall(t_point p0, int start, int end, t_data *data)
 {
     int i = 0;
     int j;
+    int color;
     while (i < start)
     {
         my_mlx_pixel_put(&data->mlx, p0.x_ind, i, data->map.C_color);
@@ -25,21 +26,25 @@ void draw_wall(t_point p0, int start, int end, t_data *data)
     }
     p0.y_ind = start;
     j = check_texture(data);
-    // printf("*********%====%f\n", data->text.height, data->map.p.wall_height);
-    double texture_step = (double)data->text.height / data->map.p.wall_height;
-    // printf("::::::::::::::%f\n", texture_step);
-    double texture_pos = 0.0;                                  
+    if (end > WIN_HEIGHT)
+		end = WIN_HEIGHT;
+	if (i < 0)
+		i = 0;
+    double texture_step = (double)data->text.height / data->map.p.wall_height ;
+    double texture_pos = 0.0;                                       
     while (i < end)
     {
-        double tex_y = texture_pos;
-        if (data->map.p.offset_x >= 0 && data->map.p.offset_x < data->text.width)
+        double tex_y = texture_pos ;
+        if (data->map.p.offset_x < data->text.width && data->map.p.offset_x >= 0 && tex_y < data->text.height && tex_y >= 0)
         {
-            int color = *(int *)(data->textures[j].text_mlx.image_addr +
+           color = *(int *)(data->textures[j].text_mlx.image_addr +
                                 ((int)tex_y * data->textures[j].text_mlx.line_length) +
                                 ((int)data->map.p.offset_x* (data->textures[j].text_mlx.bits_per_pixel / 8)));
+        }
+            //color = darkness(color, data->map.p.ray.wall_dist, WIN_HEIGHT);
+            //int color = set_wall_color(data);
                 my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
 
-       }
         texture_pos += texture_step;
         i++;
     }
@@ -66,8 +71,8 @@ void render_wall_projection(t_point p0, t_data *data, double alpha, int i)
     data->map.p.wall_height = round((dis_to_proj / precise_dist) * WALL_DIM);
     int start = (WIN_HEIGHT / 2) - (int)(data->map.p.wall_height / 2);
     int end = (WIN_HEIGHT / 2) + (int)(data->map.p.wall_height / 2);
-    p0.x_ind = i;
     data->map.p.hit_x = p0.x_ind;
+    p0.x_ind = i;
     data->map.p.hit_y = p0.y_ind;
     draw_wall(p0, start, end, data);
 }

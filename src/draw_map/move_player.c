@@ -8,9 +8,9 @@ void move_player(t_data *data)
 }
 void    validate_move(t_data *data, double new_x, double new_y)
 {
-    if (data->map.map[(int)(data->map.p.p_y/ WALL_DIM)][(int)(new_x/ WALL_DIM)] != '1')
+    if (data->map.map[(int)(data->map.p.p_y/ WALL_DIM)][(int)((new_x+4)/ WALL_DIM)] != '1')
         data->map.p.p_x = new_x;
-    if (data->map.map[(int)(new_y/ WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] != '1')
+    if (data->map.map[(int)((new_y+4)/ WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] != '1')
         data->map.p.p_y = new_y;
 }
 int handle_key(int keycode, t_data *data)
@@ -21,14 +21,14 @@ int handle_key(int keycode, t_data *data)
     double angle = data->map.p.angle;
     if (keycode == KEY_W)
     {
-        double new_x = (data->map.p.p_x + SPEED * cos(angle));
+        double new_x = (data->map.p.p_x + SPEED * cos(angle)) ;
         double new_y = (data->map.p.p_y + SPEED * sin(angle)) ;
         validate_move(data, new_x, new_y);
     }
 
     if (keycode == KEY_S)
     {
-        double new_x= (data->map.p.p_x - SPEED * cos(angle));
+        double new_x= (data->map.p.p_x - SPEED * cos(angle)) ;
         double new_y = (data->map.p.p_y - SPEED * sin(angle));
         validate_move(data, new_x, new_y);
     }
