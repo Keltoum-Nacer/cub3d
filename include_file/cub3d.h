@@ -32,9 +32,9 @@
 
 // macro draw
 
-#define KEY_W 65362
+#define KEY_W 119
 #define KEY_D 100
-#define KEY_S 65364
+#define KEY_S 115
 #define KEY_A 97
 #define ESC 65307
 #define OPEN 111
