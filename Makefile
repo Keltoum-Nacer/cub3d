@@ -1,17 +1,18 @@
 
 SRC =  main.c \
-		parse_map/check_file.c \
-		parse_map/check_directions.c \
-		parse_map/ft_getline.c \
-		parse_map/check_color.c \
-		parse_map/check_map.c \
-		parse_map/check_map_utils.c \
-		parse_map/read_map.c \
-		draw_map/draw_map.c \
-		draw_map/bresenham.c \
-		draw_map/move_player.c \
-		draw_map/events.c \
-		initial/init.c 
+		src/parse_map/check_file.c \
+		src/parse_map/check_directions.c \
+		src/parse_map/ft_getline.c \
+		src/parse_map/check_color.c \
+		src/parse_map/check_map.c \
+		src/parse_map/check_map_utils.c \
+		src/parse_map/read_map.c \
+		src/draw_map/draw_map.c \
+		src/draw_map/bresenham.c \
+		src/draw_map/move_player.c \
+		src/draw_map/events.c \
+		src/draw_map/init.c \
+		src/draw_map/texters.c
 		
 		
 LIBFT_DIR=libft
@@ -23,7 +24,7 @@ INCLUDES = -I . -I include -I $(LIBFT_DIR)
 
 C = cc
 
-CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 #-g3 -fsanitize=address 
+CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 #	-g3 -fsanitize=address 
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lbsd -lm
 
 

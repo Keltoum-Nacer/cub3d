@@ -41,11 +41,11 @@ int set_wall_color(t_data *data)
     double normalized_angle;
 
     // Normalize the ray angle to [0, 2*PI]
-    normalized_angle = fmod(data->map.p.ray.angle, 2 * PI);
+    normalized_angle = fmod(data->map.p.ray_angle, 2 * PI);
     if (normalized_angle < 0)
         normalized_angle += 2 * PI;
 
-    if (!data->map.p.ray.ver_hor) // Horizontal hit
+    if (data->map.p.flag) // Horizontal hit
     {
         if (normalized_angle > 0 && normalized_angle < PI)
             return (0xD239FF); // South-facing wall
@@ -66,22 +66,22 @@ int set_wall_color(t_data *data)
 
 int check_texture(t_data *data)
 {
-    if (!data->map.p.ray.ver_hor)
-        data->map.p.ray.texture_x = fmod(data->map.p.ray.wall_intersection.x_ind, WALL_DIM) / WALL_DIM * data->text.width;
+    if (data->map.p.flag)
+        data->map.p.offset_x = fmod(data->map.p.hit_x, WALL_DIM) / WALL_DIM * data->text.width;
     else
-        data->map.p.ray.texture_x = fmod(data->map.p.ray.wall_intersection.y_ind, WALL_DIM) / WALL_DIM * data->text.width;
+        data->map.p.offset_x = fmod(data->map.p.hit_y, WALL_DIM) / WALL_DIM * data->text.width;
     if (data->map.is_door)
         return(data->textures[4].name = "textures/simonkraft/door.xpm", 4);
-    if (!data->map.p.ray.ver_hor)
+    if (data->map.p.flag)
     {
-        if (data->map.p.ray.angle > 0 && data->map.p.ray.angle < PI)
+        if (data->map.p.ray_angle > 0 && data->map.p.ray_angle < PI)
             return(data->textures[0].name = data->map.south, 0);
         else
             return(data->textures[1].name = data->map.north, 1);
     }
     else
     {
-        if (data->map.p.ray.angle > (3 * PI ) / 2 || data->map.p.ray.angle < PI / 2)
+        if (data->map.p.ray_angle > (3 * PI ) / 2 || data->map.p.ray_angle < PI / 2)
             return(data->textures[2].name = data->map.east, 2);
         else
             return(data->textures[3].name = data->map.west, 3);
@@ -106,11 +106,11 @@ void bresenham_wall(t_point p0, int start, int end, t_data *data)
     while (i < end)
     {
         double tex_y = texture_pos ;
-        if (data->map.p.ray.texture_x < data->text.width && data->map.p.ray.texture_x >= 0 && tex_y < data->text.height && tex_y >= 0)
+        if (data->map.p.offset_x < data->text.width && data->map.p.offset_x >= 0 && tex_y < data->text.height && tex_y >= 0)
         {
            color = *(int *)(data->textures[j].text_mlx.image_addr +
                                 ((int)tex_y * data->textures[j].text_mlx.line_length) +
-                                ((int)data->map.p.ray.texture_x* (data->textures[j].text_mlx.bits_per_pixel / 8)));
+                                ((int)data->map.p.offset_x* (data->textures[j].text_mlx.bits_per_pixel / 8)));
         }
             //color = darkness(color, data->map.p.ray.wall_dist, WIN_HEIGHT);
             //int color = set_wall_color(data);
@@ -135,14 +135,14 @@ void draw_wall(t_point p0, t_data *data, double alpha, int i)
         alpha += 2 * PI;
     if (alpha >= 2 * PI)
         alpha -= 2 * PI;
-    data->map.p.ray.angle = alpha;
-    precise_dist = data->map.p.ray.wall_dist * cos(alpha - degree_to_rad(data->map.p.angle));
+    data->map.p.ray_angle = alpha;
+    precise_dist = data->map.p.wall_dist * cos(alpha - degree_to_rad(data->map.p.angle));
     dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(FOV / 2));
     data->map.p.wall_height = round((dis_to_proj / precise_dist) * WALL_DIM);
     int start = (WIN_HEIGHT / 2) - (int)(data->map.p.wall_height / 2);
     int end = (WIN_HEIGHT / 2) + (int)(data->map.p.wall_height / 2);
-    data->map.p.ray.wall_intersection.x_ind = p0.x_ind;
-    data->map.p.ray.wall_intersection.y_ind = p0.y_ind;
+    data->map.p.hit_x = p0.x_ind;
+    data->map.p.hit_y = p0.y_ind;
     p0.x_ind = i;
     bresenham_wall(p0, start, end, data);
 }
@@ -159,21 +159,21 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
     double max_ray_length = sqrt(pow(data->map.width * WALL_DIM, 2) + pow(MAP_HEIGHT * WALL_DIM, 2));
     p1.x_ind = p0.x_ind + max_ray_length * cos(alpha);
     p1.y_ind = max_ray_length * sin(alpha) + p0.y_ind;
-    data->map.p.ray.angle = alpha;
+    data->map.p.ray_angle = alpha;
     init_flag(&s, p0, p1);
     while (1)
     {
         if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == '1')
         {
             data->map.is_door = 0;
-            data->map.p.ray.wall_dist = calculate_distance(p0, player);
+            data->map.p.wall_dist = calculate_distance(p0, player);
             draw_wall(p0, data, alpha, i);
             break;
         }
         else if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == 'D' && !data->map.open_door)
         {
             data->map.is_door = 1;
-            data->map.p.ray.wall_dist = calculate_distance(p0, player);
+            data->map.p.wall_dist = calculate_distance(p0, player);
             draw_wall(p0, data, alpha, i);
             break;
         }
@@ -183,13 +183,13 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
         {
             s.err -= s.dy;
             p0.x_ind += s.sx;
-            data->map.p.ray.ver_hor = 1;
+            data->map.p.flag = HOR;
         }
         else if (e2 < s.dx)
         {
             s.err += s.dx;
             p0.y_ind += s.sy;                                                   
-            data->map.p.ray.ver_hor = 0;
+            data->map.p.flag = VER;
         }
     }
 }

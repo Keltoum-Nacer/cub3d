@@ -16,7 +16,8 @@ SRCF = ft_atoi.c \
 		ft_isdigit.c \
 		ft_strtrim.c \
 		ft_strlcpy.c \
-		ft_calloc.c
+		ft_calloc.c \
+		ft_split.c
 CC = cc
 
 CFLAGS = -Wall -Werror -Wextra

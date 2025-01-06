@@ -43,11 +43,12 @@
 #define KEY_LEFT 65363
 #define KEY_RIGHT 65361
 #define WALL_DIM 256.0
+#define HIGH 600
 #define FOV 60
 #define NUM_RAYS 1920
 #define MINI_DIM 400
 #define MINI_GRID 15
-#define SPEED 20.0
+#define SPEED 25.0
 #define PI 3.14159265358979323846
 #define VIEW_RADIUS 5
 #define TEX_HEIGHT 64
@@ -60,14 +61,20 @@ typedef struct s_point
 } t_point;
 typedef struct s_ray
 {
-    t_point wall_intersection;
-    double texture_x;
-    double texture_y;
+    double hit_x;
+    double hit_y;
+    double offset_x;
+    double offset_y;
     double angle;
     int ver_hor;
     double wall_dist;
 } t_ray;
 
+enum e_HorVer
+{
+    VER,
+    HOR,
+};
 typedef struct s_player
 {
     double p_x;
@@ -75,7 +82,13 @@ typedef struct s_player
     char p_name;
     double angle;
     double wall_height;
-    t_ray ray;
+    double hit_x;
+    double hit_y;
+    double offset_x;
+    double offset_y;
+    double ray_angle;
+    enum e_HorVer flag;
+    double wall_dist;
 } t_player;
 
 typedef struct s_map
@@ -157,26 +170,28 @@ int check_0(char **new_map, t_map *map);
 void free_map(char **arr, t_map *map);
 void print_err(char *str);
 
-// function 2D
+// ray-casting && texters
 int draw_map(t_data *data);
-void draw_mini_map(t_data *data);
 void draw_pixels(int i, int j, int color, t_mlx *mlx);
-void my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
-// test array
 void bresenham(t_point p0, double alpha, t_data *data, int i);
 void init_flag(t_bres_flag *s, t_point p0, t_point p1);
-void init_mlx(t_data *data);
 void init_data(t_map map, t_data *data);
 int handle_key(int keycode, t_data *data);
-void move_player(t_data *data);
 double calculate_distance(t_point p0, t_point p1);
-void draw_wall(t_point p0, t_data *data, double alpha, int i);
-void bresenham_wall(t_point p0, int start, int end, t_data *data);
+void render_wall_projection(t_point p0, t_data *data, double alpha, int i);
+void draw_wall(t_point p0, int start, int end, t_data *data);
+int check_texture(t_data *data);
 
-// events
-double degree_to_rad(float fov);
+// mlx
 
+void move_player(t_data *data);
 void hook_functions(t_data *data);
+void init_mlx(t_data *data);
+void my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 int ft_close(t_data *cub);
+
+//helper
+void draw_mini_map(t_data *data);
+double degree_to_rad(float fov);
 
 #endif
