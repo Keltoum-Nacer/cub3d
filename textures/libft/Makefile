@@ -6,18 +6,12 @@ SRCF = ft_atoi.c \
         ft_strjoin.c \
 		ft_memcpy.c \
 		ft_strlen.c \
-		ft_strtrim.c \
-		ft_strlcpy.c \
-		ft_putendl_fd.c \
-		ft_putstr_fd.c \
 		ft_strcmp.c \
 		ft_strstr.c \
 		ft_strchr.c \
 		ft_isdigit.c \
 		ft_strtrim.c \
-		ft_strlcpy.c \
-		ft_calloc.c \
-		ft_split.c
+		ft_strlcpy.c
 CC = cc
 
 CFLAGS = -Wall -Werror -Wextra
@@ -34,6 +28,7 @@ $(OBJF) : $(SRC)
 
 $(NAME): $(OBJF) 
 	$(AR) $(NAME) $(OBJF)
+
 
 clean :
 	rm -f $(OBJF)
