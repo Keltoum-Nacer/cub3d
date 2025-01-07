@@ -1,4 +1,4 @@
-#include "../../include_files/cub3d.h"
+#include "../include_files/cub3d_bonus.h"
 
 void init_flag(t_bres_flag *s, t_point p0, t_point p1)
 {
@@ -83,8 +83,7 @@ void render_wall_projection(t_point p0, t_data *data, double alpha, int i)
     p0.x_ind = i;
     draw_wall(p0, start, end, data);
 }
-
-int    check_wall(t_point p0, double alpha, t_data *data, int i)
+int    check_wall_door(t_point p0, double alpha, t_data *data, int i)
 {
     t_point player;
 
@@ -98,9 +97,15 @@ int    check_wall(t_point p0, double alpha, t_data *data, int i)
         render_wall_projection(p0, data, alpha, i);
         return(1);
     }
+    if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == 'D' && !data->map.open_door)
+    {
+        data->map.is_door = 1;
+        data->map.p.wall_dist = calculate_distance(p0, player);
+        render_wall_projection(p0, data, alpha, i);
+        return(1);
+    }
     return(0);
 }
-
 void    init_bresenham(t_data *data, t_point p0, double alpha, t_bres_flag *s)
 {
     double max_ray_length;
@@ -121,7 +126,7 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
     init_bresenham(data, p0, alpha, &s);
     while (1)
     {
-        if(check_wall(p0, alpha, data, i))
+        if(check_wall_door(p0, alpha, data, i))
             break;
         e2 = s.err * 2;
         if (e2 > -s.dy)

@@ -1,4 +1,4 @@
-#include "../include_files/cub3d.h"
+#include "../include_files/cub3d_bonus.h"
 
 int validate_position(char *line, int flag)
 {

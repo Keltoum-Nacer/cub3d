@@ -1,4 +1,4 @@
-#include "../include_files/cub3d.h"
+#include "../include_files/cub3d_bonus.h"
 
 int extract_and_validate_int(char *line, int *pos)
 {

@@ -1,4 +1,4 @@
-#include "../include_files/cub3d.h"
+#include "../include_files/cub3d_bonus.h"
 
 unsigned int darkness(unsigned int color, double distance, int max_distance)
 {
@@ -50,21 +50,24 @@ int set_wall_color(t_data *data)
 int check_texture(t_data *data)
 {
     if (!data->map.p.flag)
-    {
         data->map.p.offset_x = fmod(data->map.p.hit_x, WALL_DIM) / WALL_DIM * data->text.width;
+    else
+        data->map.p.offset_x = fmod(data->map.p.hit_y, WALL_DIM) / WALL_DIM * data->text.width;
+    if (data->map.is_door)
+        return(4);
+    if (!data->map.p.flag)
+    {
         if (data->map.p.ray_angle > 0 && data->map.p.ray_angle < PI)
-            return (data->textures[0].name = data->map.south, 0);
+            return (0);
         else
-            return (data->textures[1].name = data->map.north, 1);
+            return (1);
     }
     else
     {
-        data->map.p.offset_x = fmod(data->map.p.hit_y, WALL_DIM) / WALL_DIM * data->text.width;
         if (data->map.p.ray_angle > (3 * PI) / 2 || data->map.p.ray_angle < PI / 2)
-            return (data->textures[2].name = data->map.east, 2);
+            return (2);
         else
-            return (data->textures[3].name = data->map.west, 3);
+            return ( 3);
     }
-
     return 0;
 }

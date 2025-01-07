@@ -1,4 +1,4 @@
-#include "../../include_files/cub3d.h"
+#include "../include_files/cub3d_bonus.h"
 
 int ft_close(t_data *cub)
 {

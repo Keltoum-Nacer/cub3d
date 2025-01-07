@@ -1,4 +1,4 @@
-#include "../include_files/cub3d.h"
+#include "../include_files/cub3d_bonus.h"
 
 void move_player(t_data *data)
 {
@@ -13,10 +13,17 @@ void validate_move(t_data *data, double new_x, double new_y)
 
     if (data->map.map[(int)(data->map.p.p_y / WALL_DIM)]
                      [(int)((new_x - WALL_DIM) / WALL_DIM)] != '1' &&
-                     data->map.map[(int)((new_y - WALL_DIM) / WALL_DIM)]
-                     [(int)(data->map.p.p_x / WALL_DIM)] != '1')
+        data->map.map[(int)(data->map.p.p_y / WALL_DIM)]
+                     [(int)((new_x + WALL_DIM) / WALL_DIM)] != '1')
     {
         data->map.p.p_x = new_x;
+    }
+
+    if (data->map.map[(int)((new_y - WALL_DIM) / WALL_DIM)]
+                     [(int)(data->map.p.p_x / WALL_DIM)] != '1' &&
+        data->map.map[(int)((new_y + WALL_DIM) / WALL_DIM)]
+                     [(int)(data->map.p.p_x / WALL_DIM)] != '1')
+    {
         data->map.p.p_y = new_y;
     }
 }

@@ -1,15 +1,16 @@
-#include "../include_files/cub3d.h"
+#include "../include_files/cub3d_bonus.h"
 
 void    init_textures(t_data *data)
 {
-    char *names[4];
+    char *names[5];
 
     names[0] = data->map.south;
     names[1] = data->map.north;
     names[2] = data->map.east;
     names[3] = data->map.west;
+    names[4] = ft_strdup("textures/simonkraft/door.xpm");
     int i = 0;
-    while(i < 4)
+    while(i < 5)
     {
         data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, names[i], &data->text.width, &data->text.height);
         if (!data->textures[i].text_mlx.image)
@@ -39,10 +40,11 @@ void init_mlx(t_data *data)
 void    init_data(t_map map, t_data *data)
 {
     data->map = map;
+    data->map.open_door = 0;
     data->map.p.p_y *= WALL_DIM ;
     data->map.p.p_x *= WALL_DIM;
     if (map.p.p_name == 'N')
-        data->map.p.angle = (3 * PI) / 2;
+        data->map.p.angle = 3*PI / 2;
     if (map.p.p_name == 'W')
         data->map.p.angle = PI;
     if (map.p.p_name == 'S')
