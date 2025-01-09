@@ -7,6 +7,8 @@ char	*ft_strchr(const char	*s, int c)
 
 	find = (unsigned char)c;
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i] != '\0')
 	{
 		if (s[i] == find)

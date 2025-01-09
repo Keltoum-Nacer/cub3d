@@ -34,7 +34,9 @@ int draw_textures(t_data *data, int i, int end, t_point p0)
                                 ((int)tex_y * data->textures[j].text_mlx.line_length) +
                                 ((int)data->map.p.offset_x* (data->textures[j].text_mlx.bits_per_pixel / 8)));
         }
-            //color = darkness(color, data->map.p.ray.wall_dist, WIN_HEIGHT);
+        // printf("%d\n", color);
+            // color = darkness(color, data->map.p.wall_dist, WIN_HEIGHT);
+        // printf("%d\n", color);
             //int color = set_wall_color(data);
             my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
             texture_pos += texture_step;

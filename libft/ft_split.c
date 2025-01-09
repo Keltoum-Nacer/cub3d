@@ -74,8 +74,6 @@ char **ft_split(const char *s, char c)
     if (!s)
         return (NULL);
     cw = ft_len(s, c);
-    if (cw != 3)
-        return (NULL);
     str = (char **)malloc((cw + 1) * sizeof(char *));
     if (!str)
         return (NULL);

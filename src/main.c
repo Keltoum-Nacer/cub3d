@@ -24,6 +24,7 @@ int parse_Gmap(char *name, t_map *map)
     if (!parse_map(fd, fdd, map))
         return (FAILURE);
     close(fd);
+    // printf("::::::::::::\n");
     return (SUCCESS);
 }
 
@@ -37,10 +38,25 @@ int main(int ac, char **av)
         return (EXIT_FAILURE);
     }
     if (!parse_Gmap(av[1], &map))
+    {
+        // printf("::::::::::::\n");
+        free(map.north);
+        free(map.south);
+        free(map.east);
+        printf("🫣🫣🫣🫣\n");
+        free(map.west);
         return (FAILURE);
+    }
+    printf("cool👾🤖\n");
     init_data(map, &data);
     draw_map(&data);
     mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
     hook_functions(&data);
     mlx_loop(data.mlx.mlx);
+    printf("::::::::::::::::::::::\n");
+    free(map.north);
+    free(map.south);
+    free(map.east);
+    free(map.west);
+    return (0);
 }
