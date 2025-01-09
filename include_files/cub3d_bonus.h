@@ -13,8 +13,8 @@
 // macro parsing
 #define SUCCESS 1
 #define FAILURE 0
-#define MAP_HEIGHT 1000
 #define BUFFER_SIZE 7
+#define MAP_HEIGHT 1000
 #define INV_TEX ": Invalid texture(s)\n"
 #define NOT_XPM " Not an .xpm file\n"
 #define NOT_CUB " Not an .cub file\n"
@@ -36,6 +36,7 @@
 #define KEY_A 97
 #define ESC 65307
 #define OPEN 111
+#define CLOSE 99
 #define WIN_WIDTH 1920
 #define WIN_HEIGHT 1080
 #define KEY_LEFT 65363
@@ -95,7 +96,7 @@ typedef struct s_map
     char *west;
     char *east;
     char *south;
-    char *map[MAP_HEIGHT]; // Updated with the parsing changes
+    char **map; // Updated with the parsing changes
     char **new_map;
     int F_color;
     int C_color;

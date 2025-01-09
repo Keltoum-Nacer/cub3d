@@ -35,7 +35,6 @@
 #define KEY_S 115
 #define KEY_A 97
 #define ESC 65307
-#define OPEN 111
 #define WIN_WIDTH 1920
 #define WIN_HEIGHT 1080
 #define KEY_LEFT 65363
@@ -95,7 +94,7 @@ typedef struct s_map
     char *west;
     char *east;
     char *south;
-    char *map[MAP_HEIGHT]; // Updated with the parsing changes
+    char **map; // Updated with the parsing changes
     char **new_map;
     int F_color;
     int C_color;
@@ -188,5 +187,6 @@ int ft_close(t_data *cub);
 
 //helper
 double degree_to_rad(float fov);
+int set_wall_color(t_data *data);
 
 #endif

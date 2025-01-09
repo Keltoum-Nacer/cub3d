@@ -32,7 +32,9 @@ char **allocate_map(t_map *map)
     int i;
 
     i = 0;
-    new_map = ft_calloc(map->height, sizeof(char *));
+    new_map = (char **)malloc(map->height * sizeof(char *));
+    if (!new_map)
+        return(NULL);
     while (i < map->height)
     {
         new_map[i] = ft_calloc(map->width, sizeof(char));
@@ -61,7 +63,7 @@ int valid_map(t_map *map)
     }
     if (!check_0(map->new_map, map))
         return (FAILURE);
-    //free_map(new_map, map);
+   // free_map(map->new_map, map);
     return (SUCCESS);
 }
 

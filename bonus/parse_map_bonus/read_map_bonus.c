@@ -56,13 +56,13 @@ int valid_character(t_map *map)
     return(SUCCESS);
 }
 
-int    read_map(int fd, int fdd, t_map *map)
+int    full_map(t_map *map, char **str, int fd)
 {
-    char    *line;
-    int     i;
+    char *line;
+    int j; 
+    int i;
 
     i = 0;
-    map->height = height_map(fdd);
     while((line = get_next_line(fd)))
     {
         while(line && !ft_strcmp(line, "\n") && i == 0)
@@ -72,14 +72,28 @@ int    read_map(int fd, int fdd, t_map *map)
         }
         if(line && ft_strcmp(line, "\n"))
         {
-            map->map[i] = ft_strtrim(line, "\n");
+            *str = ft_strjoin(*str, line);
+            j = ft_strlen(line);
+            if(j > map->width)
+                map->width = j;
             i++;
         }
         else if(line && i < map->height - map->height_text)
             return ( free(line),print_err(MAP), FAILURE);
         free(line);
     }
-    map->map[i] = NULL;
-    map->height = i;
+    return(i);
+}
+
+int    read_map(int fd, int fdd, t_map *map)
+{
+    char *str;
+
+    
+    map->width = 0;
+    map->height = height_map(fdd);
+    str = NULL;
+    map->height = full_map(map, &str, fd);
+    map->map = ft_split(str, '\n');
     return(SUCCESS);
 }

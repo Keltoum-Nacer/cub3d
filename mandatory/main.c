@@ -30,7 +30,7 @@ int parse_Gmap(char *name, t_map *map)
 int main(int ac, char **av)
 {
     t_map map;
-    t_data data;
+   t_data data;
     if (ac != 2)
     {
         write(2, WR_NBR, 26);

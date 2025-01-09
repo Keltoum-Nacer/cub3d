@@ -17,7 +17,7 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
 int draw_textures(t_data *data, int i, int end, t_point p0)
 {
     double tex_y;
-    int color;
+   int color;
     double texture_step;
     double texture_pos;
     int j;
@@ -35,7 +35,7 @@ int draw_textures(t_data *data, int i, int end, t_point p0)
                                 ((int)data->map.p.offset_x* (data->textures[j].text_mlx.bits_per_pixel / 8)));
         }
             //color = darkness(color, data->map.p.ray.wall_dist, WIN_HEIGHT);
-            //int color = set_wall_color(data);
+           // int color = set_wall_color(data);
             my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
             texture_pos += texture_step;
             i++;
