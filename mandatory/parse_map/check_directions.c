@@ -37,6 +37,30 @@ char	*extract_directory_path(int fd, int flag, t_map **map)
 	return (free(line), free(line_trim), d);
 }
 
+void	free_dir(t_map *map, int flag)
+{
+	if (flag == 1)
+		free(map->north);
+	else if (flag == 2)
+	{
+		free(map->north);
+		free(map->south);
+	}
+	else if (flag == 3)
+	{
+		free(map->north);
+		free(map->south);
+		free(map->west);
+	}
+	else
+	{
+		free(map->north);
+		free(map->south);
+		free(map->west);
+		free(map->east);
+	}
+}
+
 int	parse_direction(int fd, t_map **map)
 {
 	char	*line;
@@ -46,18 +70,19 @@ int	parse_direction(int fd, t_map **map)
 		return (FAILURE);
 	(*map)->south = extract_directory_path(fd, 1, map);
 	if (!(*map)->south)
-		return (FAILURE);
+		return (free_dir(*map, 1), FAILURE);
 	(*map)->west = extract_directory_path(fd, 2, map);
 	if (!(*map)->west)
-		return (FAILURE);
+		return (free_dir(*map, 2), FAILURE);
 	(*map)->east = extract_directory_path(fd, 3, map);
 	if (!(*map)->east)
-		return (FAILURE);
+		return (free_dir(*map, 3), FAILURE);
 	line = get_next_line(fd);
 	if (line[0] != '\n')
 	{
 		write(2, DUP, 12);
 		free(line);
+		free_dir(*map, 4);
 		return (FAILURE);
 	}
 	return (free(line), SUCCESS);

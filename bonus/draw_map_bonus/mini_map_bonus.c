@@ -37,92 +37,6 @@
 // // }
 
 
-// // void draw_mini_map(t_data *data)
-// // {
-// //     int i, j;
-// //     double center_x, center_y;
-// //     double dx, dy, dist_squared;
-// //     int radius = VIEW_RADIUS * MINI_GRID * 15; 
-// //     center_x = data->map.p.p_x / 64;
-// //     center_y = data->map.p.p_y / 64;
-
-// //     // Iterate over the map
-// //     i = 0;
-// //     while (data->map.map[i])
-// //     {
-// //         j = 0;
-// //         while (data->map.map[i][j])
-// //         {
-// //             dx = j - center_x;
-// //             dy = i - center_y;
-// //             dist_squared = dx * dx + dy * dy;
-
-// //             if (dist_squared <= VIEW_RADIUS * VIEW_RADIUS)
-// //             {
-// //                 int x = (dx + VIEW_RADIUS) * 15;
-// //                 int y = (dy + VIEW_RADIUS) * 15;
-
-// //                 if (x * x + y * y <= radius * radius)
-// //                 {
-// //                     if (data->map.map[i][j] == '1')
-// //                         draw_pixels_mini_map(x, y, 0xDB7093, &data->mlx);
-// //                     else if (data->map.map[i][j] == ' ')
-// //                         draw_pixels_mini_map(x, y, 0xC71585, &data->mlx);
-// //                     else 
-// //                         draw_pixels_mini_map(x, y, 0xFFB6C1, &data->mlx);
-// //                 }
-// //             }
-// //             j++;
-// //         }
-// //         i++;
-// //     }
-
-// //     draw_mini_player(5, 5, 0x000000, &data->mlx);
-// //     draw_raycasting_mini_map(data);
-// // }
-// void draw_mini_map(t_data *data)
-// {
-//     int i, j;
-//     double center_x, center_y;
-//     double dx, dy, dist_squared;
-//    // int radius = VIEW_RADIUS * MINI_GRID * 15;
-
-//     center_x = data->map.p.p_x / 64;
-//     center_y = data->map.p.p_y / 64;
-
-//     i = 0;
-//     while (data->map.map[i])
-//     {
-//         j = 0;
-//         while (data->map.map[i][j])
-//         {
-//             dx = j - center_x;
-//             dy = i - center_y;  
-//             dist_squared = dx * dx + dy * dy;
-//             if (dist_squared <= VIEW_RADIUS * VIEW_RADIUS)
-//             {
-//                 int tile_x = (dx + VIEW_RADIUS) * 15;  
-//                 int tile_y = (dy + VIEW_RADIUS) * 15; 
-
-//                 // if (tile_x * tile_x + tile_y * tile_y <= radius * radius)
-//                 // {
-//                     if (data->map.map[i][j] == '1')
-//                         draw_pixels_mini_map(tile_x, tile_y, 0xDB7093, &data->mlx);
-//                     else if (data->map.map[i][j] == ' ')
-//                         draw_pixels_mini_map(tile_x, tile_y, 0xC71585, &data->mlx);
-//                     else
-//                         draw_pixels_mini_map(tile_x, tile_y, 0xFFB6C1, &data->mlx);
-//                 // }
-//             }
-//             j++;
-//         }
-//         i++;
-//     }
-//     // draw_mini_player(center_x , center_y, 0x000000, &data->mlx);
-//     //draw_circle(center_x, center_y, 0x000000, &data->mlx);
-//     // draw_raycasting_mini_map(data);
-// }
-
 // void    mini_map(t_data *data)
 // {
 //    double i, angle, x1, y1;
@@ -181,31 +95,6 @@
 //     }
 // }
 
-// void draw_raycasting_mini_map(t_data *data)
-// {
-//     double fov = degree_to_rad(FOV);
-//     double angle_step = fov / NUM_RAYS;
-//     double ray_angle;
-//     t_point x;
-//     int i;
-
-//     ray_angle = degree_to_rad(data->map.p.angle) - (fov / 2);
-//     x.x_ind = 5 * 15;
-//     x.y_ind = 5 * 15;
-
-//     i = 0;
-//     while (i < 450)
-//     {
-//         if (ray_angle < 0)
-//             ray_angle += 2 * PI;
-//         if (ray_angle > 2 * PI)
-//             ray_angle -= 2 * PI;
-//         bresenham_mini_map(x, ray_angle, data, i);
-//         ray_angle += angle_step;
-//         i++;
-//     }
-// }
-
 
 // void draw_pixels_mini_map(int i, int j, int color, t_mlx *mlx)
 // {
@@ -225,6 +114,7 @@
 //         x++;
 //     }
 // }
+
 void     draw_mini_player(int x, int y, int color, t_mlx *mlx)
 {
     double i, angle, x1, y1;
@@ -326,10 +216,9 @@ void draw_mini_map(t_data *data)
     int i, j;
     double center_x, center_y;
     double dx, dy, dist_squared;
-   // int radius = VIEW_RADIUS * MINI_GRID * 15;
 
-    center_x = (data->map.p.p_x / 64) + 0.2;
-    center_y = (data->map.p.p_y / 64) + 0.2;
+    center_x = (data->map.p.p_x / WALL_DIM) + 0.2;
+    center_y = (data->map.p.p_y / WALL_DIM) + 0.2;
 
     i = 0;
     while (data->map.map[i])
@@ -344,23 +233,20 @@ void draw_mini_map(t_data *data)
             {
                 int tile_x = (dx + VIEW_RADIUS) * 15;  
                 int tile_y = (dy + VIEW_RADIUS) * 15; 
-
-                // if (tile_x * tile_x + tile_y * tile_y <= radius * radius)
-                // {
                     if (data->map.map[i][j] == '1')
-                        draw_pixels_mini_map(tile_x, tile_y, 0xDB7093, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0xB22222, &data->mlx);
                     else if (data->map.map[i][j] == ' ')
-                        draw_pixels_mini_map(tile_x, tile_y, 0xC71585, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0x000000, &data->mlx);
+                    else if(data->map.map[i][j] == 'D')
+                        draw_pixels_mini_map(tile_x, tile_y, 0x008000, &data->mlx);
                     else
-                        draw_pixels_mini_map(tile_x, tile_y, 0xFFB6C1, &data->mlx);
-                // }
+                        draw_pixels_mini_map(tile_x, tile_y, 0xFFFAFA, &data->mlx);
             }
             j++;
         }
         i++;
     }
      draw_mini_player(5.5, 5.5, 0x000000, &data->mlx);
-    //draw_circle(center_x, center_y, 0x000000, &data->mlx);
      draw_raycasting_mini_map(data);
 }
 

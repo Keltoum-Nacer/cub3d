@@ -1,18 +1,18 @@
 
-SRC =  src/main.c \
-		src/parse_map/check_file.c \
-		src/parse_map/check_directions.c \
-		src/parse_map/ft_getline.c \
-		src/parse_map/check_color.c \
-		src/parse_map/check_map.c \
-		src/parse_map/check_map_utils.c \
-		src/parse_map/read_map.c \
-		src/draw_map/draw_map.c \
-		src/draw_map/bresenham.c \
-		src/draw_map/move_player.c \
-		src/draw_map/events.c \
-		src/draw_map/init.c \
-		src/draw_map/texters.c
+SRC =  mandatory/main.c \
+		mandatory/parse_map/check_file.c \
+		mandatory/parse_map/check_directions.c \
+		mandatory/parse_map/ft_getline.c \
+		mandatory/parse_map/check_color.c \
+		mandatory/parse_map/check_map.c \
+		mandatory/parse_map/check_map_utils.c \
+		mandatory/parse_map/read_map.c \
+		mandatory/draw_map/draw_map.c \
+		mandatory/draw_map/bresenham.c \
+		mandatory/draw_map/move_player.c \
+		mandatory/draw_map/events.c \
+		mandatory/draw_map/init.c \
+		mandatory/draw_map/texters.c
 		
 SRCB = bonus/main_bonus.c \
 		bonus/parse_map_bonus/check_color_bonus.c \
@@ -40,7 +40,7 @@ INCLUDES = -I . -I include -I $(LIBFT_DIR)
 
 C = cc
 
-CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 #-g3 -fsanitize=address 
+CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 -g3 -fsanitize=address 
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lbsd -lm
 
 

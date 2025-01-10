@@ -2,8 +2,7 @@
 
 int ft_close(t_data *cub)
 {
-    mlx_destroy_image(cub->mlx.mlx, cub->mlx.image);
-	mlx_destroy_window(cub->mlx.mlx, cub->mlx.window);
+    destroy_all(*cub);
 	exit(0);
 }
 

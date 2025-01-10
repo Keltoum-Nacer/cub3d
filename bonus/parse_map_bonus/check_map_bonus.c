@@ -1,4 +1,4 @@
-#include "../include_files/cub3d_bonus.h"
+#include "../../include_files/cub3d_bonus.h"
 
 int surrounded_by_1(t_map *map)
 {
@@ -32,7 +32,6 @@ int check_doors(t_map *map)
     int j;
 
     i = 0;
-    map->width = 0;
     while (map->map[i])
     {
         j = 0;
@@ -42,8 +41,6 @@ int check_doors(t_map *map)
                 return (print_err(DOOR), FAILURE);
             j++;
         }
-        if (map->width < j)
-            map->width = j;
         i++;
     }
     return (SUCCESS);
@@ -66,7 +63,6 @@ char **allocate_map(t_map *map)
 
 int valid_map(t_map *map)
 {
-   // char **new_map;
     int i;
     int j;
 
@@ -92,8 +88,9 @@ int parse_map(int fd, int fdd, t_map *map)
 {
     if (!read_map(fd, fdd, map))
         return (FAILURE);
-    if (!map->map[0])
-        return (print_err(EMPTY), FAILURE);
+    // if (!map->map[0])
+    printf(":::::::::::%s\n",map->map[0]);
+    //     return (print_err(EMPTY), FAILURE);
     if (map->height <= 2)
         return (print_err(SMALL), FAILURE);
     if (!valid_character(map))

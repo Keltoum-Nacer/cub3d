@@ -5,8 +5,13 @@ int	extract_and_validate_int(char *line)
 	int		i;
 	int		ret;
 	char	*nmbr;
+	char	**spl;
 
 	i = 0;
+	spl = ft_split(line, ' ');
+	if (ft_len_double(spl) != 1)
+		return (ft_free(spl), ft_put_str(INV_RGB, NULL), -1);
+	ft_free(spl);
 	while (ft_whitespace(line[0]))
 		line++;
 	while (ft_isdigit(line[i]))
@@ -78,9 +83,11 @@ int	parse_color(int fd, t_map **map)
 {
 	(*map)->F_color = extract_color_value(fd, 0, map);
 	if ((*map)->F_color == -1)
-		return (FAILURE);
+		return (free((*map)->north), free((*map)->south), free((*map)->west),
+			free((*map)->east), FAILURE);
 	(*map)->C_color = extract_color_value(fd, 1, map);
 	if ((*map)->C_color == -1)
-		return (FAILURE);
+		return (free((*map)->north), free((*map)->south), free((*map)->west),
+			free((*map)->east), FAILURE);
 	return (SUCCESS);
 }

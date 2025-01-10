@@ -21,7 +21,7 @@ char	*ft_getline(int fd)
 		buff = ft_strjoin(d, tmp);
 		if (tmp[0] == '\n' || !tmp)
 			return (free(tmp), free(d), buff);
-		free(d);
+		// free(d);
 	}
 	return (NULL);
 }

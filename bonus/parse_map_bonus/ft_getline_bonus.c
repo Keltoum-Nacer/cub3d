@@ -1,4 +1,4 @@
-#include "../include_files/cub3d_bonus.h"
+#include "../../include_files/cub3d_bonus.h"
 
 char    *ft_getline(int fd)
 {

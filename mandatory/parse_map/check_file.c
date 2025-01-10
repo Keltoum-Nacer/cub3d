@@ -36,6 +36,8 @@ void	ft_free(char **tr)
 	int	i;
 
 	i = 0;
+	if (!tr || !(tr[0]))
+		return ;
 	while (tr[i])
 	{
 		free(tr[i]);
