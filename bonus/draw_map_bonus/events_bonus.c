@@ -9,28 +9,23 @@ int ft_close(t_data *cub)
 int mouse_move(int x, int y, t_data *data)
 {
     (void)y;
-   static int last_x = -1; // Uninitialized state
-
-    // if (last_x == -1)
-    //     mlx_mouse_get_pos(data->mlx.mlx, data->mlx.window, &last_x, NULL);
-
-    if (x > last_x)
-    {
-        data->map.p.angle += 0.005;
-        if (data->map.p.angle > 2 * PI)
-            data->map.p.angle -= 2 * PI;
-    }
-    else if (x < last_x)
-    {
-        data->map.p.angle -=  0.005;
-        if (data->map.p.angle < 0)
-            data->map.p.angle += 2 * PI;
-    }
-    //mlx_mouse_show(data->mlx.mlx, data->mlx.window);
+    static int last_x = WIN_WIDTH / 2;
+        if (x > last_x)
+        {
+            data->map.p.angle += 0.03;
+            if (data->map.p.angle > 2 * PI)
+                data->map.p.angle -= 2 * PI;
+        }
+        if (x < last_x)
+        {
+            data->map.p.angle -= 0.03;
+            if (data->map.p.angle < 0)
+                data->map.p.angle += 2 * PI;
+        }
     last_x = x;
-
-    return(move_player(data), 1);
+    return (move_player(data), 1); 
 }
+
 
 void    hook_functions(t_data *data)
 {

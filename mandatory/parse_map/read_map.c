@@ -93,6 +93,8 @@ int    read_map(int fd, int fdd, t_map *map)
     map->height = height_map(fdd);
     str = NULL;
     map->height = full_map(map, &str, fd);
+    if (!map->height)
+        return(FAILURE);
     map->map = ft_split(str, '\n');
     return(SUCCESS);
 }

@@ -124,6 +124,7 @@ typedef struct s_text
     t_mlx text_mlx;
     int width;
     int height;
+    char *player;
     char *name;
     int x;
     int y;
@@ -178,7 +179,7 @@ double calculate_distance(t_point p0, t_point p1);
 void render_wall_projection(t_point p0, t_data *data, double alpha, int i);
 void draw_wall(t_point p0, int start, int end, t_data *data);
 int check_texture(t_data *data);
-
+void player(t_data *data);
 // mlx
 
 void move_player(t_data *data);
