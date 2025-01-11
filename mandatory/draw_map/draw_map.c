@@ -86,7 +86,7 @@ double calculate_distance(t_point p0, t_point p1)
 int     draw_map(t_data *data)
 {
     draw_raycasting(data);
-    // draw_mini_map(data);
+    // draw_mini_wwmap(data);
     return(0);
 }
 

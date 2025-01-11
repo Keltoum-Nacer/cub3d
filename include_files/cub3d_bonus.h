@@ -40,20 +40,19 @@
 #define ESC 65307
 #define OPEN 111
 #define CLOSE 99
-#define WIN_WIDTH 1920
-#define WIN_HEIGHT 1080
+#define WIN_WIDTH 920
+#define WIN_HEIGHT 800
 #define KEY_LEFT 65363
 #define KEY_RIGHT 65361
 #define WALL_DIM 256.0
-#define HIGH 600
 #define FOV 60
 #define NUM_RAYS WIN_WIDTH
 #define MINI_DIM 400
 #define MINI_GRID 15
-#define SPEED 25.0
+#define SPEED 50.0
 #define PI 3.14159265358979323846
 #define VIEW_RADIUS 5
-#define CO 256
+#define CO 100
 
 typedef struct s_point
 {
@@ -196,4 +195,6 @@ void draw_mini_map(t_data *data);
 double degree_to_rad(float fov);
 void	ft_free(char **tr);
 int	ft_len_double(char **str);
+void	free_dir(t_map *map, int flag);
+void destroy_all_bonus(t_data data);
 #endif

@@ -9,12 +9,14 @@ void move_player(t_data *data)
 }
 void validate_move(t_data *data, double new_x, double new_y, int flag_x, int flag_y)
 {
-
-    if (data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((new_x) / WALL_DIM)] == '0' || data->map.open_door)
+        printf("=============%f++++++++++++++++%f\n", new_x, new_y);
+        printf("***************************%c\n",data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((new_x) / WALL_DIM)]);
+    if (data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((new_x) / WALL_DIM)] == '0' || data->map.open_door || data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((new_x) / WALL_DIM)] == data->map.p.p_name)
     {
+        printf(">>>>>%c\n", data->map.p.p_name);
         data->map.p.p_x = new_x - flag_x;
     }
-    if (data->map.map[(int)(new_y / WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] == '0' || data->map.open_door)
+    if (data->map.map[(int)(new_y / WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] == '0' || data->map.open_door || data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((new_x) / WALL_DIM)] == data->map.p.p_name)
     {
         data->map.p.p_y = new_y - flag_y;
     }
@@ -27,28 +29,29 @@ int handle_key(int keycode, t_data *data)
     double angle = data->map.p.angle;
     if (keycode == KEY_W)
     {
-        double new_x = (data->map.p.p_x + SPEED * cos(angle)) + CO * cos(data->map.p.angle);
-        double new_y = (data->map.p.p_y + SPEED * sin(angle)) + CO * sin(data->map.p.angle);
-        validate_move(data, new_x, new_y, CO * cos(data->map.p.angle), CO * sin(data->map.p.angle));
+        printf("::::::::::%f-____________%f\n", data->map.p.p_x, data->map.p.p_y);
+        double new_x = (data->map.p.p_x + SPEED * cos(angle));
+        double new_y = (data->map.p.p_y + SPEED * sin(angle));
+        validate_move(data, new_x, new_y, 0, 0);
     }
 
     if (keycode == KEY_S)
     {
-        double new_x = (data->map.p.p_x - SPEED * cos(data->map.p.angle)) - CO * cos(data->map.p.angle);
-        double new_y = (data->map.p.p_y - SPEED * sin(data->map.p.angle)) - CO * sin(data->map.p.angle);
-        validate_move(data, new_x, new_y, -CO * cos(data->map.p.angle), -CO * sin(data->map.p.angle));
+        double new_x = (data->map.p.p_x - SPEED * cos(data->map.p.angle)) - 0;
+        double new_y = (data->map.p.p_y - SPEED * sin(data->map.p.angle)) - 0;
+        validate_move(data, new_x, new_y, -0, -0);
     }
     if (keycode == KEY_A)
     {
-        double new_x = data->map.p.p_x - SPEED * cos(data->map.p.angle + PI / 2) - CO * cos(data->map.p.angle + PI / 2);
-        double new_y = data->map.p.p_y - SPEED * sin(data->map.p.angle + PI / 2) - CO * sin(data->map.p.angle + PI / 2);
-        validate_move(data, new_x, new_y, -CO * cos(data->map.p.angle + PI / 2), -CO * sin(data->map.p.angle + PI / 2));
+        double new_x = data->map.p.p_x - SPEED * cos(data->map.p.angle + PI / 2) - 0;
+        double new_y = data->map.p.p_y - SPEED * sin(data->map.p.angle + PI / 2) -0;
+        validate_move(data, new_x, new_y, -0, -0);
     }
     if (keycode == KEY_D)
     {
-        double new_x = data->map.p.p_x + SPEED * cos(data->map.p.angle + PI / 2) + CO * cos(data->map.p.angle + PI / 2);
-        double new_y = data->map.p.p_y + SPEED * sin(data->map.p.angle + PI / 2) + CO * sin(data->map.p.angle + PI / 2);
-        validate_move(data, new_x, new_y, CO * cos(data->map.p.angle + PI / 2), CO * sin(data->map.p.angle + PI / 2));
+        double new_x = data->map.p.p_x + SPEED * cos(data->map.p.angle + PI / 2) + 0;
+        double new_y = data->map.p.p_y + SPEED * sin(data->map.p.angle + PI / 2) +0;
+        validate_move(data, new_x, new_y, 0,0);
     }
     if (keycode == KEY_LEFT)
     {
