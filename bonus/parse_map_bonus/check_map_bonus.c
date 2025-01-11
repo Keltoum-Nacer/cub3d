@@ -88,9 +88,8 @@ int parse_map(int fd, int fdd, t_map *map)
 {
     if (!read_map(fd, fdd, map))
         return (FAILURE);
-    // if (!map->map[0])
-    printf(":::::::::::%s\n",map->map[0]);
-    //     return (print_err(EMPTY), FAILURE);
+    if (!map->height)
+        return (print_err(EMPTY), FAILURE);
     if (map->height <= 2)
         return (print_err(SMALL), FAILURE);
     if (!valid_character(map))

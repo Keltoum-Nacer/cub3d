@@ -47,12 +47,13 @@
 #define WALL_DIM 256.0
 #define HIGH 600
 #define FOV 60
-#define NUM_RAYS 1920
+#define NUM_RAYS WIN_WIDTH
 #define MINI_DIM 400
 #define MINI_GRID 15
 #define SPEED 25.0
 #define PI 3.14159265358979323846
 #define VIEW_RADIUS 5
+#define CO 256
 
 typedef struct s_point
 {
@@ -127,6 +128,7 @@ typedef struct s_text
     t_mlx text_mlx;
     int width;
     int height;
+    char *player;
     char *name;
     int x;
     int y;
@@ -180,7 +182,7 @@ double calculate_distance(t_point p0, t_point p1);
 void render_wall_projection(t_point p0, t_data *data, double alpha, int i);
 void draw_wall(t_point p0, int start, int end, t_data *data);
 int check_texture(t_data *data);
-
+void player(t_data *data);
 // mlx
 
 void move_player(t_data *data);
@@ -190,7 +192,7 @@ void my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 int ft_close(t_data *cub);
 
 //helper
-// void draw_mini_map(t_data *data);
+void draw_mini_map(t_data *data);
 double degree_to_rad(float fov);
 void	ft_free(char **tr);
 int	ft_len_double(char **str);
