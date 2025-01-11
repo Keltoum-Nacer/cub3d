@@ -66,5 +66,7 @@ int handle_key(int keycode, t_data *data)
         data->map.open_door = 1;
     if (keycode == CLOSE)
         data->map.open_door = 0;
+    if (keycode == SPC)
+        data->text.hidden = 0;
     return (move_player(data), 1);
 }

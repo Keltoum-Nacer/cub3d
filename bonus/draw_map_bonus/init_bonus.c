@@ -22,6 +22,18 @@ void    init_textures(t_data *data)
         i++;
     }
 }
+void    draw_start(t_data *data)
+{
+    data->text.intro = ft_strdup("textures/simonkraft/intro.xpm");
+    data->text.text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, data->text.intro, &data->text.width, &data->text.height);
+    if (!data->text.text_mlx.image)
+    {
+        printf("the image cannot be loaded successfully\n");
+        return;
+    }
+    mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.text_mlx.image, 0, 0);
+    
+}   
 
 void init_mlx(t_data *data)
 {
@@ -34,11 +46,14 @@ void init_mlx(t_data *data)
     data->mlx.window = mlx_new_window(data->mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Our Cub3D");
     if (!data->mlx.window)
         return;
+    if (data->text.hidden)
+        draw_start(data);
     init_textures(data);
 }
 
 void    init_data(t_map map, t_data *data)
 {
+    data->text.hidden = 1;
     data->map = map;
     data->map.open_door = 0;
     data->map.p.p_y *= WALL_DIM ;
