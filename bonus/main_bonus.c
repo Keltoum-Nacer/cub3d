@@ -60,7 +60,8 @@ int main(int ac, char **av)
         return (FAILURE);
     init_data(map, &data);
     draw_map(&data);
-    mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
+    if (!data.text.hidden)
+        mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
     hook_functions(&data);
     mlx_loop(data.mlx.mlx);
     destroy_all_bonus(data);

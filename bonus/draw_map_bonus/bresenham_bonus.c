@@ -37,7 +37,7 @@ int draw_textures(t_data *data, int i, int end, t_point p0)
 }
 
 void draw_wall(t_point p0, int start, int end, t_data *data)
-{
+{ 
     int i;
 
     i = 0;

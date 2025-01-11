@@ -40,8 +40,9 @@
 #define ESC 65307
 #define OPEN 111
 #define CLOSE 99
-#define WIN_WIDTH 920
-#define WIN_HEIGHT 800
+#define SPC 32
+#define WIN_WIDTH 900
+#define WIN_HEIGHT 700
 #define KEY_LEFT 65363
 #define KEY_RIGHT 65361
 #define WALL_DIM 256.0
@@ -129,6 +130,8 @@ typedef struct s_text
     int height;
     char *player;
     char *name;
+    char  *intro;
+    int     hidden;
     int x;
     int y;
 } t_text;
@@ -148,6 +151,7 @@ typedef struct s_data
     t_map   map;
     t_text  text;
     t_text  textures[5];
+    t_text  anim;
 } t_data;
 // parsing functions
 
