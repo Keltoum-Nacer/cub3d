@@ -15,18 +15,20 @@
 #define FAILURE 0
 #define MAP_HEIGHT 1000
 #define BUFFER_SIZE 7
-#define INV_TEX ": Invalid texture(s)\n"
-#define NOT_XPM " Not an .xpm file\n"
-#define NOT_CUB " Not an .cub file\n"
+#define INV_TEX ": Invalid texture(s)✋\n"
+#define NOT_XPM " Not an .xpm file🤌\n"
+#define NOT_CUB " Not an .cub file ❌\n"
 #define WR_NBR "Wrong number of arguments\n"
 #define DUP "duplicates\n"
 #define INV_RGB " Invalid RGB value \n"
 #define MIS_COL " Missing color(s)\n"
-#define ER_OPEN " Error in opening file \n"
-#define EMPTY "Empty map\n"
+#define ER_OPEN " Error in opening file ❓\n"
+#define EMPTY "Empty map \n"
 #define SMALL "Map too small\n"
 #define MAP "Invalid map!\n"
 #define PLAYER "The map should contain one player!\n"
+#define TEX_NMBR "invalid number of path\n"
+#define INV_CLR "missing color \n"
 
 // macro draw
 
@@ -35,19 +37,20 @@
 #define KEY_S 115
 #define KEY_A 97
 #define ESC 65307
-#define WIN_WIDTH 1920
-#define WIN_HEIGHT 1080
+#define WIN_WIDTH 900
+#define WIN_HEIGHT 800
 #define KEY_LEFT 65363
 #define KEY_RIGHT 65361
 #define WALL_DIM 256.0
 #define HIGH 600
 #define FOV 60
-#define NUM_RAYS 1920
+#define NUM_RAYS WIN_WIDTH
 #define MINI_DIM 400
 #define MINI_GRID 15
 #define SPEED 25.0
 #define PI 3.14159265358979323846
 #define VIEW_RADIUS 5
+#define CO WALL_DIM
 
 typedef struct s_point
 {
@@ -152,8 +155,8 @@ int parse_direction(int fd, t_map **map);
 char *extract_directory_path(int fd, int flag, t_map **map);
 int validate_position(char *line, int flag);
 int file_xpm(char *name);
+int extract_and_validate_int(char *line);
 int parse_color(int fd, t_map **map);
-int extract_and_validate_int(char *line, int *pos);
 long long transform_sequence(char *line);
 int extract_color_value(int fd, int flag, t_map **map);
 int parse_color(int fd, t_map **map);
@@ -187,6 +190,9 @@ int ft_close(t_data *cub);
 
 //helper
 double degree_to_rad(float fov);
-int set_wall_color(t_data *data);
-
+unsigned int darkness(unsigned int color, double distance, int max_distance);
+int ft_len_double(char **str);
+void    ft_free(char **tr);
+void	free_dir(t_map *map, int flag);
+void destroy_all(t_data data);
 #endif

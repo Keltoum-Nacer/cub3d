@@ -13,7 +13,6 @@ int parse_Gmap(char *name, t_map *map)
 {
     int fd;
     int fdd;
-
     fd = open(name, O_RDONLY);
     fdd = open(name, O_RDONLY);
     map->height_text = 0;
@@ -22,15 +21,38 @@ int parse_Gmap(char *name, t_map *map)
     if (!parse_direction(fd, &map) || !parse_color(fd, &map))
         return (FAILURE);
     if (!parse_map(fd, fdd, map))
+    {
         return (FAILURE);
+    }
     close(fd);
+    close(fdd);
     return (SUCCESS);
 }
 
+void destroy_all(t_data data)
+{
+    if (data.mlx.image)
+        mlx_destroy_image(data.mlx.mlx, data.mlx.image);
+    if (data.mlx.window)
+        mlx_destroy_window(data.mlx.mlx, data.mlx.window);
+    for (int i = 0; i < 4; i++)
+    {
+        if (data.textures[i].text_mlx.image)
+            mlx_destroy_image(data.mlx.mlx, data.textures[i].text_mlx.image);
+    }
+    mlx_destroy_display(data.mlx.mlx);
+    if (data.mlx.mlx)
+        free(data.mlx.mlx);
+    ft_free(data.map.map);
+    free(data.map.north);
+    free(data.map.south);
+    free(data.map.east);
+    free(data.map.west);
+}
 int main(int ac, char **av)
 {
     t_map map;
-   t_data data;
+    t_data data;
     if (ac != 2)
     {
         write(2, WR_NBR, 26);
@@ -43,4 +65,6 @@ int main(int ac, char **av)
     mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
     hook_functions(&data);
     mlx_loop(data.mlx.mlx);
+    destroy_all(data);
+    return (0);
 }

@@ -152,14 +152,14 @@ void bresenham_mini_map(t_point p0, double alpha, t_data *data, int i)
         {
             break;
         }
-        my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0xFFAE41);
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0x008000);
         e2 = s.err * 2;
         if (e2 > -s.dy)
         {
             s.err -= s.dy;
             p0.x_ind += s.sx;
         }
-        if (e2 < s.dx)
+        else if (e2 < s.dx)
         {
             s.err += s.dx;
             p0.y_ind += s.sy;
@@ -170,17 +170,17 @@ void bresenham_mini_map(t_point p0, double alpha, t_data *data, int i)
 void draw_raycasting_mini_map(t_data *data)
 {
     double fov = degree_to_rad(FOV);
-    double angle_step = fov / NUM_RAYS;
+    double angle_step = fov /NUM_RAYS ;
     double ray_angle;
     t_point x;
     int i;
 
-    ray_angle = degree_to_rad(data->map.p.angle) - (fov / 2);
-    x.x_ind = 5 * 15;
-    x.y_ind = 5 * 15;
+    ray_angle = data->map.p.angle - (fov / 2);
+    x.x_ind = 5.1 * 15;
+    x.y_ind = 5.1 * 15;
 
     i = 0;
-    while (i < 450)
+    while (i < NUM_RAYS)
     {
         if (ray_angle < 0)
             ray_angle += 2 * PI;
@@ -217,14 +217,14 @@ void draw_mini_map(t_data *data)
     double center_x, center_y;
     double dx, dy, dist_squared;
 
-    center_x = (data->map.p.p_x / WALL_DIM) + 0.2;
-    center_y = (data->map.p.p_y / WALL_DIM) + 0.2;
+    center_x = (data->map.p.p_x / WALL_DIM);
+    center_y = (data->map.p.p_y / WALL_DIM);
 
     i = 0;
-    while (data->map.map[i])
+    while (i < data->map.height)
     {
         j = 0;
-        while (data->map.map[i][j])
+        while (j < data->map.width)
         {
             dx = j - center_x;
             dy = i - center_y;  
@@ -237,7 +237,7 @@ void draw_mini_map(t_data *data)
                         draw_pixels_mini_map(tile_x, tile_y, 0xB22222, &data->mlx);
                     else if (data->map.map[i][j] == ' ')
                         draw_pixels_mini_map(tile_x, tile_y, 0x000000, &data->mlx);
-                    else if(data->map.map[i][j] == 'D')
+                    else if(data->map.map[i][j] == 'D' && !data->map.open_door)
                         draw_pixels_mini_map(tile_x, tile_y, 0x008000, &data->mlx);
                     else
                         draw_pixels_mini_map(tile_x, tile_y, 0xFFFAFA, &data->mlx);

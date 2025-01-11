@@ -5,13 +5,14 @@
 #include <unistd.h>
 #include <limits.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 int ft_atoi(const char *c);
 
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 int     ft_atoi(const char *c);
-char *ft_strjoin(char const *s1, char const *s2);
+char *ft_strjoin(char *s1, char *s2);
 char *ft_substr(char const *s, unsigned int start, size_t len);
 char *ft_strdup(const char *s1);
 void *ft_memcpy(void *dest, const void *src, size_t n);

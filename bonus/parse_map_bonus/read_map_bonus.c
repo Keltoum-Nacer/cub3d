@@ -1,4 +1,4 @@
-#include "../include_files/cub3d_bonus.h"
+#include "../../include_files/cub3d_bonus.h"
 
 int height_map(int fdd)
 {

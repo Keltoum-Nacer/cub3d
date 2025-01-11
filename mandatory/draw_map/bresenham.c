@@ -14,6 +14,7 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
         s->sy = -1;
     s->err = s->dx - s->dy;
 }
+
 int draw_textures(t_data *data, int i, int end, t_point p0)
 {
     double tex_y;

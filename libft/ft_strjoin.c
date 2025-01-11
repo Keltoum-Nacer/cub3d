@@ -1,7 +1,7 @@
 
 #include "libft.h"
 
-static char	*ft_cpy(const char *s1, char const *s2)
+static char	*ft_cpy( char *s1, char *s2)
 {
 	int		i;
 	int		j;
@@ -28,7 +28,7 @@ static char	*ft_cpy(const char *s1, char const *s2)
 	return (d);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*d;
 
@@ -39,5 +39,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s2)
 		return (ft_strdup(s1));
 	d = ft_cpy(s1, s2);
+	free(s1);
 	return (d);
 }

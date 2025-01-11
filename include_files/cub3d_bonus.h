@@ -13,21 +13,24 @@
 // macro parsing
 #define SUCCESS 1
 #define FAILURE 0
-#define BUFFER_SIZE 7
 #define MAP_HEIGHT 1000
-#define INV_TEX ": Invalid texture(s)\n"
-#define NOT_XPM " Not an .xpm file\n"
-#define NOT_CUB " Not an .cub file\n"
+#define BUFFER_SIZE 7
+#define INV_TEX ": Invalid texture(s)✋\n"
+#define NOT_XPM " Not an .xpm file🤌\n"
+#define NOT_CUB " Not an .cub file ❌\n"
 #define WR_NBR "Wrong number of arguments\n"
 #define DUP "duplicates\n"
 #define INV_RGB " Invalid RGB value \n"
 #define MIS_COL " Missing color(s)\n"
-#define ER_OPEN " Error in opening file \n"
-#define EMPTY "Empty map\n"
+#define ER_OPEN " Error in opening file ❓\n"
+#define EMPTY "Empty map \n"
 #define SMALL "Map too small\n"
 #define MAP "Invalid map!\n"
-#define DOOR "Invalid door!\n"
 #define PLAYER "The map should contain one player!\n"
+#define TEX_NMBR "invalid number of path\n"
+#define INV_CLR "missing color \n"
+#define PLAYER "The map should contain one player!\n"
+#define DOOR "Invalid door!\n"
 
 // macro draw
 #define KEY_W 119
@@ -44,12 +47,13 @@
 #define WALL_DIM 256.0
 #define HIGH 600
 #define FOV 60
-#define NUM_RAYS 1920
+#define NUM_RAYS WIN_WIDTH
 #define MINI_DIM 400
 #define MINI_GRID 15
 #define SPEED 25.0
 #define PI 3.14159265358979323846
 #define VIEW_RADIUS 5
+#define CO 256
 
 typedef struct s_point
 {
@@ -157,7 +161,6 @@ char *extract_directory_path(int fd, int flag, t_map **map);
 int validate_position(char *line, int flag);
 int file_xpm(char *name);
 int parse_color(int fd, t_map **map);
-int extract_and_validate_int(char *line, int *pos);
 long long transform_sequence(char *line);
 int extract_color_value(int fd, int flag, t_map **map);
 int parse_color(int fd, t_map **map);
@@ -192,5 +195,6 @@ int ft_close(t_data *cub);
 //helper
 void draw_mini_map(t_data *data);
 double degree_to_rad(float fov);
-
+void	ft_free(char **tr);
+int	ft_len_double(char **str);
 #endif

@@ -26,6 +26,27 @@ int parse_Gmap(char *name, t_map *map)
     return (SUCCESS);
 }
 
+void destroy_all_bonus(t_data data)
+{
+    if (data.mlx.image)
+        mlx_destroy_image(data.mlx.mlx, data.mlx.image);
+    if (data.mlx.window)
+        mlx_destroy_window(data.mlx.mlx, data.mlx.window);
+    for (int i = 0; i < 4; i++)
+    {
+        if (data.textures[i].text_mlx.image)
+            mlx_destroy_image(data.mlx.mlx, data.textures[i].text_mlx.image);
+    }
+    mlx_destroy_display(data.mlx.mlx);
+    if (data.mlx.mlx)
+        free(data.mlx.mlx);
+    ft_free(data.map.map);
+    free(data.map.north);
+    free(data.map.south);
+    free(data.map.east);
+    free(data.map.west);
+}
+
 int main(int ac, char **av)
 {
     t_map map;
@@ -42,4 +63,5 @@ int main(int ac, char **av)
     mlx_put_image_to_window(data.mlx.mlx, data.mlx.window, data.mlx.image, 0, 0);
     hook_functions(&data);
     mlx_loop(data.mlx.mlx);
+    destroy_all_bonus(data);
 }

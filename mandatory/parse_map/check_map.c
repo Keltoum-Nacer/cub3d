@@ -1,85 +1,85 @@
-#include "../include_files/cub3d.h"
+#include "../../include_files/cub3d.h"
 
-int surrounded_by_1(t_map *map)
+int	surrounded_by_1(t_map *map)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 0;
-    while (map->map[i])
-    {
-        j = 0;
-        while (ft_whitespace(map->map[i][j]))
-            j++;
-        if ((i > 0 && i < map->height - 1) &&
-            (map->map[i][j] != '1' || map->map[i][ft_strlen(map->map[i]) - 1] != '1'))
-            return (print_err(MAP), FAILURE);
-        while (map->map[i][j])
-        {
-            if ((i == 0 || i == map->height - 1) &&
-                (map->map[i][j] != '1' && !ft_whitespace(map->map[i][j])))
-                return (print_err(MAP), FAILURE);
-            j++;
-        }
-        i++;
-    }
-    return (SUCCESS);
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (ft_whitespace(map->map[i][j]))
+			j++;
+		if ((i > 0 && i < map->height - 1) && (map->map[i][j] != '1'
+			|| map->map[i][ft_strlen(map->map[i]) - 1] != '1'))
+			return (print_err(MAP), FAILURE);
+		while (map->map[i][j])
+		{
+			if ((i == 0 || i == map->height - 1) && (map->map[i][j] != '1'
+				&& !ft_whitespace(map->map[i][j])))
+				return (print_err(MAP), FAILURE);
+			j++;
+		}
+		i++;
+	}
+	return (SUCCESS);
 }
 
-char **allocate_map(t_map *map)
+char	**allocate_map(t_map *map)
 {
-    char **new_map;
-    int i;
+	char	**new_map;
+	int		i;
 
-    i = 0;
-    new_map = (char **)malloc(map->height * sizeof(char *));
-    if (!new_map)
-        return(NULL);
-    while (i < map->height)
-    {
-        new_map[i] = ft_calloc(map->width, sizeof(char));
-        i++;
-    }
-    return (new_map);
+	i = 0;
+	new_map = (char **)malloc((map->height + 1) * sizeof(char *));
+	if (!new_map)
+		return (NULL);
+	while (i < map->height)
+	{
+		new_map[i] = ft_calloc(map->width, sizeof(char));
+		i++;
+	}
+	new_map[i] = NULL;
+	return (new_map);
 }
 
-int valid_map(t_map *map)
+int	valid_map(t_map *map)
 {
-   // char **new_map;
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    map->new_map = allocate_map(map);
-    i = 0;
-    while (map->map[i])
-    {
-        j = 0;
-        while (map->map[i][j])
-        {
-            map->new_map[i][j] = map->map[i][j];
-            j++;
-        }
-        i++;
-    }
-    if (!check_0(map->new_map, map))
-        return (FAILURE);
-   // free_map(map->new_map, map);
-    return (SUCCESS);
+	map->new_map = allocate_map(map);
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			map->new_map[i][j] = map->map[i][j];
+			j++;
+		}
+		i++;
+	}
+	if (!check_0(map->new_map, map))
+		return (ft_free(map->new_map), FAILURE);
+	ft_free(map->new_map);
+	return (SUCCESS);
 }
 
-int parse_map(int fd, int fdd, t_map *map)
+int	parse_map(int fd, int fdd, t_map *map)
 {
-    if (!read_map(fd, fdd, map))
-        return (FAILURE);
-    if (!map->map[0])
-        return (print_err(EMPTY), FAILURE);
-    if (map->height <= 2)
-        return (print_err(SMALL), FAILURE);
-    if (!valid_character(map))
-        return (FAILURE);
-    if (!surrounded_by_1(map))
-        return (FAILURE);
-    if (!valid_map(map))
-        return (FAILURE);
-    return (SUCCESS);
+	if (!read_map(fd, fdd, map))
+		return (free_dir(map, 4), FAILURE);
+	if (!map->map || !map->map[0])
+		return (free_dir(map, 4), ft_free(map->map), print_err(EMPTY), FAILURE);
+	if (map->height <= 2)
+		return (ft_free(map->map), print_err(SMALL), FAILURE);
+	else if (!valid_character(map))
+		return (ft_free(map->map), FAILURE);
+	else if (!surrounded_by_1(map))
+		return (ft_free(map->map), FAILURE);
+	else if (!valid_map(map))
+		return (ft_free(map->map), FAILURE);
+	return (SUCCESS);
 }

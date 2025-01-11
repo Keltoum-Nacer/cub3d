@@ -1,4 +1,4 @@
-#include "../include_files/cub3d_bonus.h"
+#include "../../include_files/cub3d_bonus.h"
 
 int surrounded_by_1(t_map *map)
 {

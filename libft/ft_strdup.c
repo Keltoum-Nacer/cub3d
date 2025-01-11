@@ -9,6 +9,8 @@ char	*ft_strdup(const char *s1)
 
 	len = 0;
 	i = 0;
+	if (!s1)
+		return (NULL);
 	while (s1[len])
 		len++;
 	d = (char *) s1;

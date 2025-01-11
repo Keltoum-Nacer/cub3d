@@ -66,7 +66,6 @@ int     draw_map(t_data *data)
 {
     // mlx_clear_window(data->mlx.mlx, data->mlx.window);
     draw_raycasting(data);
-   // player(data);
     draw_mini_map(data);
     return(0);
 }

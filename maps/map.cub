@@ -1,15 +1,12 @@
-                           NO textures/simonkraft/palestine4.xpm
+                           NO textures/simonkraft/palestine4.xpm 
                         SO textures/simonkraft/palestine3.xpm
 WE textures/simonkraft/keffiah.xpm
 EA textures/simonkraft/palestine1.xpm
 
 
                    F   178,34,34
-C 192,192,192
 
-
-
-
+C 220,220,220
 
 111111111111111111111111
 100000000000000000001011
@@ -17,7 +14,7 @@ C 192,192,192
 100000100010000000000001
 100000100010000100010001
 100000100010000000000001
-1000001D11100001010100001
+10000011110000110100001
 100000000000000000000001
 100000000000000000000001
 10000000000S000000000001

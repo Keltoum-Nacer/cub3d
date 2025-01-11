@@ -1,91 +1,93 @@
-#include "../include_files/cub3d_bonus.h"
+#include "../../include_files/cub3d_bonus.h"
 
-int extract_and_validate_int(char *line, int *pos)
+int	extract_and_validate_int(char *line)
 {
-    int i;
-    int ret;
-    char *nmbr;
+	int		i;
+	int		ret;
+	char	*nmbr;
+	char	**spl;
 
-    i = 0;
-    while (ft_whitespace(line[0]))
-        line++;
-    while (ft_isdigit(line[i]))
-        i++;
-    *pos = *pos + i;
-    nmbr = ft_substr(line, 0, i);
-    if (!nmbr[0])
-        return(ft_put_str(INV_RGB, NULL), -1);
-    ret = ft_atoi(nmbr);
-    if (ret >= 0 && ret <= 255)
-    {
-        if (line[0] == ',')
-            (*pos)++;
-        return (free(nmbr), ret);
-    }
-    if (line[0] == ',')
-        (*pos)++;
-    return (-1);
+	i = 0;
+	spl = ft_split(line, ' ');
+	if (ft_len_double(spl) != 1)
+		return (ft_free(spl), ft_put_str(INV_RGB, NULL), -1);
+	ft_free(spl);
+	while (ft_whitespace(line[0]))
+		line++;
+	while (ft_isdigit(line[i]))
+		i++;
+	nmbr = ft_substr(line, 0, i);
+	if (!nmbr[0])
+		return (free(nmbr), ft_put_str(INV_RGB, NULL), -1);
+	ret = ft_atoi(nmbr);
+	if (ret >= 0 && ret <= 255)
+		return (free(nmbr), ret);
+	return (free(nmbr), ft_put_str(INV_RGB, NULL), -1);
 }
 
-long long transform_sequence(char *line)
+long long	transform_sequence(char *line)
 {
-    int c_red;
-    int c_green;
-    int c_blue;
-    int pos;
+	int		c_red;
+	int		c_green;
+	int		c_blue;
+	char	**pl;
 
-    line++;
-    pos = 0;
-    while (ft_whitespace(line[0]))
-        line++;
-    if ((c_red = extract_and_validate_int(line, &pos)) == -1)
-        return (-1);
-    while (ft_whitespace(line[0]))
-        line++;
-    line++;
-    if ((c_green = extract_and_validate_int(line + pos, &pos)) == -1)
-        return (-1);
-    while (ft_whitespace(line[0]))
-        line++;
-    line++;
-    if ((c_blue = extract_and_validate_int(line + pos, &pos)) == -1)
-        return (-1);
-    return ((c_red << 16) | (c_green << 8) | c_blue);
+	line++;
+	pl = ft_split(line, ',');
+	if (ft_len_double(pl) != 3)
+		return (ft_put_str(INV_CLR, NULL), ft_free(pl), -1);
+	c_red = extract_and_validate_int(pl[0]);
+	if (c_red == -1)
+		return (ft_free(pl), -1);
+	c_green = extract_and_validate_int(pl[1]);
+	if (c_green == -1)
+		return (ft_free(pl), -1);
+	c_blue = extract_and_validate_int(pl[2]);
+	if (c_blue == -1)
+		return (ft_free(pl), -1);
+	return (ft_free(pl), (c_red << 16) | (c_green << 8) | c_blue);
 }
 
-int extract_color_value(int fd, int flag, t_map **map)
+int	affecte_color(char *line)
 {
-    char *line;
-    int color;
-    line = get_next_line(fd);
-    while (line[0] == '\n')
-    {
-        free(line);
-        line = get_next_line(fd);
-    }
-    (*map)->height_text++;
-    char *line_trim = ft_strtrim(line, " \n\r\f\v\t");
-    if (!flag && line_trim[0] == 'F')
-    {
-        if ((color = transform_sequence(line_trim)) == -1)
-            return (free(line_trim), free(line), -1);
-        return (free(line_trim), free(line), color);
-    }
-    else if (flag && line_trim[0] == 'C')
-    {
-        if ((color = transform_sequence(line_trim)) == -1)
-            return (free(line_trim), free(line), -1);
-        return (free(line_trim), free(line), color);
-    }
-    ft_put_str(MIS_COL, NULL);
-    return (-1);
+	int	color;
+
+	color = transform_sequence(line);
+	if (color == -1)
+		return (free(line), -1);
+	return (free(line), color);
 }
 
-int parse_color(int fd, t_map **map)
+int	extract_color_value(int fd, int flag, t_map **map)
 {
-    if (((*map)->F_color = extract_color_value(fd, 0, map)) == -1)
-        return (FAILURE);
-    if (((*map)->C_color = extract_color_value(fd, 1, map)) == -1)
-        return (FAILURE);
-    return (SUCCESS);
+	char	*line;
+	char	*line_trim;
+
+	line = get_next_line(fd);
+	while (line[0] == '\n')
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	(*map)->height_text++;
+	line_trim = ft_strtrim(line, " \n\r\f\v\t");
+	if (!flag && line_trim[0] == 'F')
+		return (free(line), affecte_color(line_trim));
+	else if (flag && line_trim[0] == 'C')
+		return (free(line), affecte_color(line_trim));
+	ft_put_str(MIS_COL, NULL);
+	return (free(line), free(line_trim), -1);
+}
+
+int	parse_color(int fd, t_map **map)
+{
+	(*map)->F_color = extract_color_value(fd, 0, map);
+	if ((*map)->F_color == -1)
+		return (free((*map)->north), free((*map)->south), free((*map)->west),
+			free((*map)->east), FAILURE);
+	(*map)->C_color = extract_color_value(fd, 1, map);
+	if ((*map)->C_color == -1)
+		return (free((*map)->north), free((*map)->south), free((*map)->west),
+			free((*map)->east), FAILURE);
+	return (SUCCESS);
 }
