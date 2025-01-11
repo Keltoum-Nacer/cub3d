@@ -145,6 +145,7 @@ typedef struct s_data
     t_map   map;
     t_text  text;
     t_text  textures[5];
+    t_text  anim;
 } t_data;
 // parsing functions
 

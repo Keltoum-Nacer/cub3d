@@ -64,8 +64,10 @@ double calculate_distance(t_point p0, t_point p1)
 
 int     draw_map(t_data *data)
 {
+    // mlx_clear_window(data->mlx.mlx, data->mlx.window);
     draw_raycasting(data);
-    //draw_mini_map(data);
+   // player(data);
+    draw_mini_map(data);
     return(0);
 }
 
