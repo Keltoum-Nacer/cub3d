@@ -32,7 +32,7 @@ void destroy_all_bonus(t_data data)
         mlx_destroy_image(data.mlx.mlx, data.mlx.image);
     if (data.mlx.window)
         mlx_destroy_window(data.mlx.mlx, data.mlx.window);
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         if (data.textures[i].text_mlx.image)
             mlx_destroy_image(data.mlx.mlx, data.textures[i].text_mlx.image);

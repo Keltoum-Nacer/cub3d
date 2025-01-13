@@ -16,35 +16,28 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
 }
 int draw_textures(t_data *data, int i, int end, t_point p0)
 {
-    double tex_y;
     int color;
-    double texture_step;
-    double texture_pos;
     int j;
-    
+
     j = check_texture(data);
-    texture_step = (double)data->text.height / data->map.p.wall_height ;
-    texture_pos = 0.0;                                       
-    while(i < end)
+    while (i < end)
     {
-        tex_y = texture_pos ;
-        if (data->map.p.offset_x < data->text.width && data->map.p.offset_x >= 0 && tex_y < data->text.height && tex_y >= 0)
+        double distance_from_top = i + (data->map.p.wall_height / 2) - (WIN_HEIGHT / 2);
+        double texture_offset_y = distance_from_top * ((double)data->text.height / data->map.p.wall_height);
+        if (data->map.p.offset_x < data->text.width && data->map.p.offset_x >= 0 && texture_offset_y < data->text.height && texture_offset_y >= 0)
         {
             color = *(int *)(data->textures[j].text_mlx.image_addr +
-                                ((int)tex_y * data->textures[j].text_mlx.line_length) +
-                                ((int)data->map.p.offset_x* (data->textures[j].text_mlx.bits_per_pixel / 8)));
+                             ((int)texture_offset_y * data->textures[j].text_mlx.line_length) +
+                             ((int)data->map.p.offset_x * (data->textures[j].text_mlx.bits_per_pixel / 8)));
         }
-            //color = darkness(color, data->map.p.ray.wall_dist, WIN_HEIGHT);
-            //int color = set_wall_color(data);
-            my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
-            texture_pos += texture_step;
-            i++;
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
+        i++;
     }
-    return(i);
+    return (i);
 }
 
 void draw_wall(t_point p0, int start, int end, t_data *data)
-{
+{ 
     int i;
 
     i = 0;

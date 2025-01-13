@@ -9,12 +9,14 @@ void move_player(t_data *data)
 }
 void validate_move(t_data *data, double new_x, double new_y, int flag_x, int flag_y)
 {
-
-    if (data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((new_x) / WALL_DIM)] == '0' || data->map.open_door)
+        // printf("=============%f++++++++++++++++%f\n", new_x, new_y);
+        // printf("***************************%c\n",data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((new_x) / WALL_DIM)]);
+    if (data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((new_x) / WALL_DIM)] == '0' || data->map.open_door || data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((new_x) / WALL_DIM)] == data->map.p.p_name)
     {
+        // printf(">>>>>%c\n", data->map.p.p_name);
         data->map.p.p_x = new_x - flag_x;
     }
-    if (data->map.map[(int)(new_y / WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] == '0' || data->map.open_door)
+    if (data->map.map[(int)(new_y / WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] == '0' || data->map.open_door || data->map.map[(int)(new_y / WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] == data->map.p.p_name)
     {
         data->map.p.p_y = new_y - flag_y;
     }

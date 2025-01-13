@@ -67,8 +67,8 @@ void draw_raycasting_mini_map(t_data *data)
     int i;
 
     ray_angle = data->map.p.angle - (fov / 2);
-    x.x_ind = 5.1 * MINI_GRID;
-    x.y_ind = 5.1 * MINI_GRID;
+    x.x_ind = 6.1 * MINI_GRID;
+    x.y_ind = 6.1 * MINI_GRID;
 
     i = 0;
     while (i < NUM_RAYS)
@@ -108,8 +108,8 @@ void draw_mini_map(t_data *data)
     double center_x, center_y;
     double dx, dy, dist_squared;
 
-    center_x = (data->map.p.p_x / WALL_DIM) + 0.2;
-    center_y = (data->map.p.p_y / WALL_DIM) + 0.2;
+    center_x = (data->map.p.p_x / WALL_DIM);
+    center_y = (data->map.p.p_y / WALL_DIM);
 
     i = 0;
     while (i < data->map.height)
@@ -140,7 +140,7 @@ void draw_mini_map(t_data *data)
         }
         i++;
     }
-     draw_mini_player(5.5, 5.5, 0x000000, &data->mlx);
+     draw_mini_player(6.5, 6.5, 0x000000, &data->mlx);
     //  draw_raycasting_mini_map(data);
 }
 

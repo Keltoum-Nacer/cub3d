@@ -52,53 +52,56 @@ char **allocate_map(t_map *map)
     int i;
 
     i = 0;
-    new_map = ft_calloc(map->height, sizeof(char *));
+    new_map = ft_calloc(map->height + 1, sizeof(char *));
     while (i < map->height)
     {
         new_map[i] = ft_calloc(map->width, sizeof(char));
         i++;
     }
+    new_map[i] = NULL;
     return (new_map);
 }
 
-int valid_map(t_map *map)
+int	valid_map(t_map *map)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    map->new_map = allocate_map(map);
-    i = 0;
-    while (map->map[i])
-    {
-        j = 0;
-        while (map->map[i][j])
-        {
-            map->new_map[i][j] = map->map[i][j];
-            j++;
-        }
-        i++;
-    }
-    if (!check_0(map->new_map, map))
-        return (FAILURE);
-    //free_map(new_map, map);
-    return (SUCCESS);
+	map->new_map = allocate_map(map);
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			map->new_map[i][j] = map->map[i][j];
+			j++;
+		}
+		i++;
+	}
+	if (!check_0(map->new_map, map))
+		return (ft_free(map->new_map), FAILURE);
+	ft_free(map->new_map);
+	return (SUCCESS);
 }
 
 int parse_map(int fd, int fdd, t_map *map)
 {
     if (!read_map(fd, fdd, map))
-        return (FAILURE);
+        return (free_dir(map, 4), FAILURE);
     if (!map->height)
-        return (print_err(EMPTY), FAILURE);
+        return (free_dir(map, 4), ft_free(map->map), print_err(EMPTY), FAILURE);
     if (map->height <= 2)
-        return (print_err(SMALL), FAILURE);
+        return (free_dir(map, 4), ft_free(map->map), print_err(SMALL), FAILURE);
+    if (!map->map || !map->map[0])
+        return (free_dir(map, 4), ft_free(map->map), print_err(EMPTY), FAILURE);
     if (!valid_character(map))
-        return (FAILURE);
-    if (!surrounded_by_1(map))
-        return (FAILURE);
+        return (ft_free(map->map), FAILURE);
     if (!check_doors(map))
         return (FAILURE);
+    if (!surrounded_by_1(map))
+        return (ft_free(map->map), FAILURE);
     if (!valid_map(map))
-        return (FAILURE);
+        return (ft_free(map->map), FAILURE);
     return (SUCCESS);
 }
