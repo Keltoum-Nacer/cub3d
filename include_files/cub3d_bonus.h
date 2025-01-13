@@ -41,8 +41,8 @@
 #define OPEN 111
 #define CLOSE 99
 #define SPC 32
-#define WIN_WIDTH 900
-#define WIN_HEIGHT 700
+#define WIN_WIDTH 1080
+#define WIN_HEIGHT 1080
 #define KEY_LEFT 65363
 #define KEY_RIGHT 65361
 #define WALL_DIM 256.0
@@ -50,11 +50,12 @@
 #define FOV 60
 #define NUM_RAYS WIN_WIDTH
 #define MINI_DIM 400
-#define MINI_GRID 15
+#define MINI_GRID 10
 #define SPEED 25.0
 #define PI 3.14159265358979323846
-#define VIEW_RADIUS 5
+#define VIEW_RADIUS 5.5
 #define CO 256
+#define PATH_FORMAT "textures/animation/p%d.xpm"
 
 typedef struct s_point
 {
@@ -127,11 +128,12 @@ typedef struct s_mlx
 typedef struct s_text
 {
     t_mlx text_mlx;
+    t_mlx frames[67];
+    t_mlx tank;
     int width;
     int height;
     char *player;
     char *name;
-    char  *intro;
     int     hidden;
     int x;
     int y;

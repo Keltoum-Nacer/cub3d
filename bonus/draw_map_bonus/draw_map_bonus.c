@@ -62,10 +62,38 @@ double calculate_distance(t_point p0, t_point p1)
     return (sqrt(powf(p0.x_ind - p1.x_ind, 2.) + powf(p0.y_ind - p1.y_ind, 2.)));
 }
 
+void    draw_tank(t_data *data)
+{
+    int i;
+    int j;
+
+    i = 0;
+    data->text.tank.image = mlx_xpm_file_to_image(data->mlx.mlx,"textures/simonkraft/tank.xpm", &data->text.width, &data->text.height);
+    if (!data->text.tank.image)
+    {
+        printf("the image cannot be loaded successfully\n");
+        return;
+    }
+    while(data->map.map[i])
+    {
+        j = 0;
+        while(data->map.map[i][j])
+        {
+            if (data->map.map[i][j] == 'T')
+            {
+                mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.tank.image, 0, 0);
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
 int     draw_map(t_data *data)
 {
     // mlx_clear_window(data->mlx.mlx, data->mlx.window);
     draw_raycasting(data);
+    //draw_tank(data);
     draw_mini_map(data);
     return(0);
 }

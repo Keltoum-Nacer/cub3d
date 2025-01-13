@@ -15,7 +15,7 @@ int	check_left_right(char c, t_map *map)
 
 int	check_top_bottom(char c, t_map *map)
 {
-	if (c != '0' && c != '1' && c != map->p.p_name && c != 'D')
+	if (c != '0' && c != '1' && c != map->p.p_name)
 		return (0);
 	return (1);
 }
@@ -35,7 +35,7 @@ int	check_0(char **new_map, t_map *map)
 						map) || !check_left_right(new_map[i][j + 1], map)
 					|| !check_top_bottom(new_map[i + 1][j], map)
 					|| !check_top_bottom(new_map[i - 1][j], map)))
-				return (printf("what the hell\n"), print_err(MAP), FAILURE);
+				return (printf("what the hellll\n"), print_err(MAP), FAILURE);
 			j++;
 		}
 		i++;
