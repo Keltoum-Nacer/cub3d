@@ -41,6 +41,8 @@ void draw_wall(t_point p0, int start, int end, t_data *data)
     int i;
 
     i = 0;
+    // if (p0.x_ind > 120 && p0.x_ind < 198)
+        // draw_player(data, )
     while (i < start)
     {
         my_mlx_pixel_put(&data->mlx, p0.x_ind, i, data->map.C_color);

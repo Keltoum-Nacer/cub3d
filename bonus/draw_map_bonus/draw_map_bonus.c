@@ -62,11 +62,41 @@ double calculate_distance(t_point p0, t_point p1)
     return (sqrt(powf(p0.x_ind - p1.x_ind, 2.) + powf(p0.y_ind - p1.y_ind, 2.)));
 }
 
-int     draw_map(t_data *data)
+void draw_player(t_data *data)
+{
+    void *img_player;
+    int a;
+    int b;
+    // int c;
+    // int d;
+    // int e;
+    img_player = mlx_xpm_file_to_image(data->mlx.mlx, "textures/gun-_1_.xpm", &a, &b);
+    if (!img_player)
+        return;
+    // void *data_addr = mlx_get_data_addr(img_player, &c, &d, &e);
+    int i = 120;
+    int x = 0;
+    // int y = 0;
+    while (x < a)
+    {
+        int y = WIN_HEIGHT -1;
+        int j = 0;
+        while (y > WIN_HEIGHT - b)
+        {
+            // int color = *(int *)data_addr + ((int)j  * d) + ((int)x * c / 8);
+            y--;
+            j++;
+            my_mlx_pixel_put(&data->mlx,x + i, y, 0xFFFFFF);
+    printf(":::::::::::::\n");
+        }
+        x++;
+    }
+}
+int draw_map(t_data *data)
 {
     // mlx_clear_window(data->mlx.mlx, data->mlx.window);
     draw_raycasting(data);
+    draw_player(data);
     draw_mini_map(data);
-    return(0);
+    return (0);
 }
-

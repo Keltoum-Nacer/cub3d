@@ -16,6 +16,8 @@ void    init_textures(t_data *data)
         if (!data->textures[i].text_mlx.image)
         {
             printf("the image cannot be loaded successfully\n");
+        printf(">>>>>>%d\n", i);
+
             return;
         }
         data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
