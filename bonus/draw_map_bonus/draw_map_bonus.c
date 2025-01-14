@@ -62,41 +62,67 @@ double calculate_distance(t_point p0, t_point p1)
     return (sqrt(powf(p0.x_ind - p1.x_ind, 2.) + powf(p0.y_ind - p1.y_ind, 2.)));
 }
 
-void draw_player(t_data *data)
+void draw_tank(t_data *data)
 {
-    void *img_player;
-    int a;
-    int b;
-    // int c;
-    // int d;
-    // int e;
-    img_player = mlx_xpm_file_to_image(data->mlx.mlx, "textures/gun-_1_.xpm", &a, &b);
-    if (!img_player)
-        return;
-    // void *data_addr = mlx_get_data_addr(img_player, &c, &d, &e);
-    int i = 120;
-    int x = 0;
-    // int y = 0;
-    while (x < a)
+    int i;
+    int j;
+
+    i = 0;
+    data->text.tank.image = mlx_xpm_file_to_image(data->mlx.mlx, "textures/simonkraft/tank.xpm", &data->text.width, &data->text.height);
+    if (!data->text.tank.image)
     {
-        int y = WIN_HEIGHT -1;
-        int j = 0;
-        while (y > WIN_HEIGHT - b)
+        printf("the image cannot be loaded successfully\n");
+        return;
+    }
+    while (data->map.map[i])
+    {
+        j = 0;
+        while (data->map.map[i][j])
         {
-            // int color = *(int *)data_addr + ((int)j  * d) + ((int)x * c / 8);
-            y--;
+            if (data->map.map[i][j] == 'T')
+            {
+                mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.tank.image, 0, 0);
+            }
             j++;
-            my_mlx_pixel_put(&data->mlx,x + i, y, 0xFFFFFF);
-    printf(":::::::::::::\n");
         }
-        x++;
+        i++;
     }
 }
+void draw_player(t_data *data)
+{
+    double x = 175;
+    double offset_x = 0;
+    double offset_y;
+    int img_width, img_height;
+    int bpp, size_line, endian;
+
+    void *img_player = mlx_xpm_file_to_image(data->mlx.mlx, "textures/gun-removebg-preview.xpm", &img_width, &img_height);
+    if (!img_player)
+        return;
+    double y = WIN_HEIGHT - 70 - img_height;
+
+    void *addr = mlx_get_data_addr(img_player, &bpp, &size_line, &endian);
+
+    while (offset_x < img_width)
+    {
+        offset_y = 0;
+        while (offset_y < img_height)
+        {
+            int color = *(int *)(addr + (int)(offset_y * size_line + offset_x * (bpp / 8)));
+            if (color != TRANSPARENT_COLOR)
+                my_mlx_pixel_put(&data->mlx, x + offset_x, y + offset_y, color);
+            offset_y++;
+        }
+        offset_x++;
+    }
+}
+
 int draw_map(t_data *data)
 {
     // mlx_clear_window(data->mlx.mlx, data->mlx.window);
     draw_raycasting(data);
     draw_player(data);
+    // draw_tank(data);
     draw_mini_map(data);
     return (0);
 }

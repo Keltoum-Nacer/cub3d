@@ -47,11 +47,11 @@ MLXFLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lbsd -lm
 
 all: $(NAME)
 
-$(NAME): $(SRC) $(LIBFT_LIB) $(MLX_LIB)
+$(NAME): $(SRC) $(LIBFT_LIB) $(MLX_LIB) 
 	$(CC) $(CFLAGS) $(SRC) $(LIBFT_LIB) $(MLX_LIB) $(MLXFLAGS) -o $(NAME)
 
 bonus: $(NAMEB)
-$(NAMEB): $(SRCB) $(LIBFT_LIB) $(MLX_LIB)
+$(NAMEB): $(SRCB) $(LIBFT_LIB) $(MLX_LIB) $(OBJF)
 	$(CC) $(CFLAGS) $(SRCB) $(LIBFT_LIB) $(MLX_LIB) $(MLXFLAGS) -o $(NAMEB)
 
 $(LIBFT_LIB):

@@ -8,14 +8,14 @@ void    print_err(char *str)
 
 int check_left_right(char c, t_map *map)
 {
-    if (c != '0' && c != '1' && c != map->p.p_name)
+    if (c != '0' && c != '1' && c != map->p.p_name && c != 'T')
         return(0);
     return(1);
 }
 
 int check_top_bottom(char c, t_map *map)
 {
-    if (c != '0' && c != '1' && c != map->p.p_name && c != 'D')
+    if (c != '0' && c != '1' && c != map->p.p_name && c != 'D' && c != 'T')
         return(0);
     return(1);
 }
