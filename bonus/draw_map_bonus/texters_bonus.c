@@ -2,23 +2,24 @@
 
 unsigned int darkness(unsigned int color, double distance, int max_distance)
 {
-    double dark_factor;
-    int r;
-    int g;
-    int b;
+    double	dark_factor;
+	int		r;
+	int		g;
+	int		b;
 
-    dark_factor = 1 - (distance / max_distance);
-    if (dark_factor < 0)
-        dark_factor = 0;
-    if (dark_factor > 1)
-        dark_factor = 1;
-    r = (color >> 16) & 0xFF;
-    g = (color >> 8) & 0xFF;
-    b = color & 0xFF;
-    r = r * dark_factor;
-    g = g * dark_factor;
-    b = b * dark_factor;
-    return ((r << 16) | (g << 8) | b);
+    if (distance <= 0) return 255;
+	dark_factor = 0.5 / (distance / max_distance);
+	if (dark_factor < 0.2)
+		dark_factor = 0.2;
+	if (dark_factor > 1)
+		dark_factor = 1;
+	r = (color >> 16) & 0xFF;
+	g = (color >> 8) & 0xFF;
+	b = color & 0xFF;
+	r = r * dark_factor;
+	g = g * dark_factor;
+	b = b * dark_factor;
+	return ((r << 16) | (g << 8) | b);
 }
 
 int set_wall_color(t_data *data)

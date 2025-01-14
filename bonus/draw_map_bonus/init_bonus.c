@@ -8,7 +8,7 @@ void    init_textures(t_data *data)
     names[1] = data->map.north;
     names[2] = data->map.east;
     names[3] = data->map.west;
-    names[4] = ft_strdup("textures/simonkraft/door.xpm");
+    names[4] = ft_strdup("textures/simonkraft/door4.xpm");
     int i = 0;
     while(i < 5)
     {

@@ -105,11 +105,7 @@ void draw_pixels_mini_map(int i, int j, int color, t_mlx *mlx)
 void draw_mini_map(t_data *data)
 {
     int i, j;
-    double center_x, center_y;
     double dx, dy, dist_squared;
-
-    center_x = (data->map.p.p_x / WALL_DIM);
-    center_y = (data->map.p.p_y / WALL_DIM);
 
     i = 0;
     while (i < data->map.height)
@@ -117,24 +113,23 @@ void draw_mini_map(t_data *data)
         j = 0;
         while (j < data->map.width)
         {
-            dx = j - center_x;
-            dy = i - center_y;  
+            dx = j - (data->map.p.p_x / WALL_DIM);
+            dy = i - (data->map.p.p_y / WALL_DIM);  
             dist_squared = dx * dx + dy * dy;
             if (dist_squared <= VIEW_RADIUS * VIEW_RADIUS)
             {
-                // int tile_x = (dx + VIEW_RADIUS) * MINI_GRID;  
-                // int tile_y = (dy + VIEW_RADIUS) * MINI_GRID; 
+                int tile_x = (dx + VIEW_RADIUS) * GRID;  
+                int tile_y = (dy + VIEW_RADIUS) * GRID; 
                     if (data->map.map[i][j] == '1')
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0xB22222, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0xB22222, &data->mlx);
                     else if (data->map.map[i][j] == ' ')
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0x000000, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0x000000, &data->mlx);
                     else if (data->map.map[i][j] == 'T')
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0x000000, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0x000000, &data->mlx);
                     else if(data->map.map[i][j] == 'D' && !data->map.open_door)
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0x008000, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0x008000, &data->mlx);
                     else
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0xFFFAFA, &data->mlx);
-                    //draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0xFAAAFA, &data->mlx);
+                        draw_pixels_mini_map(tile_x, tile_y, 0xFFFAFA, &data->mlx);
             }
             j++;
         }

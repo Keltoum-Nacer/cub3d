@@ -101,7 +101,7 @@ void    init_bresenham(t_data *data, t_point p0, double alpha, t_bres_flag *s)
     double max_ray_length;
     t_point p1;
     
-    max_ray_length = sqrt(pow(data->map.width * WALL_DIM, 2) + pow(MAP_HEIGHT * WALL_DIM, 2));
+    max_ray_length = sqrt(pow(WIN_WIDTH * WALL_DIM, 2) + pow(WIN_HEIGHT * WALL_DIM, 2));
     p1.x_ind = p0.x_ind + max_ray_length * cos(alpha);
     p1.y_ind = max_ray_length * sin(alpha) + p0.y_ind;
     data->map.p.ray_angle = alpha;

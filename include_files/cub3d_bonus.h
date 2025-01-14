@@ -50,11 +50,13 @@
 #define NUM_RAYS WIN_WIDTH
 #define MINI_DIM 400
 #define MINI_GRID 10
+#define GRID 12
 #define VIEW_RADIUS 5.5
 #define PATH_FORMAT "textures/animation/p%d.xpm"
 #define SPEED 50.0
 #define PI 3.14159265358979323846
 #define CO 100
+#define TRANSPARENT -16777216
 
 typedef struct s_point
 {
@@ -83,6 +85,11 @@ typedef struct s_player
 {
     double p_x;
     double p_y;
+    double d_x;
+    double d_y;
+    double door_dist;
+    double height_door;
+    int door;
     char p_name;
     double angle;
     double wall_height;
@@ -203,4 +210,5 @@ void	ft_free(char **tr);
 int	ft_len_double(char **str);
 void	free_dir(t_map *map, int flag);
 void destroy_all_bonus(t_data data);
+unsigned int darkness(unsigned int color, double distance, int max_distance);
 #endif
