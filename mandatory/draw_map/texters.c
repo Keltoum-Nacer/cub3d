@@ -25,7 +25,7 @@ int check_texture(t_data *data)
 {
     if (!data->map.p.flag)
     {
-        data->map.p.offset_x = fmod(data->map.p.hit_x, WALL_DIM) / WALL_DIM * data->text.width;
+        data->map.p.offset_x = data->text.width - fmod(data->map.p.hit_x, WALL_DIM) / WALL_DIM * data->text.width;
         if (data->map.p.ray_angle > 0 && data->map.p.ray_angle < PI)
             return (data->textures[0].name = data->map.south, 0);
         else
@@ -39,6 +39,5 @@ int check_texture(t_data *data)
         else
             return (data->textures[3].name = data->map.west, 3);
     }
-
     return 0;
 }

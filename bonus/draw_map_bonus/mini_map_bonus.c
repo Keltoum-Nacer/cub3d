@@ -62,10 +62,10 @@ void draw_mini_map(t_data *data, t_point center)
     double dist_squared;
 
     i = 0;
-    while (i < data->map.height)
+    while (data->map.map[i])
     {
         j = 0;
-        while (j < data->map.width)
+        while (data->map.map[i][j])
         {
             dx = j - center.x_ind;
             dy = i - center.y_ind;

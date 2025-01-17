@@ -48,6 +48,7 @@ void draw_raycasting(t_data *data)
     }
 }
 
+
 int draw_map(t_data *data)
 {
     draw_raycasting(data);

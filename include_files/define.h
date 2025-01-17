@@ -39,6 +39,7 @@
 #define OPEN 111
 #define KEY_G 103
 #define KEY_M 109
+#define KEY_N 110
 #define CLOSE 99
 #define SPC 32
 #define WIN_WIDTH 1080
@@ -50,6 +51,7 @@
 #define NUM_RAYS WIN_WIDTH
 #define MINI_DIM 400
 #define MINI_GRID 10
+#define GRID 12
 #define SPEED 50.0
 #define PI 3.14159265358979323846
 #define CO 100

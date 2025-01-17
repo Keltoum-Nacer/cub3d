@@ -19,8 +19,8 @@ void    setup_bresenham(t_data *data, t_point p0, double alpha, t_bres_flag *s)
 {
     double max_ray_length;
     t_point p1;
-    
-    max_ray_length = sqrt(pow(data->map.width * WALL_DIM, 2) + pow(MAP_HEIGHT * WALL_DIM, 2)); //soumayaaa
+
+    max_ray_length = sqrt(pow(WIN_WIDTH * WALL_DIM, 2) + pow(WIN_HEIGHT * WALL_DIM, 2));
     p1.x_ind = p0.x_ind + max_ray_length * cos(alpha);
     p1.y_ind = max_ray_length * sin(alpha) + p0.y_ind;
     data->map.p.ray_angle = alpha;
@@ -35,7 +35,7 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
     setup_bresenham(data, p0, alpha, &s);
     while (1)
     {
-        if(check_wall_door(p0, alpha, data, i))
+        if (check_wall_door(p0, alpha, data, i))
             break;
         e2 = s.err * 2;
         if (e2 > -s.dy)
@@ -47,7 +47,7 @@ void bresenham(t_point p0, double alpha, t_data *data, int i)
         else if (e2 < s.dx)
         {
             s.err += s.dx;
-            p0.y_ind += s.sy;                                                   
+            p0.y_ind += s.sy;
             data->map.p.flag = VER;
         }
     }

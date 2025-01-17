@@ -44,7 +44,7 @@ int valid_character(t_map *map)
         {
             if(!ft_whitespace(map->map[i][j]) && map->map[i][j] != '0' && map->map[i][j] != '1' 
             && map->map[i][j] != 'N' && map->map[i][j] != 'S' && map->map[i][j] != 'E' 
-            && map->map[i][j] != 'W' && map->map[i][j] != 'D' && map->map[i][j] != 'T')
+            && map->map[i][j] != 'W' && map->map[i][j] != 'D')
                 return(print_err(MAP), FAILURE);
             count += check_player(map, map->map[i][j], i, j);
             j++;

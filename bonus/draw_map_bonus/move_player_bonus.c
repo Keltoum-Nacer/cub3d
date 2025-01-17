@@ -60,7 +60,7 @@ void rot(int keycode, t_data *data)
 int handle_key(int keycode, t_data *data)
 {
 	if (keycode == ESC)
-		return (mlx_loop_end(data->mlx.mlx), 1);
+		return (ft_close(data), 1);
 	if (keycode == KEY_W || keycode == KEY_S)
 		move_updown(keycode, data);
 	if (keycode == KEY_A || keycode == KEY_D)
@@ -69,7 +69,7 @@ int handle_key(int keycode, t_data *data)
 		rot(keycode, data);
 	if (keycode == OPEN)
 		data->map.open_door = 1;
-	if (keycode == CLOSE)
+	if (keycode == CLOSE && data->map.map[(int)(data->map.p.p_y / WALL_DIM)] [(int)(data->map.p.p_x / WALL_DIM)] != 'D')
 	{
 		data->map.open_door = 0;
 		move_player(data);
@@ -77,7 +77,9 @@ int handle_key(int keycode, t_data *data)
 	if (keycode == SPC)
 		data->text.hidden = 0;
 	if (keycode == KEY_M && data->flag % 2)
-		return (animation_player(data), 1);
+		return (data->wall = 1, animation_player(data), 1);
+	if (keycode == KEY_N && data->flag % 2)
+		return (data->wall = 0, animation_player(data), 1);
 	if (keycode == KEY_G)
 		data->flag++;
 	return (move_player(data), 1);

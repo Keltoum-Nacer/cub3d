@@ -10,11 +10,13 @@ int animation_player(t_data *data)
         mlx_do_sync(data->mlx.mlx);
         draw_raycasting(data);
         snprintf(path, sizeof(path), PATH_PLAYER, i + 1);
-        if (i == 25)
-            data->flag_palestine = 1;
+        if (i == 25 && data->wall)
+            data->flag_weast = 1;
+        else if (i == 25 && !data->wall)
+                data->flag_east = 1;
         draw_player(data, path);
         mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->mlx.image, 0, 0);
-       rendring_minimap(data);
+        rendring_minimap(data);
         usleep(40000);
         i++;
     }
@@ -26,12 +28,17 @@ void draw_player(t_data *data, char *name)
     double offset_y;
     t_mlx player;
     double y;
+    double x;
 
     player.image = mlx_xpm_file_to_image(data->mlx.mlx, name, &player.img_width, &player.img_height);
     if (!player.image)
         return;
     y = WIN_HEIGHT - SCALE_YP - player.img_height;
     player.image_addr = mlx_get_data_addr(player.image, &player.bits_per_pixel, &player.line_length, &player.endian);
+    if (data->flag % 2)
+        x = 175;
+    else
+        x = 370;
     offset_x = 0;
     while (offset_x < player.img_width)
     {
@@ -40,7 +47,7 @@ void draw_player(t_data *data, char *name)
         {
             int color = *(int *)(player.image_addr + (int)(offset_y * player.line_length + offset_x * (player.bits_per_pixel / 8)));
             if (color != TRANSPARENT_COLOR)
-                my_mlx_pixel_put(&data->mlx, SCALE_XP + offset_x, y + offset_y, color);
+                my_mlx_pixel_put(&data->mlx, x + offset_x, y + offset_y, color);
             offset_y++;
         }
         offset_x++;

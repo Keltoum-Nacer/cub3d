@@ -11,6 +11,10 @@
 #include <fcntl.h>
 #include <math.h>
 
+#define HEIGHT 700
+#define WIDTH 900
+#define RAYS WIDTH
+
 typedef struct s_point
 {
     double x_ind;
