@@ -25,9 +25,9 @@ unsigned int darkness(unsigned int color, double distance, int max_distance)
 int check_texture(t_data *data)
 {
     if (!data->map.p.flag)
-        data->map.p.offset_x = data->text.width -  fmod(data->map.p.hit_x, WALL_DIM) / WALL_DIM * data->text.width;
+        data->map.p.offset_x = fmod(data->map.p.hit_x, WALL_DIM) / WALL_DIM * data->text.width;
     else
-        data->map.p.offset_x = data->text.width -  fmod(data->map.p.hit_y, WALL_DIM) / WALL_DIM * data->text.width;
+        data->map.p.offset_x =   fmod(data->map.p.hit_y, WALL_DIM) / WALL_DIM * data->text.width;
     if (data->map.is_door)
         return (4);
     if (!data->map.p.flag)
@@ -40,10 +40,14 @@ int check_texture(t_data *data)
     else
     {
         if (data->map.p.ray_angle > (3 * PI) / 2 || data->map.p.ray_angle < PI / 2)
-            return (2);
+        {
+            if(data->flag_east)
+                return(2);
+            return (6);
+        }
         else
         {
-            if (data->flag_palestine)
+            if (data->flag_weast)
                 return (3);
             return (5);
         }

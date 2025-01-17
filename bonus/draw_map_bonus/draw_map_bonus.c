@@ -62,7 +62,7 @@ double calculate_distance(t_point p0, t_point p1)
 
 void draw_player(t_data *data, char *name)
 {
-    double x = 175;
+    double x ;
     double offset_x = 0;
     double offset_y;
     int img_width, img_height;
@@ -74,6 +74,10 @@ void draw_player(t_data *data, char *name)
     double y = WIN_HEIGHT - 70 - img_height;
 
     void *addr = mlx_get_data_addr(img_player, &bpp, &size_line, &endian);
+    if (data->flag % 2)
+        x = 175;
+    else
+        x = 370;
 
     while (offset_x < img_width)
     {
@@ -109,8 +113,10 @@ int draw_anim(t_data *data)
         mlx_do_sync(data->mlx.mlx);
         draw_raycasting(data);
         snprintf(path, sizeof(path), PATH_PLAYER, i + 1);
-        if (i == 25)
-            data->flag_palestine = 1;
+        if (i == 25 && data->wall)
+            data->flag_weast = 1;
+        else if (i == 25 && !data->wall)
+            data->flag_east = 1;
         draw_player(data, path);
         mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->mlx.image, 0, 0);
         draw_mini_map(data);

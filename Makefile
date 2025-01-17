@@ -29,7 +29,6 @@ SRCB = bonus/main_bonus.c \
 		bonus/draw_map_bonus/mini_map_bonus.c \
 		bonus/draw_map_bonus/move_player_bonus.c \
 		bonus/draw_map_bonus/texters_bonus.c \
-		bonus/draw_map_bonus/animation_bonus.c  \
 		bonus/draw_map_bonus/utils.c
 
 LIBFT_DIR=libft

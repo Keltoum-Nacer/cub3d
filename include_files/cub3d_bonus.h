@@ -28,8 +28,6 @@ typedef struct s_player
 {
     double p_x;
     double p_y;
-    double d_x;
-    double d_y;
     double door_dist;
     double height_door;
     int door;
@@ -51,7 +49,6 @@ typedef struct s_map
     char *west;
     char *east;
     char *south;
-    char *palestine;
     char **map; // Updated with the parsing changes
     char **new_map;
     int F_color;
@@ -80,6 +77,7 @@ typedef struct s_text
     t_mlx text_mlx;
     t_mlx frames[67];
     t_mlx tank;
+    t_mlx end;
     int width;
     int height;
     char *player;
@@ -103,11 +101,13 @@ typedef struct s_data
     t_mlx   mlx;
     t_map   map;
     t_text  text;
-    t_text  textures[6];
+    t_text  textures[8];
     t_text  anim;
     int     sound;
     int     flag;
-    int     flag_palestine;
+    int     wall;
+    int     flag_weast;
+    int     flag_east;
 } t_data;
 // parsing functions
 

@@ -36,6 +36,7 @@
 #define OPEN 111
 #define KEY_G 103
 #define KEY_M 109
+#define KEY_N 110
 #define CLOSE 99
 #define SPC 32
 #define WIN_WIDTH 1080

@@ -2,15 +2,17 @@
 
 void init_textures(t_data *data)
 {
-    char *names[5];
-
+    char *names[7];
+    int i;
     names[0] = data->map.south;
     names[1] = data->map.north;
     names[2] = data->map.east;
     names[3] = data->map.west;
-    names[4] = ft_strdup("textures/simonkraft/door4.xpm");
-    int i = 0;
-    while (i < 5)
+    names[4] = ft_strdup("textures/simonkraft/door.xpm");
+    names[5] = ft_strdup("textures/simonkraft/palestine15.xpm");
+    names[6] = ft_strdup("textures/simonkraft/palestine17.xpm");
+    i = 0;
+    while (i < 7)
     {
         data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, names[i], &data->text.width, &data->text.height);
         if (!data->textures[i].text_mlx.image)
@@ -21,29 +23,13 @@ void init_textures(t_data *data)
         data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
         i++;
     }
-    data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, data->map.palestine, &data->text.width, &data->text.height);
-    if (!data->textures[i].text_mlx.image)
-    {
-        printf("the image cannot be loaded successfully\n");
-        return;
-    }
-    data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
-    free(names[4]);
 }
 
-
-void* play_sound(void *arg)
-{
-    (void) arg;
-    system("aplay ../typing.wav &");
-    return NULL;
-}
 
 
 void draw_start(t_data *data) {
     int i;
     char path[256];
-    pthread_t sound_thread;
 
     i = 0;
     while (i < 66) {
@@ -53,14 +39,7 @@ void draw_start(t_data *data) {
             printf("the image cannot be loaded successfully\n");
             return;
         }
-        mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.frames[i].image, 0, 0);
-        
-        // Start sound on the first frame
-        if (i == 0) {
-            pthread_create(&sound_thread, NULL, play_sound, NULL);
-            pthread_detach(sound_thread);
-        }
-        
+        mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.frames[i].image, 0, 0);   
         if (i == 43)
             sleep(1);
         usleep(100000);
@@ -71,17 +50,16 @@ void draw_start(t_data *data) {
 
 void init_mlx(t_data *data)
 {
-
     data->mlx.mlx = mlx_init();
     if (!data->mlx.mlx)
         return;
     data->mlx.image = mlx_new_image(data->mlx.mlx, WIN_WIDTH, WIN_HEIGHT);
     data->mlx.image_addr = mlx_get_data_addr(data->mlx.image, &data->mlx.bits_per_pixel, &data->mlx.line_length, &data->mlx.endian);
-    data->mlx.window = mlx_new_window(data->mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Our Cub3D");
+    data->mlx.window = mlx_new_window(data->mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "FREE PALESTINE");
     if (!data->mlx.window)
         return;
-    if (data->text.hidden)
-        draw_start(data);
+    // if (data->text.hidden)
+    //     draw_start(data);
     init_textures(data);
 }
 
@@ -101,7 +79,7 @@ void init_data(t_map map, t_data *data)
     if (map.p.p_name == 'E')
         data->map.p.angle = 0;
     data->flag = 0;
-    data->map.palestine = "textures/simonkraft/pal_is.xpm";
-    data->flag_palestine = 0;
+    data->flag_weast = 0;
+    data->flag_east = 0;
     init_mlx(data);
 }

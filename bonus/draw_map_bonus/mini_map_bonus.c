@@ -98,10 +98,10 @@ void draw_mini_map(t_data *data)
     double dx, dy, dist_squared;
 
     i = 0;
-    while (i < data->map.height)
+    while (data->map.map[i])
     {
         j = 0;
-        while (j < data->map.width)
+        while (data->map.map[i][j])
         {
             dx = j - (data->map.p.p_x / WALL_DIM);
             dy = i - (data->map.p.p_y / WALL_DIM);  

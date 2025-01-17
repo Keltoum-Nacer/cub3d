@@ -24,9 +24,9 @@ int draw_textures(t_data *data, int i, int end, t_point p0)
     j = check_texture(data);
     while (i < end)
     {
-        double distance_from_top = i + (data->map.p.wall_height / 2) - (WIN_HEIGHT / 2);
+        double distance_from_top = i + (data->map.p.wall_height / 2) - (HEIGHT / 2);
         double texture_offset_y = distance_from_top * ((double)data->text.height / data->map.p.wall_height);
-        if (data->map.p.offset_x < data->text.width && data->map.p.offset_x >= 0 && texture_offset_y < data->text.height && texture_offset_y >= 0)
+        if (data->map.p.offset_x <= data->text.width && data->map.p.offset_x >= 0 && texture_offset_y <= data->text.height && texture_offset_y >= 0)
         {
             color = *(int *)(data->textures[j].text_mlx.image_addr +
                              ((int)texture_offset_y * data->textures[j].text_mlx.line_length) +
@@ -49,7 +49,7 @@ void draw_wall(t_point p0, int start, int end, t_data *data)
         i++;
     }
     i = draw_textures(data, i, end, p0);
-    while (i < WIN_HEIGHT)
+    while (i < HEIGHT)
     {
         my_mlx_pixel_put(&data->mlx, p0.x_ind, i, data->map.F_color);
         i++;
@@ -69,10 +69,10 @@ void render_wall_projection(t_point p0, t_data *data, double alpha, int i)
         alpha -= 2 * PI;
     data->map.p.ray_angle = alpha;
     precise_dist = data->map.p.wall_dist * cos(alpha - data->map.p.angle);
-    dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(FOV / 2));
+    dis_to_proj = (WIDTH / 2) / tan(degree_to_rad(FOV / 2));
     data->map.p.wall_height = round((dis_to_proj / precise_dist) * WALL_DIM);
-    start = (WIN_HEIGHT / 2) - (int)(data->map.p.wall_height / 2);
-    end = (WIN_HEIGHT / 2) + (int)(data->map.p.wall_height / 2);
+    start = (HEIGHT / 2) - (int)(data->map.p.wall_height / 2);
+    end = (HEIGHT / 2) + (int)(data->map.p.wall_height / 2);
     data->map.p.hit_x = p0.x_ind;
     data->map.p.hit_y = p0.y_ind;
     p0.x_ind = i;
@@ -101,7 +101,7 @@ void    init_bresenham(t_data *data, t_point p0, double alpha, t_bres_flag *s)
     double max_ray_length;
     t_point p1;
     
-    max_ray_length = sqrt(pow(WIN_WIDTH * WALL_DIM, 2) + pow(WIN_HEIGHT * WALL_DIM, 2));
+    max_ray_length = sqrt(pow(WIDTH * WALL_DIM, 2) + pow(HEIGHT * WALL_DIM, 2));
     p1.x_ind = p0.x_ind + max_ray_length * cos(alpha);
     p1.y_ind = max_ray_length * sin(alpha) + p0.y_ind;
     data->map.p.ray_angle = alpha;

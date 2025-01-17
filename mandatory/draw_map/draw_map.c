@@ -4,7 +4,7 @@ void my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
 {
     int offset;
 
-    if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
+    if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
         return;
     offset = (y * data->line_length) + (x * (data->bits_per_pixel / 8));
     *((unsigned int *)(data->image_addr + offset)) = color;
@@ -57,7 +57,7 @@ void     draw_mini_player(int x, int y, int color, t_mlx *mlx)
 void draw_raycasting(t_data *data)
 {
     double fov = degree_to_rad(FOV);
-    double angle_step = fov / NUM_RAYS;
+    double angle_step = fov / RAYS;
     double ray_angle;
     t_point x;
     int i;
@@ -66,7 +66,7 @@ void draw_raycasting(t_data *data)
     x.x_ind = data->map.p.p_x;
     x.y_ind = data->map.p.p_y;
     i = 0;
-    while (i < NUM_RAYS)
+    while (i < RAYS)
     {
         if (ray_angle < 0)
             ray_angle += 2 * PI;
