@@ -1,5 +1,5 @@
-#ifndef DEF_STR_H
-#define DED_STR_H
+#ifndef DEFINE_H
+#define DEFINE_H
 
 
 // macro 
@@ -26,8 +26,11 @@
 #define DOOR "Invalid door!\n"
 #define PATH_PLAYER "textures/anim_player/player%d.xpm"
 #define FAILED_DOWN "the image cannot be loaded successfully\n"
+#define NOT_LOAD "the image cannot be loaded successfully\n"
+#define CUB_ERR "cub3D: Error: "
 
 // macro draw
+
 #define KEY_W 119
 #define KEY_D 100
 #define KEY_S 115
@@ -53,6 +56,20 @@
 #define PI 3.14159265358979323846
 #define CO 100
 #define VIEW_RADIUS 5.5
+#define DEGREE_180 180.0
+#define DEGREE_360 360.0
+#define SCALE_XP 175
+#define SCALE_YP 70
+
+
+///color
+
 #define TRANSPARENT_COLOR -16777216
+#define COLOR_MINI 0x660000
+#define PLAYER_MINI 0xB22222
+#define COL_WALL 0xB22222
+#define COL_SP 0x000000
+#define COL_D 0x008000
+#define COL_0 0xFFFAFA
 
 #endif

@@ -29,7 +29,9 @@ SRCB = bonus/main_bonus.c \
 		bonus/draw_map_bonus/mini_map_bonus.c \
 		bonus/draw_map_bonus/move_player_bonus.c \
 		bonus/draw_map_bonus/texters_bonus.c \
-		bonus/draw_map_bonus/utils.c
+		bonus/draw_map_bonus/player.c  \
+		bonus/draw_map_bonus/utils.c \
+		bonus/draw_map_bonus/rendring_wall.c
 
 LIBFT_DIR=libft
 LIBFT_LIB=$(LIBFT_DIR)/libft.a

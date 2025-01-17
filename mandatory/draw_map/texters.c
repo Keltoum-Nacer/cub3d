@@ -21,7 +21,6 @@ unsigned int darkness(unsigned int color, double distance, int max_distance)
     return ((r << 16) | (g << 8) | b);
 }
 
-
 int check_texture(t_data *data)
 {
     if (!data->map.p.flag)

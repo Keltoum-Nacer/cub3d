@@ -30,30 +30,10 @@ double degree_to_rad(float fov)
 {
     double rad;
 
-    rad = fov * PI / 180.0;
+    rad = fov * PI / DEGREE_180;
     return (rad);
 }
 
-void     draw_mini_player(int x, int y, int color, t_mlx *mlx)
-{
-    double i, angle, x1, y1;
-    int r;
-
-    r  = 5;
-    i = 0;
-    while(i <= r)
-    {
-        angle = 0;
-        while(angle < 360)
-        {
-            x1 = i * cos(angle * PI / 180);
-            y1 = i * sin(angle * PI / 180);
-            my_mlx_pixel_put(mlx, x * MINI_GRID + x1, y * MINI_GRID + y1, color);
-            angle += 0.1;
-        }
-        i += 0.1;
-    }
-}
 void draw_raycasting(t_data *data)
 {
     double fov = degree_to_rad(FOV);
@@ -68,10 +48,7 @@ void draw_raycasting(t_data *data)
     i = 0;
     while (i < RAYS)
     {
-        if (ray_angle < 0)
-            ray_angle += 2 * PI;
-        if (ray_angle > 2 * PI)
-            ray_angle -= 2 * PI;
+        ray_angle = normalize_angle(ray_angle);
         bresenham(x, ray_angle, data, i);
         ray_angle += angle_step;
         i++;
@@ -86,7 +63,6 @@ double calculate_distance(t_point p0, t_point p1)
 int     draw_map(t_data *data)
 {
     draw_raycasting(data);
-    // draw_mini_wwmap(data);
     return(0);
 }
 

@@ -25,14 +25,12 @@ int mouse_move(int x, int y, t_data *data)
     if (x > last_x)
     {
         data->map.p.angle += 0.03;
-        if (data->map.p.angle > 2 * PI)
-            data->map.p.angle -= 2 * PI;
+        data->map.p.angle = normalize_angle(data->map.p.angle);
     }
     if (x < last_x)
     {
         data->map.p.angle -= 0.03;
-        if (data->map.p.angle < 0)
-            data->map.p.angle += 2 * PI;
+        data->map.p.angle = normalize_angle(data->map.p.angle);
     }
     last_x = x;
     return (move_player(data), 1);

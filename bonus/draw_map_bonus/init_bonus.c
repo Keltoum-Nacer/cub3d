@@ -17,7 +17,7 @@ void init_textures(t_data *data)
         data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, names[i], &data->text.width, &data->text.height);
         if (!data->textures[i].text_mlx.image)
         {
-            printf("the image cannot be loaded successfully\n");
+            write(2, NOT_LOAD, 40);
             return;
         }
         data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
@@ -25,28 +25,29 @@ void init_textures(t_data *data)
     }
 }
 
-
-
-void draw_start(t_data *data) {
+void draw_start(t_data *data)
+{
     int i;
     char path[256];
 
     i = 0;
-    while (i < 66) {
+    while (i < 66)
+    {
         snprintf(path, sizeof(path), PATH_FORMAT, i + 1);
         data->text.frames[i].image = mlx_xpm_file_to_image(data->mlx.mlx, path, &data->text.width, &data->text.height);
-        if (!data->text.frames[i].image) {
-            printf("the image cannot be loaded successfully\n");
+        if (!data->text.frames[i].image)
+        {
+            write(2, NOT_LOAD, 40);
             return;
         }
-        mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.frames[i].image, 0, 0);   
+        mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.frames[i].image, 0, 0);
         if (i == 43)
             sleep(1);
+        mlx_destroy_image(data->mlx.mlx, data->text.frames[i].image);
         usleep(100000);
         i++;
     }
 }
-   
 
 void init_mlx(t_data *data)
 {
@@ -58,8 +59,8 @@ void init_mlx(t_data *data)
     data->mlx.window = mlx_new_window(data->mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "FREE PALESTINE");
     if (!data->mlx.window)
         return;
-    // if (data->text.hidden)
-    //     draw_start(data);
+    if (data->text.hidden)
+        draw_start(data);
     init_textures(data);
 }
 

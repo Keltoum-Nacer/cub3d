@@ -21,7 +21,6 @@ unsigned int darkness(unsigned int color, double distance, int max_distance)
 	return ((r << 16) | (g << 8) | b);
 }
 
-
 int check_texture(t_data *data)
 {
     if (!data->map.p.flag)
@@ -53,4 +52,26 @@ int check_texture(t_data *data)
         }
     }
     return 0;
+}
+
+int build_texters(t_data *data, int i, int end, t_point p0)
+{
+    int color;
+    int j;
+
+    j = check_texture(data);
+    while (i < end)
+    {
+        double distance_from_top = i + (data->map.p.wall_height / 2) - (WIN_HEIGHT / 2);
+        double texture_offset_y = distance_from_top * ((double)data->text.height / data->map.p.wall_height);
+        if (data->map.p.offset_x <= data->text.width && data->map.p.offset_x >= 0 && texture_offset_y <= data->text.height && texture_offset_y >= 0)
+        {
+            color = *(int *)(data->textures[j].text_mlx.image_addr +
+                             ((int)texture_offset_y * data->textures[j].text_mlx.line_length) +
+                             ((int)data->map.p.offset_x * (data->textures[j].text_mlx.bits_per_pixel / 8)));
+        }
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
+        i++;
+    }
+    return (i);
 }
