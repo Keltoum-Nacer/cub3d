@@ -3,31 +3,28 @@
 int ft_close(t_data *cub)
 {
     mlx_destroy_image(cub->mlx.mlx, cub->mlx.image);
-	mlx_destroy_window(cub->mlx.mlx, cub->mlx.window);
-	exit(0);
+    mlx_destroy_window(cub->mlx.mlx, cub->mlx.window);
+    exit(0);
 }
 int mouse_move(int x, int y, t_data *data)
 {
     (void)y;
     static int last_x = WIN_WIDTH / 2;
-        if (x > last_x)
-        {
-            data->map.p.angle += 0.03;
-            if (data->map.p.angle > 2 * PI)
-                data->map.p.angle -= 2 * PI;
-        }
-        if (x < last_x)
-        {
-            data->map.p.angle -= 0.03;
-            if (data->map.p.angle < 0)
-                data->map.p.angle += 2 * PI;
-        }
+    if (x > last_x)
+    {
+        data->map.p.angle += 0.03;
+        data->map.p.angle = normalize_angle(data->map.p.angle);
+    }
+    if (x < last_x)
+    {
+        data->map.p.angle -= 0.03;
+        data->map.p.angle = normalize_angle(data->map.p.angle);
+    }
     last_x = x;
-    return (move_player(data), 1); 
+    return (move_player(data), 1);
 }
 
-
-void    hook_functions(t_data *data)
+void hook_functions(t_data *data)
 {
     mlx_hook(data->mlx.window, 17, 0, ft_close, data);
     mlx_hook(data->mlx.window, 2, 1L << 0, handle_key, data);

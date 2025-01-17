@@ -63,10 +63,7 @@ void render_wall_projection(t_point p0, t_data *data, double alpha, int i)
     int start;
     int end;
 
-    if (alpha < 0)
-        alpha += 2 * PI;
-    if (alpha >= 2 * PI)
-        alpha -= 2 * PI;
+    alpha = normalize_angle(alpha);
     data->map.p.ray_angle = alpha;
     precise_dist = data->map.p.wall_dist * cos(alpha - data->map.p.angle);
     dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(FOV / 2));
@@ -85,7 +82,6 @@ int    check_wall(t_point p0, double alpha, t_data *data, int i)
 
     player.x_ind = data->map.p.p_x;
     player.y_ind = data->map.p.p_y;
-    
     if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == '1')
     {
         data->map.is_door = 0;

@@ -1,13 +1,5 @@
 #include "../include_files/cub3d_bonus.h"
 
-void ft_put_str(char *str, char *name)
-{
-    write(2, "cub3D: Error: ", 14);
-    if (name)
-        write(2, name, ft_strlen(name) - 1);
-    write(2, str, ft_strlen(str) - 1);
-}
-
 int parse_Gmap(char *name, t_map *map)
 {
     int fd;

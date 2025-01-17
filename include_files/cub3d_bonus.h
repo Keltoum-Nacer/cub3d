@@ -1,4 +1,5 @@
-#ifndef CUB3D_BONUS_H
+# ifndef CUB3D_BONUS_H
+
 #define CUB3D_BONUS_H
 
 #include <stdio.h>
@@ -6,21 +7,25 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <math.h>
 #include "../libft/libft.h"
 #include "../minilibx-linux/mlx.h"
-#include <math.h>
-#include "def_str.h"
-typedef struct s_point
-{
-    double x_ind;
-    double y_ind;
-} t_point;
+#include "define.h"
+
+
+
 
 enum e_HorVer
 {
     VER,
     HOR,
 };
+
+typedef struct s_point
+{
+    double x_ind;
+    double y_ind;
+} t_point;
 
 typedef struct s_player
 {
@@ -66,6 +71,9 @@ typedef struct s_mlx
     int bits_per_pixel;
     int line_length;
     int endian;
+    int img_width;
+    int img_height;
+
 } t_mlx;
 
 typedef struct s_text
@@ -77,7 +85,7 @@ typedef struct s_text
     int height;
     char *player;
     char *name;
-    int     hidden;
+    int hidden;
     int x;
     int y;
 } t_text;
@@ -93,13 +101,15 @@ typedef struct s_bres_flag
 
 typedef struct s_data
 {
-    t_mlx   mlx;
-    t_map   map;
-    t_text  text;
-    t_text  textures[6];
-    t_text  anim;
-    int     flag;
-    int     flag_palestine;
+    t_mlx mlx;
+    t_map map;
+    t_text text;
+    t_text textures[6];
+    t_text anim;
+    int flag;
+    int flag_palestine;
+    double new_x;
+    double new_y;
 } t_data;
 // parsing functions
 
@@ -121,19 +131,24 @@ int read_map(int fd, int fdd, t_map *map);
 int check_0(char **new_map, t_map *map);
 void free_map(char **arr, t_map *map);
 void print_err(char *str);
+void init_data(t_map map, t_data *data);
 
 // ray-casting && texters
 int draw_map(t_data *data);
 void draw_pixels(int i, int j, int color, t_mlx *mlx);
 void bresenham(t_point p0, double alpha, t_data *data, int i);
 void init_flag(t_bres_flag *s, t_point p0, t_point p1);
-void init_data(t_map map, t_data *data);
 int handle_key(int keycode, t_data *data);
-double calculate_distance(t_point p0, t_point p1);
 void render_wall_projection(t_point p0, t_data *data, double alpha, int i);
 void draw_wall(t_point p0, int start, int end, t_data *data);
 int check_texture(t_data *data);
-void player(t_data *data);
+int check_wall_door(t_point p0, double alpha, t_data *data, int i);
+void build_wall(t_point p0, int start, int end, t_data *data);
+void bresenham_mini_map(t_point p0, double alpha, t_data *data);
+void draw_raycasting(t_data *data);
+void mini_player(int x, int y, int color, t_mlx *mlx);
+void draw_player(t_data *data, char *name);
+void rendring_minimap(t_data *data);
 // mlx
 
 void move_player(t_data *data);
@@ -142,16 +157,36 @@ void init_mlx(t_data *data);
 void my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 int ft_close(t_data *cub);
 
-//helper
-void draw_mini_map(t_data *data);
-double degree_to_rad(float fov);
-void	ft_free(char **tr);
-int	ft_len_double(char **str);
-void	free_dir(t_map *map, int flag);
-void destroy_all_bonus(t_data data);
-int draw_anim(t_data *data);
+//texters
 
+int build_texters(t_data *data, int i, int end, t_point p0);
+int check_texture(t_data *data);
+
+//wall
+
+// helper
+double degree_to_rad(float fov);
+void ft_free(char **tr);
+int ft_len_double(char **str);
+void free_dir(t_map *map, int flag);
+void destroy_all_bonus(t_data data);
+int animation_player(t_data *data);
 double    normalize_angle(double alpha);
+double calculate_distance(t_point p0, t_point p1);
+double normalize_angle(double alpha);
+void ft_put_str(char *str, char *name);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #endif
-                

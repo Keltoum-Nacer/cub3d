@@ -21,32 +21,6 @@ unsigned int darkness(unsigned int color, double distance, int max_distance)
     return ((r << 16) | (g << 8) | b);
 }
 
-int set_wall_color(t_data *data)
-{
-    double normalized_angle;
-
-    // Normalize the ray angle to [0, 2*PI]
-    normalized_angle = fmod(data->map.p.ray_angle, 2 * PI);
-    if (normalized_angle < 0)
-        normalized_angle += 2 * PI;
-
-    if (!data->map.p.flag) // Horizontal hit
-    {
-        if (normalized_angle > 0 && normalized_angle < PI)
-            return (0xD239FF); // South-facing wall
-        else
-            return (0xFF25CD); // North-facing wall
-    }
-    else // Vertical hit
-    {
-        if (normalized_angle > 3 * (PI / 2) || normalized_angle < PI / 2)
-            return (0x66D7FF); // East-facing wall
-        else
-            return (0x000000); // West-facing wall
-    }
-    return (0);
-}
-
 int check_texture(t_data *data)
 {
     if (!data->map.p.flag)

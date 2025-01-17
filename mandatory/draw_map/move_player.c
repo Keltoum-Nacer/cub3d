@@ -55,14 +55,12 @@ void rot(t_data *data, int keycode)
     if (keycode == KEY_LEFT)
     {
         data->map.p.angle += 0.10;
-        if (data->map.p.angle > 2 * PI)
-            data->map.p.angle -= 2 * PI;
+        data->map.p.angle = normalize_angle(data->map.p.angle);
     }
     else
     {
         data->map.p.angle -= 0.10;
-        if (data->map.p.angle < 0)
-            data->map.p.angle += 2 * PI;
+        data->map.p.angle = normalize_angle(data->map.p.angle);
     }
     move_player(data);
 }

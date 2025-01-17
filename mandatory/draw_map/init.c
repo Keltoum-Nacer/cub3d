@@ -14,7 +14,7 @@ void    init_textures(t_data *data)
         data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, names[i], &data->text.width, &data->text.height);
         if (!data->textures[i].text_mlx.image)
         {
-            printf("the image cannot be loaded successfully\n");
+            write(2, NOT_LOAD, 40);
             return;
         }
         data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
@@ -50,4 +50,13 @@ void    init_data(t_map map, t_data *data)
     if (map.p.p_name == 'E')
         data->map.p.angle = 0;
     init_mlx(data);
+}
+
+double    normalize_angle(double alpha)
+{
+    if (alpha < 0)
+        alpha += 2 * PI;
+    if (alpha > 2 * PI)
+        alpha -= 2* PI;
+    return(alpha);
 }

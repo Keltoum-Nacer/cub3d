@@ -1,15 +1,15 @@
 #ifndef CUB3D_H
 #define CUB3D_H
 
+#include "../libft/libft.h"
+#include "../minilibx-linux/mlx.h"
+#include "define.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include "../libft/libft.h"
-#include "../minilibx-linux/mlx.h"
 #include <math.h>
-#include "def_str.h"
 
 typedef struct s_point
 {
@@ -154,4 +154,5 @@ int ft_len_double(char **str);
 void    ft_free(char **tr);
 void	free_dir(t_map *map, int flag);
 void destroy_all(t_data data);
+double    normalize_angle(double alpha);
 #endif

@@ -42,7 +42,7 @@ void draw_start(t_data *data)
         data->text.frames[i].image = mlx_xpm_file_to_image(data->mlx.mlx, path, &data->text.width, &data->text.height);
         if (!data->text.frames[i].image)
         {
-            printf("the image cannot be loaded successfully\n");
+            write(2, NOT_LOAD, 40);
             return;
         }
         mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.frames[i].image, 0, 0);
