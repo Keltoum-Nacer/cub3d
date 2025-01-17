@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_color_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 22:02:37 by knacer            #+#    #+#             */
+/*   Updated: 2025/01/17 23:17:09 by sait-amm         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include_files/cub3d_bonus.h"
 
 int	extract_and_validate_int(char *line)
@@ -81,11 +93,11 @@ int	extract_color_value(int fd, int flag, t_map **map)
 
 int	parse_color(int fd, t_map **map)
 {
-	(*map)->F_color = extract_color_value(fd, 0, map);
-	if ((*map)->F_color == -1)
+	(*map)->f_color = extract_color_value(fd, 0, map);
+	if ((*map)->f_color == -1)
 		return (FAILURE);
-	(*map)->C_color = extract_color_value(fd, 1, map);
-	if ((*map)->C_color == -1)
+	(*map)->c_color = extract_color_value(fd, 1, map);
+	if ((*map)->c_color == -1)
 		return (FAILURE);
 	return (SUCCESS);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knacer <knacer@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 21:08:06 by knacer            #+#    #+#             */
+/*   Updated: 2025/01/17 21:18:35 by knacer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include_files/cub3d.h"
 
 int	height_map(int fdd)
@@ -6,11 +18,13 @@ int	height_map(int fdd)
 	int		count;
 
 	count = 0;
-	while ((line = get_next_line(fdd)))
+	line = get_next_line(fdd);
+	while (line)
 	{
 		if (ft_strcmp(line, "\n"))
 			count++;
 		free(line);
+		line = get_next_line(fdd);
 	}
 	return (count);
 }
@@ -62,13 +76,11 @@ int	full_map(t_map *map, char **str, int fd)
 	int		i;
 
 	i = 1;
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		while (line && !ft_strcmp(line, "\n") && i == 1)
-		{
-			free(line);
-			line = get_next_line(fd);
-		}
+			(free(line), line = get_next_line(fd));
 		if (line && ft_strcmp(line, "\n"))
 		{
 			*str = ft_strjoin(*str, line);
@@ -80,6 +92,7 @@ int	full_map(t_map *map, char **str, int fd)
 		else if (line && i <= map->height - map->height_text)
 			return (free(line), print_err(MAP), FAILURE);
 		free(line);
+		line = get_next_line(fd);
 	}
 	return (i);
 }
@@ -94,7 +107,7 @@ int	read_map(int fd, int fdd, t_map *map)
 	map->height = full_map(map, &str, fd);
 	if (!map->height)
 		return (free(str), FAILURE);
-    map->height -= 1;
+	map->height -= 1;
 	map->map = ft_split(str, '\n');
 	free(str);
 	return (SUCCESS);

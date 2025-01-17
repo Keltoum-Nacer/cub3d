@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 22:10:50 by knacer            #+#    #+#             */
+/*   Updated: 2025/01/17 23:24:14 by sait-amm         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include_files/cub3d_bonus.h"
 
-int ft_close(t_data *cub)
+int	ft_close(t_data *cub)
 {
-    char *end;
+	char	*end;
 
-    end = ft_strdup("textures/simonkraft/palestine2.xpm");
+    end = ft_strdup("textures/simonkraft/end.xpm");
     cub->text.end.image = mlx_xpm_file_to_image(cub->mlx.mlx, end, &cub->text.width, &cub->text.height);
     if (!cub->text.end.image)
     {
@@ -13,7 +25,7 @@ int ft_close(t_data *cub)
     }
     mlx_put_image_to_window(cub->mlx.mlx, cub->mlx.window, cub->text.end.image, 0, 0);
     mlx_do_sync(cub->mlx.mlx);
-    sleep(4);
+    sleep(2);
     mlx_destroy_image(cub->mlx.mlx, cub->text.end.image);
     destroy_all_bonus(*cub);
     free(end);
@@ -37,9 +49,9 @@ int mouse_move(int x, int y, t_data *data)
     return (move_player(data), 1);
 }
 
-void hook_functions(t_data *data)
+void	hook_functions(t_data *data)
 {
-    mlx_hook(data->mlx.window, 17, 0, ft_close, data);
-    mlx_hook(data->mlx.window, 2, 1L << 0, handle_key, data);
-    mlx_hook(data->mlx.window, 6, 1L << 6, mouse_move, data);
+	mlx_hook(data->mlx.window, 17, 0, ft_close, data);
+	mlx_hook(data->mlx.window, 2, 1L << 0, handle_key, data);
+	mlx_hook(data->mlx.window, 6, 1L << 6, mouse_move, data);
 }

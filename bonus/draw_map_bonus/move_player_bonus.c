@@ -1,54 +1,84 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move_player_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knacer <knacer@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 22:14:58 by knacer            #+#    #+#             */
+/*   Updated: 2025/01/17 22:14:59 by knacer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include_files/cub3d_bonus.h"
 
-void validate_move(t_data *data, int flag_x, int flag_y)
+void	validate_move(t_data *data, int flag_x, int flag_y)
 {
-	if (data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((data->new_x) / WALL_DIM)] != '1' && data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((data->new_x) / WALL_DIM)])
+	if (data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((data->new_x)
+			/ WALL_DIM)] != '1' && data->map.map[(int)(data->map.p.p_y
+			/ WALL_DIM)][(int)((data->new_x) / WALL_DIM)])
 	{
-		if (data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((data->new_x) / WALL_DIM)] == 'D' && !data->map.open_door)
-			return;
+		if (data->map.map[(int)(data->map.p.p_y / WALL_DIM)][(int)((data->new_x)
+				/ WALL_DIM)] == 'D' && !data->map.open_door)
+			return ;
 		data->map.p.p_x = data->new_x - flag_x;
 	}
-	if (data->map.map[(int)(data->new_y / WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] && data->map.map[(int)(data->new_y / WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] != '1')
+	if (data->map.map[(int)(data->new_y / WALL_DIM)][(int)(data->map.p.p_x
+			/ WALL_DIM)] && data->map.map[(int)(data->new_y
+			/ WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] != '1')
 	{
-		if (data->map.map[(int)(data->new_y / WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] == 'D' && !data->map.open_door)
-			return;
+		if (data->map.map[(int)(data->new_y / WALL_DIM)][(int)(data->map.p.p_x
+				/ WALL_DIM)] == 'D' && !data->map.open_door)
+			return ;
 		data->map.p.p_y = data->new_y - flag_y;
 	}
 }
 
-void move_leftright(int keycode, t_data *data)
+void	move_leftright(int keycode, t_data *data)
 {
 	if (keycode == KEY_A)
 	{
-		data->new_x = data->map.p.p_x - SPEED * cos(data->map.p.angle + PI / 2) - CO * cos(data->map.p.angle + PI / 2);
-		data->new_y = data->map.p.p_y - SPEED * sin(data->map.p.angle + PI / 2) - CO * sin(data->map.p.angle + PI / 2);
-		validate_move(data, -CO * cos(data->map.p.angle + PI / 2),-CO * sin(data->map.p.angle + PI / 2));
+		data->new_x = data->map.p.p_x - SPEED * cos(data->map.p.angle + PI / 2)
+			- CO * cos(data->map.p.angle + PI / 2);
+		data->new_y = data->map.p.p_y - SPEED * sin(data->map.p.angle + PI / 2)
+			- CO * sin(data->map.p.angle + PI / 2);
+		validate_move(data, -CO * cos(data->map.p.angle + PI / 2), -CO
+			* sin(data->map.p.angle + PI / 2));
 	}
 	if (keycode == KEY_D)
 	{
-		data->new_x = data->map.p.p_x + SPEED * cos(data->map.p.angle + PI / 2) + CO * cos(data->map.p.angle + PI / 2);
-		data->new_y = data->map.p.p_y + SPEED * sin(data->map.p.angle + PI / 2) + CO * sin(data->map.p.angle + PI / 2);
-		validate_move(data, CO * cos(data->map.p.angle + PI / 2),CO * sin(data->map.p.angle + PI / 2));
+		data->new_x = data->map.p.p_x + SPEED * cos(data->map.p.angle + PI / 2)
+			+ CO * cos(data->map.p.angle + PI / 2);
+		data->new_y = data->map.p.p_y + SPEED * sin(data->map.p.angle + PI / 2)
+			+ CO * sin(data->map.p.angle + PI / 2);
+		validate_move(data, CO * cos(data->map.p.angle + PI / 2), CO
+			* sin(data->map.p.angle + PI / 2));
 	}
 }
 
-void move_updown(int keycode, t_data *data)
+void	move_updown(int keycode, t_data *data)
 {
 	if (keycode == KEY_W)
 	{
-		data->new_x = (data->map.p.p_x + SPEED * cos(data->map.p.angle)) + CO * cos(data->map.p.angle);
-		data->new_y = (data->map.p.p_y + SPEED * sin(data->map.p.angle)) + CO * sin(data->map.p.angle);
-		validate_move(data, CO * cos(data->map.p.angle), CO * sin(data->map.p.angle));
+		data->new_x = (data->map.p.p_x + SPEED * cos(data->map.p.angle)) + CO
+			* cos(data->map.p.angle);
+		data->new_y = (data->map.p.p_y + SPEED * sin(data->map.p.angle)) + CO
+			* sin(data->map.p.angle);
+		validate_move(data, CO * cos(data->map.p.angle), CO
+			* sin(data->map.p.angle));
 	}
 	if (keycode == KEY_S)
 	{
-		data->new_x = (data->map.p.p_x - SPEED * cos(data->map.p.angle)) - CO * cos(data->map.p.angle);
-		data->new_y = (data->map.p.p_y - SPEED * sin(data->map.p.angle)) - CO * sin(data->map.p.angle);
-		validate_move(data,  -CO * cos(data->map.p.angle), -CO * sin(data->map.p.angle));
+		data->new_x = (data->map.p.p_x - SPEED * cos(data->map.p.angle)) - CO
+			* cos(data->map.p.angle);
+		data->new_y = (data->map.p.p_y - SPEED * sin(data->map.p.angle)) - CO
+			* sin(data->map.p.angle);
+		validate_move(data, -CO * cos(data->map.p.angle), -CO
+			* sin(data->map.p.angle));
 	}
 }
 
-void rot(int keycode, t_data *data)
+void	rot(int keycode, t_data *data)
 {
 	if (keycode == KEY_LEFT)
 		data->map.p.angle += 0.10;
@@ -57,7 +87,7 @@ void rot(int keycode, t_data *data)
 	data->map.p.angle = normalize_angle(data->map.p.angle);
 }
 
-int handle_key(int keycode, t_data *data)
+int	handle_key(int keycode, t_data *data)
 {
 	if (keycode == ESC)
 		return (ft_close(data), 1);
@@ -69,7 +99,8 @@ int handle_key(int keycode, t_data *data)
 		rot(keycode, data);
 	if (keycode == OPEN)
 		data->map.open_door = 1;
-	if (keycode == CLOSE && data->map.map[(int)(data->map.p.p_y / WALL_DIM)] [(int)(data->map.p.p_x / WALL_DIM)] != 'D')
+	if (keycode == CLOSE && data->map.map[(int)(data->map.p.p_y
+			/ WALL_DIM)][(int)(data->map.p.p_x / WALL_DIM)] != 'D')
 	{
 		data->map.open_door = 0;
 		move_player(data);

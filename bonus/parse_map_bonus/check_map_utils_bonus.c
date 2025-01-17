@@ -1,29 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map_utils_bonus.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 22:05:19 by knacer            #+#    #+#             */
+/*   Updated: 2025/01/17 23:18:03 by sait-amm         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include_files/cub3d_bonus.h"
 
-void    print_err(char *str)
+void	print_err(char *str)
 {
-    ft_putstr_fd("CUB3D >> Error :: ", 2);
-    ft_putstr_fd(str, 2);
+	ft_putstr_fd("CUB3D >> Error :: ", 2);
+	ft_putstr_fd(str, 2);
 }
 
-int check_left_right(char c, t_map *map)
+int	check_left_right(char c, t_map *map)
 {
-    if (c != '0' && c != '1' && c != map->p.p_name)
-        return(0);
-    return(1);
+	if (c != '0' && c != '1' && c != map->p.p_name)
+		return (0);
+	return (1);
 }
 
-int check_top_bottom(char c, t_map *map)
+int	check_top_bottom(char c, t_map *map)
 {
-    if (c != '0' && c != '1' && c != map->p.p_name && c != 'D')
-        return(0);
-    return(1);
+	if (c != '0' && c != '1' && c != map->p.p_name && c != 'D')
+		return (0);
+	return (1);
 }
 
-int check_0(char **new_map, t_map *map)
+int	check_0(char **new_map, t_map *map)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
     i = 0;
     while(i < map->height)
@@ -42,14 +54,14 @@ int check_0(char **new_map, t_map *map)
     return(SUCCESS);
 }
 
-void    free_map(char **arr, t_map *map)
+void	free_map(char **arr, t_map *map)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (i < map->height)
-    {
-        free(arr[i]);
-        i++;
-    }
+	i = 0;
+	while (i < map->height)
+	{
+		free(arr[i]);
+		i++;
+	}
 }

@@ -1,65 +1,78 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 22:04:29 by knacer            #+#    #+#             */
+/*   Updated: 2025/01/17 23:17:53 by sait-amm         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include_files/cub3d_bonus.h"
 
-int surrounded_by_1(t_map *map)
+int	surrounded_by_1(t_map *map)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 0;
-    while (map->map[i])
-    {
-        j = 0;
-        while (ft_whitespace(map->map[i][j]))
-            j++;
-        if ((i > 0 && i < map->height - 1) &&
-            (map->map[i][j] != '1' || map->map[i][ft_strlen(map->map[i]) - 1] != '1'))
-            return (print_err(MAP), FAILURE);
-        while (map->map[i][j])
-        {
-            if ((i == 0 || i == map->height - 1) &&
-                (map->map[i][j] != '1' && !ft_whitespace(map->map[i][j])))
-                return (print_err(MAP), FAILURE);
-            j++;
-        }
-        i++;
-    }
-    return (SUCCESS);
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (ft_whitespace(map->map[i][j]))
+			j++;
+		if ((i > 0 && i < map->height - 1) && (map->map[i][j] != '1'
+			|| map->map[i][ft_strlen(map->map[i]) - 1] != '1'))
+			return (print_err(MAP), FAILURE);
+		while (map->map[i][j])
+		{
+			if ((i == 0 || i == map->height - 1) && (map->map[i][j] != '1'
+				&& !ft_whitespace(map->map[i][j])))
+				return (print_err(MAP), FAILURE);
+			j++;
+		}
+		i++;
+	}
+	return (SUCCESS);
 }
 
-int check_doors(t_map *map)
+int	check_doors(t_map *map)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 0;
-    while (map->map[i])
-    {
-        j = 0;
-        while (map->map[i][j])
-        {
-            if (map->map[i][j] == 'D' && (map->map[i][j - 1] != '1' || map->map[i][j + 1] != '1'))
-                return (print_err(DOOR), FAILURE);
-            j++;
-        }
-        i++;
-    }
-    return (SUCCESS);
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			if (map->map[i][j] == 'D' && (map->map[i][j - 1] != '1'
+					|| map->map[i][j + 1] != '1'))
+				return (print_err(DOOR), FAILURE);
+			j++;
+		}
+		i++;
+	}
+	return (SUCCESS);
 }
 
-char **allocate_map(t_map *map)
+char	**allocate_map(t_map *map)
 {
-    char **new_map;
-    int i;
+	char	**new_map;
+	int		i;
 
-    i = 0;
-    new_map = ft_calloc(map->height + 1, sizeof(char *));
-    while (i < map->height)
-    {
-        new_map[i] = ft_calloc(map->width, sizeof(char));
-        i++;
-    }
-    new_map[i] = NULL;
-    return (new_map);
+	i = 0;
+	new_map = ft_calloc(map->height + 1, sizeof(char *));
+	while (i < map->height)
+	{
+		new_map[i] = ft_calloc(map->width, sizeof(char));
+		i++;
+	}
+	new_map[i] = NULL;
+	return (new_map);
 }
 
 int	valid_map(t_map *map)
@@ -85,7 +98,7 @@ int	valid_map(t_map *map)
 	return (SUCCESS);
 }
 
-int parse_map(int fd, int fdd, t_map *map)
+int	parse_map(int fd, int fdd, t_map *map)
 {
     if (!read_map(fd, fdd, map))
         return (FAILURE);
