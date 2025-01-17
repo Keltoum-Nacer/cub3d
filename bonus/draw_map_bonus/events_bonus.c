@@ -4,7 +4,7 @@ int ft_close(t_data *cub)
 {
     char *end;
 
-    end = ft_strdup("textures/simonkraft/palestine2.xpm");
+    end = ft_strdup("textures/simonkraft/end.xpm");
     cub->text.end.image = mlx_xpm_file_to_image(cub->mlx.mlx, end, &cub->text.width, &cub->text.height);
     if (!cub->text.end.image)
     {
@@ -13,8 +13,7 @@ int ft_close(t_data *cub)
     }
     mlx_put_image_to_window(cub->mlx.mlx, cub->mlx.window, cub->text.end.image, 0, 0);
     mlx_do_sync(cub->mlx.mlx);
-    sleep(4);
-    
+    sleep(2);
     mlx_destroy_image(cub->mlx.mlx, cub->mlx.image);
     mlx_destroy_window(cub->mlx.mlx, cub->mlx.window);
     exit(0);
