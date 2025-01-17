@@ -1,19 +1,17 @@
 
 #include "../include_files/cub3d_bonus.h"
 
-
-
-void     draw_mini_player(int x, int y, int color, t_mlx *mlx)
+void draw_mini_player(int x, int y, int color, t_mlx *mlx)
 {
     double i, angle, x1, y1;
     double r;
 
-    r  = 3.5;
+    r = 3.5;
     i = 0;
-    while(i <= r)
+    while (i <= r)
     {
         angle = 0;
-        while(angle < 360)
+        while (angle < 360)
         {
             x1 = i * cos(angle * PI / 180);
             y1 = i * sin(angle * PI / 180);
@@ -27,7 +25,6 @@ void     draw_mini_player(int x, int y, int color, t_mlx *mlx)
     }
 }
 
-
 void bresenham_mini_map(t_point p0, double alpha, t_data *data, int i)
 {
     (void)i;
@@ -39,11 +36,9 @@ void bresenham_mini_map(t_point p0, double alpha, t_data *data, int i)
     init_flag(&s, p0, p1);
     while (1)
     {
-        if ((int)p0.x_ind ==(int) p1.x_ind && (int)p0.y_ind == (int)p1.y_ind)
-        {
+        if ((int)p0.x_ind == (int)p1.x_ind && (int)p0.y_ind == (int)p1.y_ind)
             break;
-        }
-            my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0x660000);
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, p0.y_ind, 0x660000);
         e2 = s.err * 2;
         if (e2 > -s.dy)
         {
@@ -61,39 +56,23 @@ void bresenham_mini_map(t_point p0, double alpha, t_data *data, int i)
 void draw_raycasting_mini_map(t_data *data)
 {
     double fov = degree_to_rad(FOV);
-    double angle_step = fov /NUM_RAYS ;
+    double angle_step = fov / NUM_RAYS;
     double ray_angle;
     t_point x;
-    // int i;
 
     ray_angle = data->map.p.angle - (fov / 2);
     x.x_ind = 6.1 * MINI_GRID;
     x.y_ind = 6.1 * MINI_GRID;
-
-    // i = 0;
-    // while (i < NUM_RAYS)
-    // {
-
-        if (ray_angle < 0)
-            ray_angle += 2 * PI;
-        if (ray_angle > 2 * PI)
-            ray_angle -= 2 * PI;
-        bresenham_mini_map(x, ray_angle, data, 0);
-        ray_angle += angle_step;
-        bresenham_mini_map(x, ray_angle, data, 1);
-        ray_angle +=FOV * PI / 180 - angle_step;
-         if (ray_angle < 0)
-            ray_angle += 2 * PI;
-        if (ray_angle > 2 * PI)
-            ray_angle -= 2 * PI;
-        bresenham_mini_map(x, ray_angle , data, NUM_RAYS -1);
-        bresenham_mini_map(x, ray_angle - angle_step, data, NUM_RAYS -2);
-        ray_angle += angle_step;
-        // i++;
-
-    // }
+    ray_angle = normalize_angle(ray_angle);
+    bresenham_mini_map(x, ray_angle, data, 0);
+    ray_angle += angle_step;
+    bresenham_mini_map(x, ray_angle, data, 1);
+    ray_angle += FOV * PI / 180 - angle_step;
+    ray_angle = normalize_angle(ray_angle);
+    bresenham_mini_map(x, ray_angle, data, NUM_RAYS - 1);
+    bresenham_mini_map(x, ray_angle - angle_step, data, NUM_RAYS - 2);
+    ray_angle += angle_step;
 }
-
 
 void draw_pixels_mini_map(int i, int j, int color, t_mlx *mlx)
 {
@@ -129,31 +108,25 @@ void draw_mini_map(t_data *data)
         while (j < data->map.width)
         {
             dx = j - center_x;
-            dy = i - center_y;  
+            dy = i - center_y;
             dist_squared = dx * dx + dy * dy;
             if (dist_squared <= VIEW_RADIUS * VIEW_RADIUS)
             {
-                // int tile_x = (dx + VIEW_RADIUS) * MINI_GRID;  
-                // int tile_y = (dy + VIEW_RADIUS) * MINI_GRID; 
-                    if (data->map.map[i][j] == '1')
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0xB22222, &data->mlx);
-                    else if (data->map.map[i][j] == ' ')
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0x000000, &data->mlx);
-                    else if (data->map.map[i][j] == 'T')
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0x000000, &data->mlx);
-                    else if(data->map.map[i][j] == 'D' && !data->map.open_door)
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0x008000, &data->mlx);
-                    else
-                        draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0xFFFAFA, &data->mlx);
-                    
+                if (data->map.map[i][j] == '1')
+                    draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0xB22222, &data->mlx);
+                else if (data->map.map[i][j] == ' ')
+                    draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0x000000, &data->mlx);
+                else if (data->map.map[i][j] == 'T')
+                    draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0x000000, &data->mlx);
+                else if (data->map.map[i][j] == 'D' && !data->map.open_door)
+                    draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0x008000, &data->mlx);
+                else
+                    draw_pixels_mini_map(((j - center_x) + VIEW_RADIUS) * 12, ((i - center_y) + VIEW_RADIUS) * 12, 0xFFFAFA, &data->mlx);
             }
             j++;
         }
         i++;
     }
-     draw_mini_player(6.5, 6.5, 0x000000, &data->mlx);
-     draw_raycasting_mini_map(data);
+    draw_mini_player(6.5, 6.5, 0x000000, &data->mlx);
+    draw_raycasting_mini_map(data);
 }
-
-
-

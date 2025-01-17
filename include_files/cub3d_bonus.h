@@ -9,70 +9,12 @@
 #include "../libft/libft.h"
 #include "../minilibx-linux/mlx.h"
 #include <math.h>
-
-// macro parsing
-#define SUCCESS 1
-#define FAILURE 0
-#define MAP_HEIGHT 1000
-#define BUFFER_SIZE 7
-#define INV_TEX ": Invalid texture(s)✋\n"
-#define NOT_XPM " Not an .xpm file🤌\n"
-#define NOT_CUB " Not an .cub file ❌\n"
-#define WR_NBR "Wrong number of arguments\n"
-#define DUP "duplicates\n"
-#define INV_RGB " Invalid RGB value \n"
-#define MIS_COL " Missing color(s)\n"
-#define ER_OPEN " Error in opening file ❓\n"
-#define EMPTY "Empty map \n"
-#define SMALL "Map too small\n"
-#define MAP "Invalid map!\n"
-#define PLAYER "The map should contain one player!\n"
-#define TEX_NMBR "invalid number of path\n"
-#define INV_CLR "missing color \n"
-#define PLAYER "The map should contain one player!\n"
-#define PATH_FORMAT "textures/animation/p%d.xpm"
-#define DOOR "Invalid door!\n"
-
-// macro draw
-#define KEY_W 119
-#define KEY_D 100
-#define KEY_S 115
-#define KEY_A 97
-#define ESC 65307
-#define OPEN 111
-#define CLOSE 99
-#define SPC 32
-#define WIN_WIDTH 1080
-#define WIN_HEIGHT 1080
-#define KEY_LEFT 65363
-#define KEY_RIGHT 65361
-#define WALL_DIM 256.0
-#define FOV 60
-#define NUM_RAYS WIN_WIDTH
-#define MINI_DIM 400
-#define MINI_GRID 10
-#define SPEED 50.0
-#define PI 3.14159265358979323846
-#define CO 100
-#define VIEW_RADIUS 5.5
-#define TRANSPARENT_COLOR -16777216
-
+#include "def_str.h"
 typedef struct s_point
 {
     double x_ind;
     double y_ind;
 } t_point;
-
-typedef struct s_ray
-{
-    double hit_x;
-    double hit_y;
-    double offset_x;
-    double offset_y;
-    double angle;
-    int ver_hor;
-    double wall_dist;
-} t_ray;
 
 enum e_HorVer
 {
@@ -102,6 +44,7 @@ typedef struct s_map
     char *west;
     char *east;
     char *south;
+    char *palestine;
     char **map; // Updated with the parsing changes
     char **new_map;
     int F_color;
@@ -153,8 +96,10 @@ typedef struct s_data
     t_mlx   mlx;
     t_map   map;
     t_text  text;
-    t_text  textures[5];
+    t_text  textures[6];
     t_text  anim;
+    int     flag;
+    int     flag_palestine;
 } t_data;
 // parsing functions
 
@@ -204,4 +149,9 @@ void	ft_free(char **tr);
 int	ft_len_double(char **str);
 void	free_dir(t_map *map, int flag);
 void destroy_all_bonus(t_data data);
+int draw_anim(t_data *data);
+
+double    normalize_angle(double alpha);
+
 #endif
+                
