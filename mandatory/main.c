@@ -9,21 +9,45 @@ void ft_put_str(char *str, char *name)
     write(2, str, ft_strlen(str) - 1);
 }
 
+void free_parse(t_map *map, int fd, int fdd)
+{
+    if (map->map)
+        ft_free(map->map);
+    if (map->west)
+        free(map->west);
+    if (map->east)
+        free(map->east);
+    if (map->south)
+        free(map->south);
+    if (map->north)
+        free(map->north);
+    close(fd);
+    close(fdd);
+}
 int parse_Gmap(char *name, t_map *map)
 {
     int fd;
     int fdd;
+
     fd = open(name, O_RDONLY);
     fdd = open(name, O_RDONLY);
+    if (fdd < 0)
+    {
+        ft_put_str(ER_OPEN, name);
+        return (FAILURE);
+    }
+    map->map = NULL;
+    map->east = NULL;
+    map->west = NULL;
+    map->north = NULL;
+    map->south = NULL;
     map->height_text = 0;
     if (!file_cub(fd, name))
         return (FAILURE);
     if (!parse_direction(fd, &map) || !parse_color(fd, &map))
-        return (FAILURE);
+        return (free_parse(map, fd, fdd), FAILURE);
     if (!parse_map(fd, fdd, map))
-    {
-        return (FAILURE);
-    }
+        return (free_parse(map, fd, fdd), FAILURE);
     close(fd);
     close(fdd);
     return (SUCCESS);

@@ -34,7 +34,7 @@ int check_0(char **new_map, t_map *map)
             if(new_map[i][j] == '0' && (!check_left_right(new_map[i][j - 1], map)
                 || !check_left_right(new_map[i][j + 1], map) || !check_top_bottom(new_map[i + 1][j], map)
                 || !check_top_bottom(new_map[i - 1][j], map)))
-                return(printf("what the hell\n"), print_err(MAP), FAILURE);
+                return(print_err(MAP), FAILURE);
             j++;
         }
         i++;

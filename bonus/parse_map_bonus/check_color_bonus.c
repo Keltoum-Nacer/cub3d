@@ -35,7 +35,7 @@ long long	transform_sequence(char *line)
 	line++;
 	pl = ft_split(line, ',');
 	if (ft_len_double(pl) != 3)
-		return (ft_put_str(INV_CLR, NULL), ft_free(pl), -1);
+		return (ft_put_str(MIS_COL, NULL), ft_free(pl), -1);
 	c_red = extract_and_validate_int(pl[0]);
 	if (c_red == -1)
 		return (ft_free(pl), -1);
@@ -83,11 +83,9 @@ int	parse_color(int fd, t_map **map)
 {
 	(*map)->F_color = extract_color_value(fd, 0, map);
 	if ((*map)->F_color == -1)
-		return (free((*map)->north), free((*map)->south), free((*map)->west),
-			free((*map)->east), FAILURE);
+		return (FAILURE);
 	(*map)->C_color = extract_color_value(fd, 1, map);
 	if ((*map)->C_color == -1)
-		return (free((*map)->north), free((*map)->south), free((*map)->west),
-			free((*map)->east), FAILURE);
+		return (FAILURE);
 	return (SUCCESS);
 }

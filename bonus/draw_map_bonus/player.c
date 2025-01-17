@@ -52,6 +52,7 @@ void draw_player(t_data *data, char *name)
         }
         offset_x++;
     }
+    mlx_destroy_image(data->mlx.mlx,  player.image);
 }
 
 void mini_player(int x, int y, int color, t_mlx *mlx)

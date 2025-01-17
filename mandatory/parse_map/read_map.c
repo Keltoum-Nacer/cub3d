@@ -77,7 +77,7 @@ int	full_map(t_map *map, char **str, int fd)
 				map->width = j;
 			i++;
 		}
-		else if (line && i < map->height - map->height_text)
+		else if (line && i <= map->height - map->height_text)
 			return (free(line), print_err(MAP), FAILURE);
 		free(line);
 	}

@@ -70,16 +70,16 @@ int	valid_map(t_map *map)
 int	parse_map(int fd, int fdd, t_map *map)
 {
 	if (!read_map(fd, fdd, map))
-		return (free_dir(map, 4), FAILURE);
+		return (FAILURE);
 	if (!map->map || !map->map[0])
-		return (free_dir(map, 4), ft_free(map->map), print_err(EMPTY), FAILURE);
+		return (print_err(EMPTY), FAILURE);
 	if (map->height <= 2)
-		return (ft_free(map->map), print_err(SMALL), FAILURE);
+		return (FAILURE);
 	else if (!valid_character(map))
-		return (ft_free(map->map), FAILURE);
+		return (FAILURE);
 	else if (!surrounded_by_1(map))
-		return (ft_free(map->map), FAILURE);
+		return (FAILURE);
 	else if (!valid_map(map))
-		return (ft_free(map->map), FAILURE);
+		return (FAILURE);
 	return (SUCCESS);
 }

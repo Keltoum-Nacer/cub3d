@@ -14,7 +14,7 @@ void    init_textures(t_data *data)
         data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, names[i], &data->text.width, &data->text.height);
         if (!data->textures[i].text_mlx.image)
         {
-            write(2, NOT_LOAD, 40);
+            write(2, FAILED_DOWN, 40);
             return;
         }
         data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);

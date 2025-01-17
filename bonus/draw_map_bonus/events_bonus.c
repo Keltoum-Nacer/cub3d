@@ -8,15 +8,15 @@ int ft_close(t_data *cub)
     cub->text.end.image = mlx_xpm_file_to_image(cub->mlx.mlx, end, &cub->text.width, &cub->text.height);
     if (!cub->text.end.image)
     {
-        printf("the image cannot be loaded successfully\n");
+        ft_put_str(FAILED_DOWN, NULL);
         return (0);
     }
     mlx_put_image_to_window(cub->mlx.mlx, cub->mlx.window, cub->text.end.image, 0, 0);
     mlx_do_sync(cub->mlx.mlx);
     sleep(4);
-    
-    mlx_destroy_image(cub->mlx.mlx, cub->mlx.image);
-    mlx_destroy_window(cub->mlx.mlx, cub->mlx.window);
+    mlx_destroy_image(cub->mlx.mlx, cub->text.end.image);
+    destroy_all_bonus(*cub);
+    free(end);
     exit(0);
 }
 int mouse_move(int x, int y, t_data *data)

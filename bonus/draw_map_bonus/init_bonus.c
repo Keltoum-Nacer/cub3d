@@ -17,12 +17,15 @@ void init_textures(t_data *data)
         data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, names[i], &data->text.width, &data->text.height);
         if (!data->textures[i].text_mlx.image)
         {
-            write(2, NOT_LOAD, 40);
+            ft_put_str(FAILED_DOWN, NULL);
             return;
         }
         data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
         i++;
     }
+    free(names[4]);
+    free(names[5]);
+    free(names[6]);
 }
 
 void draw_start(t_data *data)
@@ -37,7 +40,7 @@ void draw_start(t_data *data)
         data->text.frames[i].image = mlx_xpm_file_to_image(data->mlx.mlx, path, &data->text.width, &data->text.height);
         if (!data->text.frames[i].image)
         {
-            write(2, NOT_LOAD, 40);
+            ft_put_str(FAILED_DOWN, NULL);
             return;
         }
         mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.frames[i].image, 0, 0);

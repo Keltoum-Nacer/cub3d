@@ -2,15 +2,15 @@
 
 #define CUB3D_BONUS_H
 
+#include "../libft/libft.h"
+#include "../minilibx-linux/mlx.h"
+#include "define.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
 # include <math.h>
-#include "../libft/libft.h"
-#include "../minilibx-linux/mlx.h"
-#include "define.h"
 
 
 

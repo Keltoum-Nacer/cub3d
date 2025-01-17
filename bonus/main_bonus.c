@@ -1,5 +1,20 @@
 #include "../include_files/cub3d_bonus.h"
 
+void free_parse(t_map *map, int fd, int fdd)
+{
+    if (map->map)
+        ft_free(map->map);
+    if (map->west)
+        free(map->west);
+    if (map->east)
+        free(map->east);
+    if (map->south)
+        free(map->south);
+    if (map->north)
+        free(map->north);
+    close(fd);
+    close(fdd);
+}
 int parse_Gmap(char *name, t_map *map)
 {
     int fd;
@@ -7,27 +22,41 @@ int parse_Gmap(char *name, t_map *map)
 
     fd = open(name, O_RDONLY);
     fdd = open(name, O_RDONLY);
+    if (fdd < 0)
+    {
+        ft_put_str(ER_OPEN, name);
+        return (FAILURE);
+    }
+    map->map = NULL;
+    map->east = NULL;
+    map->west = NULL;
+    map->north = NULL;
+    map->south = NULL;
     map->height_text = 0;
     if (!file_cub(fd, name))
-        return (FAILURE);
+        return (close(fdd), FAILURE);
     if (!parse_direction(fd, &map) || !parse_color(fd, &map))
-        return (FAILURE);
+        return (free_parse(map, fd, fdd), FAILURE);
     if (!parse_map(fd, fdd, map))
-        return (FAILURE);
+        return (free_parse(map, fd, fdd), FAILURE);
     close(fd);
+    close(fdd);
     return (SUCCESS);
 }
 
 void destroy_all_bonus(t_data data)
 {
+    int i;
+
+    i = 0;
     if (data.mlx.image)
         mlx_destroy_image(data.mlx.mlx, data.mlx.image);
     if (data.mlx.window)
         mlx_destroy_window(data.mlx.mlx, data.mlx.window);
-    for (int i = 0; i < 5; i++)
+    while (i < 7)
     {
-        if (data.textures[i].text_mlx.image)
-            mlx_destroy_image(data.mlx.mlx, data.textures[i].text_mlx.image);
+        mlx_destroy_image(data.mlx.mlx, data.textures[i].text_mlx.image);
+        i++;
     }
     mlx_destroy_display(data.mlx.mlx);
     if (data.mlx.mlx)
