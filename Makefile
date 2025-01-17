@@ -29,7 +29,8 @@ SRCB = bonus/main_bonus.c \
 		bonus/draw_map_bonus/mini_map_bonus.c \
 		bonus/draw_map_bonus/move_player_bonus.c \
 		bonus/draw_map_bonus/texters_bonus.c \
-		bonus/draw_map_bonus/animation_bonus.c  
+		bonus/draw_map_bonus/animation_bonus.c  \
+		bonus/draw_map_bonus/utils.c
 
 LIBFT_DIR=libft
 LIBFT_LIB=$(LIBFT_DIR)/libft.a
@@ -41,17 +42,17 @@ INCLUDES = -I . -I include -I $(LIBFT_DIR)
 
 C = cc
 
-CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 #-g3 -fsanitize=address 
+CFLAGS =  -Wall -Werror -Wextra -I$(MLX_DIR) -I/usr/include/X11 -g3 #-fsanitize=address 
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lbsd -lm
 
 
 all: $(NAME)
 
-$(NAME): $(SRC) $(LIBFT_LIB) $(MLX_LIB)
+$(NAME): $(SRC) $(LIBFT_LIB) $(MLX_LIB) 
 	$(CC) $(CFLAGS) $(SRC) $(LIBFT_LIB) $(MLX_LIB) $(MLXFLAGS) -o $(NAME)
 
 bonus: $(NAMEB)
-$(NAMEB): $(SRCB) $(LIBFT_LIB) $(MLX_LIB)
+$(NAMEB): $(SRCB) $(LIBFT_LIB) $(MLX_LIB) $(OBJF)
 	$(CC) $(CFLAGS) $(SRCB) $(LIBFT_LIB) $(MLX_LIB) $(MLXFLAGS) -o $(NAMEB)
 
 $(LIBFT_LIB):

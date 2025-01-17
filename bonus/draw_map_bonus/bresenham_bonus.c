@@ -14,7 +14,7 @@ void init_flag(t_bres_flag *s, t_point p0, t_point p1)
         s->sy = -1;
     s->err = s->dx - s->dy;
 }
-int draw_textures(t_data *data, int i, int end, t_point p0)
+int draw_textures(t_data *data, int i, int end, t_point  p0)
 {
     int color;
     int j;
@@ -63,10 +63,7 @@ void render_wall_projection(t_point p0, t_data *data, double alpha, int i)
     int start;
     int end;
     (void)i;
-    // if (alpha < 0)
-    //     alpha += 2 * PI;
-    // if (alpha >= 2 * PI)
-    //     alpha -= 2 * PI;
+    alpha = normalize_angle(alpha);
     data->map.p.ray_angle = alpha;
     precise_dist = data->map.p.wall_dist * cos(alpha - data->map.p.angle);
     dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(FOV / 2));
@@ -94,7 +91,7 @@ int check_wall_door(t_point p0, double alpha, t_data *data, int i)
         render_wall_projection(p0, data, alpha, i);
         return (1);
     }
-    if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == 'D' && !data->map.open_door)
+    if ( data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] && data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == 'D' && !data->map.open_door)
     {
         data->map.is_door = 0;
         data->map.p.wall_dist = calculate_distance(p0, player);
@@ -120,7 +117,7 @@ void init_bresenham(t_data *data, t_point p0, double alpha, t_bres_flag *s)
 void bresenham(t_point p0, double alpha, t_data *data, int i)
 {
     t_bres_flag s;
-    int e2;
+    int e2; 
 
     init_bresenham(data, p0, alpha, &s);
     while (1)

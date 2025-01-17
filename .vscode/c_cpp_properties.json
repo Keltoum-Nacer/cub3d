@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "CUB3D",
+            "includePath": [
+                "${workspaceFolder}/mandatory",
+                "${workspaceFolder}/bonus"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
+

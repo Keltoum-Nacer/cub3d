@@ -1,6 +1,6 @@
 #include "../include_files/cub3d_bonus.h"
 
-void    init_textures(t_data *data)
+void init_textures(t_data *data)
 {
     char *names[5];
 
@@ -10,7 +10,7 @@ void    init_textures(t_data *data)
     names[3] = data->map.west;
     names[4] = ft_strdup("textures/simonkraft/door4.xpm");
     int i = 0;
-    while(i < 5)
+    while (i < 5)
     {
         data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, names[i], &data->text.width, &data->text.height);
         if (!data->textures[i].text_mlx.image)
@@ -21,6 +21,13 @@ void    init_textures(t_data *data)
         data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
         i++;
     }
+    data->textures[i].text_mlx.image = mlx_xpm_file_to_image(data->mlx.mlx, data->map.palestine, &data->text.width, &data->text.height);
+    if (!data->textures[i].text_mlx.image)
+    {
+        printf("the image cannot be loaded successfully\n");
+        return;
+    }
+    data->textures[i].text_mlx.image_addr = mlx_get_data_addr(data->textures[i].text_mlx.image, &data->textures[i].text_mlx.bits_per_pixel, &data->textures[i].text_mlx.line_length, &data->textures[i].text_mlx.endian);
     free(names[4]);
 }
 
@@ -64,7 +71,7 @@ void draw_start(t_data *data) {
 
 void init_mlx(t_data *data)
 {
-   
+
     data->mlx.mlx = mlx_init();
     if (!data->mlx.mlx)
         return;
@@ -78,20 +85,23 @@ void init_mlx(t_data *data)
     init_textures(data);
 }
 
-void    init_data(t_map map, t_data *data)
+void init_data(t_map map, t_data *data)
 {
     data->text.hidden = 1;
     data->map = map;
     data->map.open_door = 0;
-    data->map.p.p_y *= WALL_DIM ;
+    data->map.p.p_y *= WALL_DIM;
     data->map.p.p_x *= WALL_DIM;
     if (map.p.p_name == 'N')
-        data->map.p.angle = 3*PI / 2;
+        data->map.p.angle = 3 * PI / 2;
     if (map.p.p_name == 'W')
         data->map.p.angle = PI;
     if (map.p.p_name == 'S')
         data->map.p.angle = PI / 2;
     if (map.p.p_name == 'E')
         data->map.p.angle = 0;
+    data->flag = 0;
+    data->map.palestine = "textures/simonkraft/pal_is.xpm";
+    data->flag_palestine = 0;
     init_mlx(data);
 }
