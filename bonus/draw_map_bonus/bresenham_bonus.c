@@ -24,17 +24,14 @@ int draw_textures(t_data *data, int i, int end, t_point p0)
     {
         double distance_from_top = i + (data->map.p.wall_height / 2) - (WIN_HEIGHT / 2);
         double texture_offset_y = distance_from_top * ((double)data->text.height / data->map.p.wall_height);
-        if (data->map.p.offset_x < data->text.width && data->map.p.offset_x >= 0 && texture_offset_y < data->text.height && texture_offset_y >= 0)
+        if (data->map.p.offset_x <= data->text.width && data->map.p.offset_x >= 0 && texture_offset_y <= data->text.height && texture_offset_y >= 0)
         {
             color = *(int *)(data->textures[j].text_mlx.image_addr +
                              ((int)texture_offset_y * data->textures[j].text_mlx.line_length) +
                              ((int)data->map.p.offset_x * (data->textures[j].text_mlx.bits_per_pixel / 8)));
         }
-            if (color != TRANSPARENT)
-            {
-                color = darkness(color, data->map.p.wall_dist, WIN_WIDTH);
-                my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
-            }
+           //color = darkness(color, data->map.p.wall_dist, WIN_WIDTH);
+            my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
        
         i++;
     }
@@ -54,8 +51,8 @@ void draw_wall(t_point p0, int start, int end, t_data *data)
     i = draw_textures(data, i, end, p0);
     while (i < WIN_HEIGHT)
     {
-        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, data->map.F_color);
-        i++;
+        my_mlx_pixel_put(&data->mlx, p0.x_ind, i, 0x537753);
+        i ++;
     }
 }
 
@@ -82,122 +79,6 @@ void render_wall_projection(t_point p0, t_data *data, double alpha, int i)
     draw_wall(p0, start, end, data);
 }
 
-void render_door(t_point p0, t_data *data, double alpha, int i)
-{
-    double dis_to_proj;
-    double precise_dist;
-    int start;
-    int end;
-    (void)i;
-    // if (alpha < 0)
-    //     alpha += 2 * PI;
-    // if (alpha >= 2 * PI)
-    //     alpha -= 2 * PI;
-    data->map.p.ray_angle = alpha;
-    precise_dist = data->map.p.door_dist * cos(alpha - data->map.p.angle);
-    dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(FOV / 2));
-    data->map.p.height_door = round((dis_to_proj / precise_dist) * WALL_DIM);
-    start = (WIN_HEIGHT / 2) - (int)(256 / 2);
-    end = (WIN_HEIGHT / 2) + (int)(256 / 2);
-    data->map.p.hit_x = p0.x_ind;
-    data->map.p.hit_y = p0.y_ind;
-    p0.x_ind = i;
-    draw_wall(p0, start, end, data);
-}
-void draw_tanks(t_data *data, t_point p0, int start, int end)
-{
-    // double step;
-    int color;
-    data->map.p.offset_x = fmod(data->map.p.hit_x, WALL_DIM) / WALL_DIM * data->text.width;
-    // step = (double)data->text.height / WALL_DIM ;
-
-    // int i = start;
-    while (start < end)
-    {
-        double distance_from_top = start + (data->text.height / 2) - (WIN_HEIGHT / 2);
-        double texture_offset_y = distance_from_top;
-        if (data->map.p.offset_x < data->text.width && data->map.p.offset_x >= 0 && texture_offset_y < data->text.height && texture_offset_y >= 0)
-        {
-            color = *(int *)(data->text.tank.image_addr +
-                             ((int)texture_offset_y * data->text.tank.line_length) +
-                             ((int)data->map.p.offset_x * (data->text.tank.bits_per_pixel / 8)));
-        }
-        // color = darkness(color, data->map.p.ray.wall_dist, WIN_HEIGHT);
-        // int color = set_wall_color(data);
-        if (color != TRANSPARENT)
-        {
-            my_mlx_pixel_put(&data->mlx, p0.x_ind, start, color);
-        }
-        start++;
-    }
-}
-// void draw_tanks(t_data *data, t_point p0, int start, int end)
-// {
-//     double step;
-//     double pos;
-//     double tex_y;
-//     int color;
-//     //double tank_width_scale;
-//     int tank_tex_width = 400;
-//     int tank_tex_height = 256;
-
-//     data->map.p.offset_x = fmod(data->map.p.hit_x, data->text.width);
-//     //ouble precise_dist = data->map.p.wall_dist * cos(data->map.p.ray_angle - data->map.p.angle);
-//     //tank_width_scale = tank_tex_width * (256.0 / precise_dist);  // Scaling factor for width
-
-//     step = (double)tank_tex_height / data->map.p.wall_height;
-//     pos = 0.0;
-//     int i = start;
-//     while (start < end)
-//     {
-//         tex_y = pos;
-//         if (data->map.p.offset_x < tank_tex_width && data->map.p.offset_x >= 0 && tex_y < tank_tex_height && tex_y >= 0)
-//         {
-//             color = *(int *)(data->text.tank.image_addr +
-//                              ((int)tex_y * data->text.tank.line_length) +
-//                              ((int)(data->map.p.offset_x * (tank_tex_width / 400.0)) * (data->text.tank.bits_per_pixel / 8)));
-
-//             if (color != 0)
-//             {
-//                 my_mlx_pixel_put(&data->mlx, p0.x_ind, i, color);
-//                 i++;
-//             }
-//         }
-
-//         pos += step;
-//         start++;
-//     }
-// }
-
-void render_tanks(t_data *data, t_point p0, double alpha, int i)
-{
-    double dis_to_proj;
-    double precise_dist;
-    int start;
-    int end;
-
-    // if (alpha < 0)
-    //     alpha += 2 * PI;
-    // if (alpha >= 2 * PI)
-    //     alpha -= 2 * PI;
-    data->map.p.ray_angle = alpha;
-    data->text.tank.image = mlx_xpm_file_to_image(data->mlx.mlx, "textures/simonkraft/tank2.xpm", &data->text.width, &data->text.height);
-    if (!data->text.tank.image)
-    {
-        printf("the image cannot be loaded successfully\n");
-        return;
-    }
-    data->text.tank.image_addr = mlx_get_data_addr(data->text.tank.image, &data->text.tank.bits_per_pixel, &data->text.tank.line_length, &data->text.tank.endian);
-    precise_dist = data->map.p.wall_dist * cos(alpha - data->map.p.angle);
-    dis_to_proj = (WIN_WIDTH / 2) / tan(degree_to_rad(FOV / 2));
-    data->map.p.wall_height = round((dis_to_proj / precise_dist) * WALL_DIM);
-    start = (WIN_HEIGHT / 2) - (int)(data->text.height / 2);
-    end = (WIN_HEIGHT / 2) + (int)(data->text.height / 2);
-    data->map.p.hit_x = p0.x_ind;
-    data->map.p.hit_y = p0.y_ind;
-    p0.x_ind = i;
-    draw_tanks(data, p0, start, end);
-}
 
 int check_wall_door(t_point p0, double alpha, t_data *data, int i)
 {
@@ -211,27 +92,15 @@ int check_wall_door(t_point p0, double alpha, t_data *data, int i)
         data->map.is_door = 0;
         data->map.p.wall_dist = calculate_distance(p0, player);
         render_wall_projection(p0, data, alpha, i);
-        if (data->map.p.door)
-            {
-                t_point p;
-                p.x_ind = data->map.p.d_x;
-                p.y_ind = data->map.p.d_y;
-                render_door(p, data, alpha, i);
-            }
         return (1);
     }
     if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == 'D' && !data->map.open_door)
     {
-        data->map.p.door = 1;
-        data->map.p.door_dist = calculate_distance(p0, player);
-        // render_wall_projection(p0, data, alpha, i);
-        return (0);
-    }
-    if (data->map.map[(int)(p0.y_ind / WALL_DIM)][(int)(p0.x_ind / WALL_DIM)] == 'T')
-    {
+        data->map.is_door = 0;
         data->map.p.wall_dist = calculate_distance(p0, player);
         render_wall_projection(p0, data, alpha, i);
-        render_tanks(data, p0, alpha, i);
+        data->map.is_door = 1;
+        render_wall_projection(p0, data, alpha, i);
         return (1);
     }
     return (0);
@@ -241,7 +110,7 @@ void init_bresenham(t_data *data, t_point p0, double alpha, t_bres_flag *s)
     double max_ray_length;
     t_point p1;
 
-    max_ray_length = sqrt(pow(WIN_WIDTH * WALL_DIM, 2) + pow(WIN_HEIGHT * WALL_DIM, 2)); // soumayaaa
+    max_ray_length = sqrt(pow(WIN_WIDTH * WALL_DIM, 2) + pow(WIN_HEIGHT * WALL_DIM, 2));
     p1.x_ind = p0.x_ind + max_ray_length * cos(alpha);
     p1.y_ind = max_ray_length * sin(alpha) + p0.y_ind;
     data->map.p.ray_angle = alpha;

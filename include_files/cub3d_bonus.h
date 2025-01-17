@@ -6,9 +6,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+# include <math.h>
+#include <pthread.h>
 #include "../libft/libft.h"
 #include "../minilibx-linux/mlx.h"
-#include <math.h>
 
 // macro parsing
 #define SUCCESS 1
@@ -161,6 +162,7 @@ typedef struct s_data
     t_text  text;
     t_text  textures[5];
     t_text  anim;
+    int     sound;
 } t_data;
 // parsing functions
 

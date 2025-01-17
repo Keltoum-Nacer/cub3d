@@ -23,28 +23,44 @@ void    init_textures(t_data *data)
     }
     free(names[4]);
 }
-void    draw_start(t_data *data)
+
+
+void* play_sound(void *arg)
 {
+    (void) arg;
+    system("aplay ../typing.wav &");
+    return NULL;
+}
+
+
+void draw_start(t_data *data) {
     int i;
     char path[256];
+    pthread_t sound_thread;
 
     i = 0;
-    while(i < 66)
-    {
+    while (i < 66) {
         snprintf(path, sizeof(path), PATH_FORMAT, i + 1);
         data->text.frames[i].image = mlx_xpm_file_to_image(data->mlx.mlx, path, &data->text.width, &data->text.height);
-        if (!data->text.frames[i].image)
-        {
+        if (!data->text.frames[i].image) {
             printf("the image cannot be loaded successfully\n");
             return;
         }
         mlx_put_image_to_window(data->mlx.mlx, data->mlx.window, data->text.frames[i].image, 0, 0);
+        
+        // Start sound on the first frame
+        if (i == 0) {
+            pthread_create(&sound_thread, NULL, play_sound, NULL);
+            pthread_detach(sound_thread);
+        }
+        
         if (i == 43)
             sleep(1);
         usleep(100000);
         i++;
     }
-}   
+}
+   
 
 void init_mlx(t_data *data)
 {
@@ -57,8 +73,8 @@ void init_mlx(t_data *data)
     data->mlx.window = mlx_new_window(data->mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Our Cub3D");
     if (!data->mlx.window)
         return;
-    // if (data->text.hidden)
-    //     draw_start(data);
+    if (data->text.hidden)
+        draw_start(data);
     init_textures(data);
 }
 

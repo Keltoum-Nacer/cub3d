@@ -2,23 +2,22 @@
 
 unsigned int darkness(unsigned int color, double distance, int max_distance)
 {
-    double	dark_factor;
+    double	factor;
 	int		r;
 	int		g;
 	int		b;
 
-    if (distance <= 0) return 255;
-	dark_factor = 0.5 / (distance / max_distance);
-	if (dark_factor < 0.2)
-		dark_factor = 0.2;
-	if (dark_factor > 1)
-		dark_factor = 1;
+	factor = 2.5 - (distance / max_distance);
+	if (factor < 0.1)
+		factor = 0.1;
+	if (factor > 1)
+		factor = 1;
 	r = (color >> 16) & 0xFF;
 	g = (color >> 8) & 0xFF;
 	b = color & 0xFF;
-	r = r * dark_factor;
-	g = g * dark_factor;
-	b = b * dark_factor;
+	r = r * factor;
+	g = g * factor;
+	b = b * factor;
 	return ((r << 16) | (g << 8) | b);
 }
 
