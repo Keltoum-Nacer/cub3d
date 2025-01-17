@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_getline.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knacer <knacer@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 21:07:59 by knacer            #+#    #+#             */
+/*   Updated: 2025/01/17 21:08:27 by knacer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include_files/cub3d.h"
 
 char	*ft_getline(int fd)
@@ -21,7 +33,6 @@ char	*ft_getline(int fd)
 		buff = ft_strjoin(d, tmp);
 		if (tmp[0] == '\n' || !tmp)
 			return (free(tmp), free(d), buff);
-		// free(d);
 	}
 	return (NULL);
 }

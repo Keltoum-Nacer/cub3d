@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knacer <knacer@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 22:55:43 by knacer            #+#    #+#             */
+/*   Updated: 2025/01/17 22:55:44 by knacer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strstr(const char *haystack, const char *needle)
@@ -8,7 +20,7 @@ char	*ft_strstr(const char *haystack, const char *needle)
 	i = 0;
 	if ((ft_strlen(needle)) > ft_strlen(haystack))
 		return (NULL);
-	if ((ft_strlen(haystack) == 0 || ft_strlen(needle) == 0) || needle == NULL )
+	if ((ft_strlen(haystack) == 0 || ft_strlen(needle) == 0) || needle == NULL)
 		return ((char *)haystack);
 	while (haystack[i])
 	{
