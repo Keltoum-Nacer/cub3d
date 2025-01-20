@@ -4,8 +4,6 @@
 
 This project implements a raycasting-based rendering engine inspired by classic games like Wolfenstein 3D. It includes key features such as map validation, 2D rendering, wall projection, and texture mapping.
 
-The following sections describe each implementation step in detail.
-
 
 ## Table of Contents
 1. [Parse Map](#1-parse-map)
@@ -16,19 +14,21 @@ The following sections describe each implementation step in detail.
 
 ### 1. Parse Map
 
-- Check that the input file (`av[1]`) has:
+1- Check that the input file (`av[1]`) has:
   - A `.cub` extension.
   - Proper read permissions.
-- Verify map elements:
+  
+  2- Verify map elements:
   - Types (e.g., `NO`, `SO`, `WE`, `EA`) must be in strict order.
   - Paths for textures must have a `.xpm` extension.
   - Colors (`F` for floor, `C` for ceiling) should have RGB values in the range `[0, 255]`.
-- Validate the map:
+  
+  3- Validate the map:
   - The map must be enclosed by `1`s (walls).
   - Any spaces within the map should also be enclosed by `1`s.
   - Ensure exactly one player exists.
 
-## 2: 2D Rendering
+## 2. 2D Rendering
 
 We use raycasting to render the 2D map. Several algorithms can achieve this, including:
 - **DDA (Digital Differential Analyzer)**
@@ -38,10 +38,11 @@ We use raycasting to render the 2D map. Several algorithms can achieve this, inc
    * [YouTube Video 2](https://youtu.be/CceepU1vIKo?si=E9myLNi9-4g3rhT_)
    * [GeeksforGeeks Article](https://www.geeksforgeeks.org/bresenhams-line-generation-algorithm/)
 
-## Third Step: Wall Rendering
+## 3. Wall Rendering
 
 To render walls:
-1. Use **Thales' theorem** to calculate `wall_height`:
+1. Use **Thales's theorem** to calculate `wall_height`:
+
    - Adjust the wall distance with `cos(ray_angle - player_angle)`.
    - Calculate the projection distance using:
      ```c
@@ -49,15 +50,13 @@ To render walls:
      wall_height = round((dis_to_proj / precise_dist) * WALL_DIM);
      ```
 2. Determine the wall's start and end positions on the screen:
-   - `start = (HEIGHT / 2) - (wall_height / 2)`
-   - `end = (HEIGHT / 2) + (wall_height / 2)`
+```c
+    start = (HEIGHT / 2) - (wall_height / 2)
+   end = (HEIGHT / 2) + (wall_height / 2)
+   ```
 
 Here is a GitHub repository that helped me understand this part:
    * [Tutorial](https://github.com/Toufa7/Cub3D)
-
-* `start` is the index in the window where the wall will start.
-* `end` is the index in the window where the wall will end.
-* `WALL_DIM` is the scale in our map; we defined `WALL_DIM = 256`.
 
 3. Render:
    - Draw the ceiling, walls, and floor in separate loops.
