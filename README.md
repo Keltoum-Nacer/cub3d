@@ -53,9 +53,9 @@ To render walls:
 Here is a GitHub repository that helped me understand this part:
    * [Tutorial](https://github.com/Toufa7/Cub3D)
 
-* `start` is the index in the window where the wall will start.
-* `end` is the index in the window where the wall will end.
-* `WALL_DIM` is the scale in our map; we defined `WALL_DIM = 256`.
+		* `start` is the index in the window where the wall will start.
+		* `end` is the index in the window where the wall will end.
+		* `WALL_DIM` is the scale in our map; we defined `WALL_DIM = 256`.
 
 3. Render:
    - Draw the ceiling, walls, and floor in separate loops.
