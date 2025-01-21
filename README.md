@@ -1,5 +1,5 @@
 <!-- ![alt text](image.png) -->
-![Gameplay Video](CUB3D.mp4)
+<video src="CUB3D.mp4" controls width="640"></video>
 
 # 3D Raycasting Game Engine
 
