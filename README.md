@@ -1,16 +1,18 @@
-![alt text](image.png)
+<!-- ![alt text](image.png) -->
+![Gameplay Video](CUB3D.mp4)
 
 # 3D Raycasting Game Engine
 
 This project implements a raycasting-based rendering engine inspired by classic games like Wolfenstein 3D. It includes key features such as map validation, 2D rendering, wall projection, and texture mapping.
 
-
 ## Table of Contents
+1. [Parse Map](#1-parse-map)
 1. [Parse Map](#1-parse-map)
 2. [2D Rendering](#2-2d-rendering)
 3. [Wall Rendering](#3-wall-rendering)
 4. [Texture Mapping](#4-texture-mapping)
 5. [Resources](#5-Additional-Resources)
+6. [How to Play](#6-how-to-play)
 
 ### 1. Parse Map
 
@@ -170,3 +172,13 @@ int	draw_textures(t_data *data, int i, int end, t_point p0)
 * [convert_to_xpm](https://convertio.co/png-xpm/)
 * [for_images](https://sketchfab.com/3d-models/smg-fps-animations-ca37ea9148dc4fcc9cc632175d311b23)
  
+
+
+## 6. How to Play
+
+``` git clone git@github.com:Keltoum-Nacer/cub3d.git ```
+
+don't mess to install the minilibix-linux (in your intra)
+
+```make```
+`W` to go 
