@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   texters_bonus.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: knacer <knacer@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/17 22:24:51 by knacer            #+#    #+#             */
-/*   Updated: 2025/01/17 23:04:00 by knacer           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include_files/cub3d_bonus.h"
 
 unsigned int	darkness(unsigned int color, double distance, int max_distance)
