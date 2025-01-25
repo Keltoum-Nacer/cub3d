@@ -190,4 +190,23 @@ int	draw_textures(t_data *data, int i, int end, t_point p0)
 don't mess to install the minilibix-linux (in your intra)
 
 ```make```
-`W` to go 
+## 🎮 Controls
+
+Our Wolfenstein-inspired game supports the following movement and rotation controls:
+
+### ⌨️ Keyboard Controls
+- **W**: ⬆️ Move Forward  
+- **S**: ⬇️ Move Backward  
+- **A**: ⬅️ Strafe Left *(move sideways to the left)*  
+- **D**: ➡️ Strafe Right *(move sideways to the right)*  
+- **⬅️ Left Arrow**: Rotate Left *(turn left)*  
+- **➡️ Right Arrow**: Rotate Right *(turn right)*  
+
+### 🎉 Bonus Features
+- **G**: 🔫 Change your gun *(you'll find a surprise waiting!)*  
+- After changing the gun, press:  
+  - **N**: 🎵 Something cool might happen!  
+  - **M**: 🎵 Another surprise awaits!  
+
+### ⚠️ Important Note
+📥 **Don't forget to download MiniLibX Linux from the intra .** It's required for the game to work properly!
