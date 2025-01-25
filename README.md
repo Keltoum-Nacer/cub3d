@@ -7,8 +7,9 @@
     <video src="CUB3D.mp4" controls width="640"></video>
 </body>
 </html> -->
-![Video Preview](CUB3D.gif)
-
+<div align="center">
+  <img src="cub3d.gif" alt="Video Preview" width="600">
+</div>
 # 3D Raycasting Game Engine
 
 This project implements a raycasting-based rendering engine inspired by classic games like Wolfenstein 3D. It includes key features such as map validation, 2D rendering, wall projection, and texture mapping.
